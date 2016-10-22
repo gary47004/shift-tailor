@@ -1,0 +1,6 @@
+framework module Pods_shifter {
+  umbrella header "Pods-shifter-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="NO">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <development version="7000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DatePickerCell" rowHeight="149" id="KGk-i7-Jjw" customClass="DatePickerCell" customModule="shifter" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="270"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CsG-RV-bkW">
+                        <rect key="frame" x="10" y="10" width="100" height="50"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHU-an-y8C">
+                                <rect key="frame" x="29" y="15" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.59539171446705152" green="0.5759625912242039" blue="1" alpha="0.45294024493243246" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="9Ro-z5-Bdd"/>
+                            <constraint firstItem="hHU-an-y8C" firstAttribute="centerX" secondItem="CsG-RV-bkW" secondAttribute="centerX" id="PRE-km-DWS"/>
+                            <constraint firstAttribute="height" constant="50" id="bqB-5x-vJK"/>
+                            <constraint firstItem="hHU-an-y8C" firstAttribute="centerY" secondItem="CsG-RV-bkW" secondAttribute="centerY" id="eEA-eH-0EX"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hkp-e5-lnW">
+                        <rect key="frame" x="160" y="25" width="152" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ccD-He-9UW">
+                        <rect key="frame" x="0.0" y="79.5" width="320" height="200"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="pzX-TT-SgT">
+                                <rect key="frame" x="0.0" y="-5" width="320" height="200"/>
+                                <color key="backgroundColor" red="0.87843137250000003" green="0.1647058824" blue="0.047058823530000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="NDP-y0-Iow"/>
+                                </constraints>
+                                <date key="date" timeIntervalSinceReferenceDate="496767159.69254202">
+                                    <!--2016-09-28 14:52:39 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="datePickerValue:" destination="KGk-i7-Jjw" eventType="valueChanged" id="y36-bc-Cpl"/>
+                                </connections>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" red="0.11153467453748489" green="0.15412042709121476" blue="1" alpha="0.10311972128378379" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="200" id="62S-0A-hVq"/>
+                            <constraint firstItem="pzX-TT-SgT" firstAttribute="centerX" secondItem="ccD-He-9UW" secondAttribute="centerX" id="6ik-64-KHH"/>
+                            <constraint firstItem="pzX-TT-SgT" firstAttribute="width" secondItem="ccD-He-9UW" secondAttribute="width" id="vAt-KU-QKN"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ccD-He-9UW" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="296-ws-hM0"/>
+                    <constraint firstItem="hkp-e5-lnW" firstAttribute="centerY" secondItem="CsG-RV-bkW" secondAttribute="centerY" id="4mx-dU-mIU"/>
+                    <constraint firstItem="ccD-He-9UW" firstAttribute="top" secondItem="hkp-e5-lnW" secondAttribute="bottom" constant="34" id="BfL-xr-q00"/>
+                    <constraint firstItem="hkp-e5-lnW" firstAttribute="leading" secondItem="CsG-RV-bkW" secondAttribute="trailing" constant="50" id="FpZ-Dh-wkF"/>
+                    <constraint firstItem="pzX-TT-SgT" firstAttribute="top" secondItem="hkp-e5-lnW" secondAttribute="bottom" constant="29" id="RtR-iU-Maj"/>
+                    <constraint firstItem="ccD-He-9UW" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" id="gh4-87-9X0"/>
+                    <constraint firstItem="CsG-RV-bkW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="m4u-28-hbf"/>
+                    <constraint firstItem="CsG-RV-bkW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="pHc-9p-ff1"/>
+                    <constraint firstAttribute="trailing" secondItem="hkp-e5-lnW" secondAttribute="trailing" constant="8" id="rY7-Ei-LM8"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="dateLabel" destination="hkp-e5-lnW" id="UbJ-Ni-A3f"/>
+                <outlet property="datePicker" destination="pzX-TT-SgT" id="1xt-6h-Jhj"/>
+                <outlet property="titleLabel" destination="hHU-an-y8C" id="MD9-qS-0Zg"/>
+            </connections>
+            <point key="canvasLocation" x="32" y="-11"/>
+        </tableViewCell>
+    </objects>
+</document>
