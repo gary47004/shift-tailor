@@ -4,15 +4,82 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Collection.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>DateTools.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>EasyDate.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>HSDatePickerViewController.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>Masonry.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>Pods-shifter.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>UIColor-HexString.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0A5E475D51DE5F84CF9BFA55D1818482</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>26F3BFB0980EF089A95B2EF8C38785FC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>56A7902C26022C3A5411C8C34B7AE456</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>6DFB2694FD55BCD4D375383796085C40</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9E5DC02CD0E38CDF33A974C9E457671C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A9A83F63385AA43314397B8DD375464B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AFEDA8059B169E4068B6DCC4D2F0B0E9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E2F903264A57370F445EE2F39CCAC6C6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
