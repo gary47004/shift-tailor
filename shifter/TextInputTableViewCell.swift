@@ -2,25 +2,22 @@
 //  TextInputTableViewCell.swift
 //  shifter
 //
-//  Created by Frank Wang on 2016/9/2.
+//  Created by Frank Wang on 2016/9/10.
 //  Copyright © 2016年 Chlorophyll. All rights reserved.
 //
 
-
 import UIKit
 
-public class TitleInputTableViewCell: UITableViewCell {
+public class TextInputTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var titleInput: UITextField!
+    @IBOutlet weak var textInput: UITextField!
     
     public func configure(text text: String?, placeholder: String) {
-        titleInput.text = text
-        titleInput.placeholder = placeholder
+        textInput.text = text
+        textInput.placeholder = placeholder
         
-        titleInput.accessibilityValue = text
-        titleInput.accessibilityLabel = placeholder
-        
+        textInput.accessibilityValue = text
+        textInput.accessibilityLabel = placeholder
     }
     
 }
-

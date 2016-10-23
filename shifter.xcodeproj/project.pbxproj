@@ -40,13 +40,11 @@
 		04BCE13A1DB49934004A8162 /* employeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BCE1391DB49934004A8162 /* employeeCell.swift */; };
 		04EAAE821DBB49FD00AB7853 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04EAAE811DBB49FD00AB7853 /* GoogleService-Info.plist */; };
 		430738C71D59E108006F749A /* LoginViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430738C61D59E108006F749A /* LoginViewContoller.swift */; };
-		431022181D5F76F200C47D22 /* ShiftSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431022171D5F76F200C47D22 /* ShiftSchedule.swift */; };
 		4310221A1D5F791A00C47D22 /* Bulletin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431022191D5F791A00C47D22 /* Bulletin.swift */; };
 		4310221E1D60D6EB00C47D22 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4310221D1D60D6EB00C47D22 /* Notification.swift */; };
 		431022201D60E07800C47D22 /* ClockIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4310221F1D60E07800C47D22 /* ClockIn.swift */; };
 		431022221D60E8F400C47D22 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431022211D60E8F400C47D22 /* Settings.swift */; };
 		43173E081D5328620043399F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43173E071D5328620043399F /* AppDelegate.swift */; };
-		43173E0A1D5328620043399F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43173E091D5328620043399F /* ViewController.swift */; };
 		43173E0D1D5328620043399F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43173E0B1D5328620043399F /* Main.storyboard */; };
 		43173E0F1D5328620043399F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43173E0E1D5328620043399F /* Assets.xcassets */; };
 		43173E121D5328620043399F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43173E101D5328620043399F /* LaunchScreen.storyboard */; };
@@ -63,7 +61,7 @@
 
 /* Begin PBXFileReference section */
 		0468C0411DBA6E29003CC48A /* PopupDialog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupDialog.framework; path = "../../Library/Developer/Xcode/DerivedData/shifter-aqhidcuryzshjydgomlseguncljs/Build/Products/Debug-iphonesimulator/PopupDialog/PopupDialog.framework"; sourceTree = "<group>"; };
-		04852CF91DB37F6600229CAE /* shifter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "shifter-Bridging-Header.h"; sourceTree = "<group>"; };
+		04852CF91DB37F6600229CAE /* shifter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "shifter-Bridging-Header.h"; path = "../shifter-Bridging-Header.h"; sourceTree = "<group>"; };
 		04852CFE1DB37F9700229CAE /* MSCollectionViewCalendarLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCollectionViewCalendarLayout.h; sourceTree = "<group>"; };
 		04852CFF1DB37F9700229CAE /* MSCollectionViewCalendarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCollectionViewCalendarLayout.m; sourceTree = "<group>"; };
 		04852D001DB37F9700229CAE /* MSWeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSWeekView.h; sourceTree = "<group>"; };
@@ -115,14 +113,12 @@
 		04BCE1391DB49934004A8162 /* employeeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = employeeCell.swift; sourceTree = "<group>"; };
 		04EAAE811DBB49FD00AB7853 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		430738C61D59E108006F749A /* LoginViewContoller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewContoller.swift; sourceTree = "<group>"; };
-		431022171D5F76F200C47D22 /* ShiftSchedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftSchedule.swift; sourceTree = "<group>"; };
 		431022191D5F791A00C47D22 /* Bulletin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bulletin.swift; sourceTree = "<group>"; };
 		4310221D1D60D6EB00C47D22 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		4310221F1D60E07800C47D22 /* ClockIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockIn.swift; sourceTree = "<group>"; };
 		431022211D60E8F400C47D22 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		43173E041D5328620043399F /* shifter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shifter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43173E071D5328620043399F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		43173E091D5328620043399F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		43173E0C1D5328620043399F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		43173E0E1D5328620043399F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43173E111D5328620043399F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -130,7 +126,7 @@
 		432614371DABC64C0080AD10 /* TextInputTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextInputTableViewCell.xib; sourceTree = "<group>"; };
 		4326143D1DACCD4D0080AD10 /* DateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
 		4326143E1DACCD4D0080AD10 /* DateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateTableViewCell.xib; sourceTree = "<group>"; };
-		432687331D83DD2A003BD479 /* TextInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextInputTableViewCell.swift; path = ../TextInputTableViewCell.swift; sourceTree = "<group>"; };
+		432687331D83DD2A003BD479 /* TextInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputTableViewCell.swift; sourceTree = "<group>"; };
 		435AD2891D693D79000E38DA /* BulletinDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinDetail.swift; sourceTree = "<group>"; };
 		43778AD61D6ECDDB00D74478 /* BulletinCompose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinCompose.swift; sourceTree = "<group>"; };
 		4385DD491D97B8C200FDD811 /* NotificationDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDetail.swift; sourceTree = "<group>"; };
@@ -155,6 +151,7 @@
 		04852CFC1DB37F9700229CAE /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				04852CF91DB37F6600229CAE /* shifter-Bridging-Header.h */,
 				04852CFD1DB37F9700229CAE /* MSCollectionViewCalendarLayout */,
 				04852D001DB37F9700229CAE /* MSWeekView.h */,
 				04852D011DB37F9700229CAE /* MSWeekView.m */,
@@ -296,37 +293,106 @@
 			isa = PBXGroup;
 			children = (
 				04BCE11E1DB39093004A8162 /* shifter.entitlements */,
-				04852CFC1DB37F9700229CAE /* Lib */,
 				04EAAE811DBB49FD00AB7853 /* GoogleService-Info.plist */,
-				43173E071D5328620043399F /* AppDelegate.swift */,
-				43173E091D5328620043399F /* ViewController.swift */,
-				43173E0B1D5328620043399F /* Main.storyboard */,
-				04BCE13C1DB4BBE2004A8162 /* Shift Schedule */,
-				43173E0E1D5328620043399F /* Assets.xcassets */,
-				43173E101D5328620043399F /* LaunchScreen.storyboard */,
 				43173E131D5328620043399F /* Info.plist */,
+				04852CFC1DB37F9700229CAE /* Lib */,
+				43F2A6751DBCAFD0002E0D1A /* View Controllers */,
+				4378DA8C1DBCB04D00DCAE85 /* Views */,
+				43173E0E1D5328620043399F /* Assets.xcassets */,
+			);
+			path = shifter;
+			sourceTree = "<group>";
+		};
+		4378DA8C1DBCB04D00DCAE85 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				43173E0B1D5328620043399F /* Main.storyboard */,
+				43173E101D5328620043399F /* LaunchScreen.storyboard */,
+				4326143E1DACCD4D0080AD10 /* DateTableViewCell.xib */,
+				432614371DABC64C0080AD10 /* TextInputTableViewCell.xib */,
+				04BCE1251DB470EF004A8162 /* DatePickerCell.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		4378DA8D1DBCB09000DCAE85 /* Login */ = {
+			isa = PBXGroup;
+			children = (
 				430738C61D59E108006F749A /* LoginViewContoller.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		4378DA8E1DBCB0A800DCAE85 /* Tab Bar */ = {
+			isa = PBXGroup;
+			children = (
 				43D2EDBB1DAF95AB00E5133E /* TabBarViewController.swift */,
-				431022171D5F76F200C47D22 /* ShiftSchedule.swift */,
+			);
+			name = "Tab Bar";
+			sourceTree = "<group>";
+		};
+		4378DA8F1DBCB0B900DCAE85 /* Bulletin */ = {
+			isa = PBXGroup;
+			children = (
 				431022191D5F791A00C47D22 /* Bulletin.swift */,
 				435AD2891D693D79000E38DA /* BulletinDetail.swift */,
 				43778AD61D6ECDDB00D74478 /* BulletinCompose.swift */,
+			);
+			name = Bulletin;
+			sourceTree = "<group>";
+		};
+		4378DA901DBCB0D200DCAE85 /* Custom Cell */ = {
+			isa = PBXGroup;
+			children = (
 				4326143D1DACCD4D0080AD10 /* DateTableViewCell.swift */,
-				4326143E1DACCD4D0080AD10 /* DateTableViewCell.xib */,
 				432687331D83DD2A003BD479 /* TextInputTableViewCell.swift */,
-				432614371DABC64C0080AD10 /* TextInputTableViewCell.xib */,
-				4310221D1D60D6EB00C47D22 /* Notification.swift */,
-				4385DD491D97B8C200FDD811 /* NotificationDetail.swift */,
-				4310221F1D60E07800C47D22 /* ClockIn.swift */,
-				431022211D60E8F400C47D22 /* Settings.swift */,
-				04852CF91DB37F6600229CAE /* shifter-Bridging-Header.h */,
 				04BCE1231DB470E7004A8162 /* DatePickerCell.swift */,
-				04BCE1251DB470EF004A8162 /* DatePickerCell.xib */,
 				04BCE12E1DB490A1004A8162 /* ConditionTableViewCell.swift */,
 				04BCE1301DB490B9004A8162 /* ShiftEmployeeTableViewCell.swift */,
 				04BCE1391DB49934004A8162 /* employeeCell.swift */,
 			);
-			path = shifter;
+			name = "Custom Cell";
+			sourceTree = "<group>";
+		};
+		4378DA911DBCB0EC00DCAE85 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				4310221D1D60D6EB00C47D22 /* Notification.swift */,
+				4385DD491D97B8C200FDD811 /* NotificationDetail.swift */,
+			);
+			name = Notification;
+			sourceTree = "<group>";
+		};
+		4378DA921DBCB0F700DCAE85 /* Clock In */ = {
+			isa = PBXGroup;
+			children = (
+				4310221F1D60E07800C47D22 /* ClockIn.swift */,
+			);
+			name = "Clock In";
+			sourceTree = "<group>";
+		};
+		4378DA931DBCB10000DCAE85 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				431022211D60E8F400C47D22 /* Settings.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		43F2A6751DBCAFD0002E0D1A /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				43173E071D5328620043399F /* AppDelegate.swift */,
+				04BCE13C1DB4BBE2004A8162 /* Shift Schedule */,
+				4378DA8D1DBCB09000DCAE85 /* Login */,
+				4378DA8E1DBCB0A800DCAE85 /* Tab Bar */,
+				4378DA8F1DBCB0B900DCAE85 /* Bulletin */,
+				4378DA901DBCB0D200DCAE85 /* Custom Cell */,
+				4378DA911DBCB0EC00DCAE85 /* Notification */,
+				4378DA921DBCB0F700DCAE85 /* Clock In */,
+				4378DA931DBCB10000DCAE85 /* Settings */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		CB87C5AC26A8BCAFD41E06A6 /* Frameworks */ = {
@@ -473,12 +539,10 @@
 			files = (
 				04852D261DB37F9700229CAE /* MSCurrentTimeGridline.m in Sources */,
 				04852D291DB37F9700229CAE /* MSDayColumnHeaderBackground.m in Sources */,
-				43173E0A1D5328620043399F /* ViewController.swift in Sources */,
 				04852D281DB37F9700229CAE /* MSDayColumnHeader.m in Sources */,
 				04852D331DB37F9700229CAE /* MSWeekViewDecoratorInfinite.m in Sources */,
 				04BCE1201DB46AB4004A8162 /* EmployeeEventWeekViewController.swift in Sources */,
 				4385DD4A1D97B8C200FDD811 /* NotificationDetail.swift in Sources */,
-				431022181D5F76F200C47D22 /* ShiftSchedule.swift in Sources */,
 				432687341D83DD2A003BD479 /* TextInputTableViewCell.swift in Sources */,
 				04BCE12F1DB490A1004A8162 /* ConditionTableViewCell.swift in Sources */,
 				04852D341DB37F9700229CAE /* MSWeekViewDecoratorNewEvent.m in Sources */,
