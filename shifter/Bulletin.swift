@@ -31,9 +31,9 @@ class Bulletin: UITableViewController {
         let tabBarVC = self.tabBarController as! TabBarViewController
         currentUID = tabBarVC.currentUID
         
-        //set listener
         let databaseRef = FIRDatabase.database().reference()
-        databaseRef.child("posts").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: { snapshot in
+        //set childAdded listener
+        databaseRef.child("bulletin").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: { snapshot in
             //this func runs after tableView
             let title = snapshot.value!["title"] as? String
             let time = snapshot.value!["time"] as? String
@@ -52,6 +52,71 @@ class Bulletin: UITableViewController {
             }
             self.tableView.reloadData()
         })
+        
+        //child removed
+        databaseRef.child("bulletin").queryOrderedByKey().observeEventType(.ChildRemoved, withBlock: {snapshot in
+            let section = snapshot.value!["section"] as? Int
+            let postRef = snapshot.key
+            
+            if section == 0{
+                if let index = self.section0Refs.indexOf({ $0 as! String == postRef }){
+                    self.section0Refs.removeAtIndex(index)
+                    self.section0Posts.removeAtIndex(index)
+                }
+            }else{
+                if let index = self.section1Refs.indexOf({ $0 as! String == postRef }){
+                    self.section1Refs.removeAtIndex(index)
+                    self.section1Posts.removeAtIndex(index)
+                }
+            }
+            self.tableView.reloadData()
+        })
+        
+        //child changed
+        databaseRef.child("bulletin").queryOrderedByKey().observeEventType(.ChildChanged, withBlock: {snapshot in
+            let title = snapshot.value!["title"] as? String
+            let time = snapshot.value!["time"] as? String
+            let content = snapshot.value!["content"] as? String
+            let section = snapshot.value!["section"] as? Int
+            let employee = snapshot.value!["emplyee"] as? String
+            let postRef = snapshot.key
+            
+            if section == 0{
+                if self.section0Refs.contains({ $0 as? String == postRef }) == true{
+                    if let index = self.section0Refs.indexOf({ $0 as? String == postRef}){
+                        self.section0Refs[index] = postRef
+                        self.section0Posts[index] = post(title: title, time: time, content: content, section: section, employee: employee)
+                    }
+                }else{
+                    if let index = self.section1Refs.indexOf({ $0 as? String == postRef }){
+                        self.section1Refs.removeAtIndex(index)
+                        self.section1Posts.removeAtIndex(index)
+                        self.section0Refs.insert(postRef , atIndex: index)
+                        self.section0Posts.insert(post(title: title, time: time, content: content, section: section, employee: employee), atIndex: index)
+                    }
+                    print("moved from 1")
+                }
+            }else{
+                if self.section1Refs.contains({ $0 as? String == postRef }){
+                    if let index = self.section0Refs.indexOf({ $0 as? String == postRef }){
+                        self.section1Refs[index] = postRef
+                        self.section1Posts[index] = post(title: title, time: time, content: content, section: section, employee: employee)
+                    }
+                }else{
+                    if let index = self.section0Refs.indexOf({ $0 as? String == postRef }){
+                        self.section0Refs.removeAtIndex(index)
+                        self.section0Posts.removeAtIndex(index)
+                        self.section1Refs.insert(postRef , atIndex: index)
+                        self.section1Posts.insert(post(title: title, time: time, content: content, section: section, employee: employee), atIndex: index)
+                    }
+                    print("moved from 0")
+                    print(self.section1Posts)
+                    print(self.section1Refs)
+                }
+            }
+            self.tableView.reloadData()
+        })
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -100,12 +165,12 @@ class Bulletin: UITableViewController {
         
         if editingStyle == .Delete{
             if indexPath.section == 0{
-                databaseRef.child("Posts").child(section0Refs[indexPath.row] as! String).removeValue() //remove from database
+                databaseRef.child("bulletin").child(section0Refs[indexPath.row] as! String).removeValue() //remove from database
                 section0Posts.removeAtIndex(indexPath.row)
                 section0Refs.removeAtIndex(indexPath.row) //remove from local array
             }else{
                 
-                databaseRef.child("Posts").child(section1Refs[indexPath.row] as! String).removeValue()
+                databaseRef.child("bulletin").child(section1Refs[indexPath.row] as! String).removeValue()
                 section1Posts.removeAtIndex(indexPath.row)
                 section1Refs.removeAtIndex(indexPath.row) //remove from local array
                 //remove from database

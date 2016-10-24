@@ -296,8 +296,8 @@
 				04EAAE811DBB49FD00AB7853 /* GoogleService-Info.plist */,
 				43173E131D5328620043399F /* Info.plist */,
 				04852CFC1DB37F9700229CAE /* Lib */,
-				43F2A6751DBCAFD0002E0D1A /* View Controllers */,
 				4378DA8C1DBCB04D00DCAE85 /* Views */,
+				43F2A6751DBCAFD0002E0D1A /* View Controllers */,
 				43173E0E1D5328620043399F /* Assets.xcassets */,
 			);
 			path = shifter;

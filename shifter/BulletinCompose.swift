@@ -135,11 +135,9 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
                     type2Button.backgroundColor = .grayColor()
                 }
                 return cell
-
             }
 
         }else{
-            
             
             if indexPath.row == 0{
                 addSubjectLabel(textInputCell!, subject: "標題：")
@@ -209,7 +207,6 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
             }else{
                 didSelectDateCell = false
             }
-            
         }else{
             didSelectDateCell = false
         }
@@ -257,7 +254,6 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         //update to latest value in textfield
         saveInputText()
-        
         tableView.reloadData()
     }
     
@@ -280,7 +276,7 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
             let databaseRef = FIRDatabase.database().reference()
             
             //add child "Posts" and upload post with auto ID
-            databaseRef.child("posts").childByAutoId().setValue(post)
+            databaseRef.child("bulletin").childByAutoId().setValue(post)
 
         }else{
             saveInputText()
@@ -288,11 +284,10 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
             let databaseRef = FIRDatabase.database().reference()
             
             if selectedSection == 0{
-                databaseRef.child("posts").child(section0Refs[selectedRow] as! String).updateChildValues(["title" : inputTitle, "time" : inputTime, "content" : inputContent, "section" : sectionPressed, "employee" : currentUID])
+                databaseRef.child("bulletin").child(section0Refs[selectedRow] as! String).updateChildValues(["title" : inputTitle, "time" : inputTime, "content" : inputContent, "section" : sectionPressed, "employee" : currentUID])
             }else{
-                databaseRef.child("posts").child(section1Refs[selectedRow] as! String).updateChildValues(["title" : inputTitle, "time" : inputTime, "content" : inputContent, "section" : sectionPressed, "employee" : currentUID])
+                databaseRef.child("bulletin").child(section1Refs[selectedRow] as! String).updateChildValues(["title" : inputTitle, "time" : inputTime, "content" : inputContent, "section" : sectionPressed, "employee" : currentUID])
             }
-            
             
         }
        

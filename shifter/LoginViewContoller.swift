@@ -36,21 +36,32 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
     @IBAction func pressLogin(sender: UIButton) {
         inputID = idTextfield.text!
         inputPassword = passwordTextfield.text!
-
+        var IDArray = [String]()
+        var passwordArray = [String]()
+        
+        
         for i in 0...accountArray.count-1{
-            if inputID == accountArray[i].ID && inputPassword == accountArray[i].password{
-                errorStatusLabel.hidden = true
-                performSegueWithIdentifier("showHome", sender: self)
-            }else if inputID == "" || inputPassword == ""{
+            IDArray.append(accountArray[i].ID)
+            passwordArray.append(accountArray[i].password)
+            
+            if inputID == "" || inputPassword == ""{
                 errorStatusLabel.text = "please enter ID and password"
                 errorStatusLabel.hidden = false
-            }else{
-                errorStatusLabel.text = "ID or password incorrect"
+            }else if IDArray.contains(inputID) == false{
+                errorStatusLabel.text = "user not found"
                 errorStatusLabel.hidden = false
+            }else if IDArray.contains(inputID) == true{
+                if let index = IDArray.indexOf({ $0 == inputID }){
+                    if inputPassword != passwordArray[index]{
+                        errorStatusLabel.text = "password incorrect"
+                        errorStatusLabel.hidden = false
+                    }else{
+                        errorStatusLabel.hidden = true
+                        performSegueWithIdentifier("showHome", sender: self)
+                    }
+                }
             }
-                
         }
-        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
