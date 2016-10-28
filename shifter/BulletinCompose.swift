@@ -67,7 +67,11 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     //set tableView
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        if editMode == false{
+            return 4
+        }else{
+            return 5
+        }
     }
     
     //add label func
@@ -166,7 +170,7 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
                 }
                 textInputCell!.textInput.delegate = self
                 return textInputCell!
-            }else{
+            }else if indexPath.row == 3{
                 addSubjectLabel(cell, subject: "種類：")
                 
                 //add buttons
@@ -175,14 +179,14 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
                 type1Button.setTitleColor(.blackColor(), forState: .Normal)
                 type1Button.setTitleColor(UIColor.blueColor() , forState: .Selected)
                 type1Button.tag = 1
-                type1Button.addTarget(self, action: #selector(BulletinCompose.sectionPressed(_:)), forControlEvents: .TouchUpInside)
+                type1Button.addTarget(self, action: #selector(BulletinCompose.sectionPressed), forControlEvents: .TouchUpInside)
                 cell.contentView.addSubview(type1Button)
                 
                 let type2Button = UIButton(frame: CGRect(x: 140,y: 8,width: 46,height: 30))
                 type2Button.setTitle("區", forState: .Normal)
                 type2Button.setTitleColor(.blackColor(), forState: .Normal)
                 type2Button.tag = 2
-                type2Button.addTarget(self, action: #selector(BulletinCompose.sectionPressed(_:)), forControlEvents: .TouchUpInside)
+                type2Button.addTarget(self, action: #selector(BulletinCompose.sectionPressed), forControlEvents: .TouchUpInside)
                 cell.contentView.addSubview(type2Button)
                 
                 if sectionPressed == 0{
@@ -192,6 +196,15 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
                     type1Button.backgroundColor = .whiteColor()
                     type2Button.backgroundColor = .grayColor()
                 }
+                return cell
+            }else{
+                let deleteButton = UIButton(frame: CGRect(x: 47, y: 7, width: 281, height: 30))
+                deleteButton.setTitle("Delete", forState: .Normal)
+                deleteButton.setTitleColor(.whiteColor(), forState: .Normal)
+                deleteButton.backgroundColor = .redColor()
+                deleteButton.addTarget(self, action: #selector(BulletinCompose.deletePressed), forControlEvents: .TouchUpInside)
+                cell.contentView.addSubview(deleteButton)
+                
                 return cell
             }
 
@@ -264,7 +277,6 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
 
     func donePressed(){
-
         if editMode == false{
             //update to latest value in textfield
             saveInputText()
@@ -294,6 +306,19 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
         //go back to bulletin without losing tab bar and navigation controller
         self.navigationController?.popToRootViewControllerAnimated(true)
         
+    }
+    
+    func deletePressed(){
+        let databaseRef = FIRDatabase.database().reference()
+        
+        if selectedSection == 0{
+            databaseRef.child("bulletin").child(section0Refs[selectedRow] as! String).removeValue() //remove from database
+        }else{
+            
+            databaseRef.child("bulletin").child(section1Refs[selectedRow] as! String).removeValue()
+        }
+
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
 }

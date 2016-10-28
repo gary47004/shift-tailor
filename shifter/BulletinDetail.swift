@@ -18,12 +18,27 @@ class BulletinDetail: UITableViewController {
     var section0Refs = [AnyObject]()
     var section1Refs = [AnyObject]()
     var editMode = Bool()
+    var currentUID = String()
     
     
     override func viewDidLoad() {
         self.tabBarController?.tabBar.hidden = true
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(BulletinDetail.editPressed))
         navigationItem.rightBarButtonItem = editButton
+        
+        if selectedSection == 0{
+            if currentUID == section0Posts[selectedRow].employee{
+                navigationItem.rightBarButtonItem = editButton
+            }else{
+                navigationItem.rightBarButtonItem = nil
+            }
+        }else{
+            if currentUID == section1Posts[selectedRow].employee{
+                navigationItem.rightBarButtonItem = editButton
+            }else{
+                navigationItem.rightBarButtonItem = nil
+            }
+        }
     }
     
     func editPressed(){
@@ -52,38 +67,36 @@ class BulletinDetail: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        let cell = tableView.dequeueReusableCellWithIdentifier("bulletinDetailCell")! as UITableViewCell
+        let subjectLabel = UILabel(frame: CGRectMake(20,10,51,21))
         
-//        if editMode == false{
-            let cell = tableView.dequeueReusableCellWithIdentifier("bulletinDetailCell")! as UITableViewCell
-            let subjectLabel = UILabel(frame: CGRectMake(20,10,51,21))
-            
-            //set subject and content labels
-            cell.addSubview(subjectLabel)
-            subjectLabel.text = subjectArray[indexPath.row]
-            let valueLabel = UILabel(frame: CGRectMake(60,10,400,21))
-            cell.addSubview(valueLabel)
-            
-            if indexPath.row == 0 {
-                if selectedSection == 0{
-                    valueLabel.text = section0Posts[selectedRow].title
-                }else{
-                    valueLabel.text = section1Posts[selectedRow].title
-                }
-            }else if indexPath.row == 1 {
-                if selectedSection == 0{
-                    valueLabel.text = section0Posts[selectedRow].time
-                }else{
-                    valueLabel.text = section1Posts[selectedRow].time
-                }
+        //set subject and content labels
+        cell.addSubview(subjectLabel)
+        subjectLabel.text = subjectArray[indexPath.row]
+        let valueLabel = UILabel(frame: CGRectMake(60,10,400,21))
+        cell.addSubview(valueLabel)
+        
+        if indexPath.row == 0 {
+            if selectedSection == 0{
+                valueLabel.text = section0Posts[selectedRow].title
             }else{
-                if selectedSection == 0{
-                    valueLabel.text = section0Posts[selectedRow].content
-                }else{
-                    valueLabel.text = section1Posts[selectedRow].content
-                }
+                valueLabel.text = section1Posts[selectedRow].title
             }
-            
-            return cell
+        }else if indexPath.row == 1 {
+            if selectedSection == 0{
+                valueLabel.text = section0Posts[selectedRow].time
+            }else{
+                valueLabel.text = section1Posts[selectedRow].time
+            }
+        }else{
+            if selectedSection == 0{
+                valueLabel.text = section0Posts[selectedRow].content
+            }else{
+                valueLabel.text = section1Posts[selectedRow].content
+            }
+        }
+        
+        return cell
 
     }
     

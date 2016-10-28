@@ -1,8 +1,8 @@
 //
-//  Bulletin.swift
+//  Bulletin2.swift
 //  shifter
 //
-//  Created by Frank Wang on 2016/8/13.
+//  Created by Frank Wang on 2016/10/24.
 //  Copyright © 2016年 Chlorophyll. All rights reserved.
 //
 
@@ -18,39 +18,50 @@ struct post {
     let employee : String!
 }
 
-class Bulletin: UITableViewController {
+class Bulletin: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var sectionSelected = Int()
     var section0Posts = [post]()
     var section1Posts = [post]()
     var section0Refs = [AnyObject]()
     var section1Refs = [AnyObject]()
     var currentUID = String()
-
-
+    
+    @IBOutlet weak var tableView0: UITableView!
+    @IBOutlet weak var tableView1: UITableView!
+   
+    
     override func viewDidLoad() {
+        
         let tabBarVC = self.tabBarController as! TabBarViewController
         currentUID = tabBarVC.currentUID
         
+//        //set obsever for notification
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Bulletin.tableView(_:didSelectRowAtIndexPath:)), name: notificationKey, object: nil)
+        
+        //set listener
         let databaseRef = FIRDatabase.database().reference()
-        //set childAdded listener
+        
+        //child added
         databaseRef.child("bulletin").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: { snapshot in
             //this func runs after tableView
             let title = snapshot.value!["title"] as? String
             let time = snapshot.value!["time"] as? String
             let content = snapshot.value!["content"] as? String
             let section = snapshot.value!["section"] as? Int
-            let employee = snapshot.value!["emplyee"] as? String
+            let employee = snapshot.value!["employee"] as? String
             let postRef = snapshot.key  //get keys for each post(for deleting)
             
             //save to local array
             if section == 0{
                 self.section0Posts.insert(post(title: title, time: time, content: content, section: section, employee: employee), atIndex: 0)
                 self.section0Refs.insert(postRef, atIndex: 0)
+                self.tableView0.reloadData()
             }else{
                 self.section1Posts.insert(post(title: title, time: time, content: content, section: section, employee: employee), atIndex: 0)
                 self.section1Refs.insert(postRef, atIndex: 0)
+                self.tableView1.reloadData()
             }
-            self.tableView.reloadData()
+            
         })
         
         //child removed
@@ -62,14 +73,15 @@ class Bulletin: UITableViewController {
                 if let index = self.section0Refs.indexOf({ $0 as! String == postRef }){
                     self.section0Refs.removeAtIndex(index)
                     self.section0Posts.removeAtIndex(index)
+                    self.tableView0.reloadData()
                 }
             }else{
                 if let index = self.section1Refs.indexOf({ $0 as! String == postRef }){
                     self.section1Refs.removeAtIndex(index)
                     self.section1Posts.removeAtIndex(index)
+                    self.tableView1.reloadData()
                 }
             }
-            self.tableView.reloadData()
         })
         
         //child changed
@@ -78,7 +90,7 @@ class Bulletin: UITableViewController {
             let time = snapshot.value!["time"] as? String
             let content = snapshot.value!["content"] as? String
             let section = snapshot.value!["section"] as? Int
-            let employee = snapshot.value!["emplyee"] as? String
+            let employee = snapshot.value!["employee"] as? String
             let postRef = snapshot.key
             
             if section == 0{
@@ -94,7 +106,6 @@ class Bulletin: UITableViewController {
                         self.section0Refs.insert(postRef , atIndex: index)
                         self.section0Posts.insert(post(title: title, time: time, content: content, section: section, employee: employee), atIndex: index)
                     }
-                    print("moved from 1")
                 }
             }else{
                 if self.section1Refs.contains({ $0 as? String == postRef }){
@@ -109,12 +120,10 @@ class Bulletin: UITableViewController {
                         self.section1Refs.insert(postRef , atIndex: index)
                         self.section1Posts.insert(post(title: title, time: time, content: content, section: section, employee: employee), atIndex: index)
                     }
-                    print("moved from 0")
-                    print(self.section1Posts)
-                    print(self.section1Refs)
                 }
             }
-            self.tableView.reloadData()
+            self.tableView0.reloadData()
+            self.tableView1.reloadData()
         })
         
     }
@@ -123,27 +132,24 @@ class Bulletin: UITableViewController {
         self.title = "公告欄"
         self.tabBarController?.tabBar.hidden = false
     }
-    
-    //set tableView
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = Int()
-        
-        if section == 0{
-            count = section0Posts.count
-        }else{
-            count = section1Posts.count
-        }
 
-        return count
+    //set tableViews
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == self.tableView0{
+            return section0Posts.count
+        }else{
+            return section1Posts.count
+        }
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        if indexPath.section == 0{
+
+        if tableView == self.tableView0{
             cell.textLabel?.text = self.section0Posts[indexPath.row].title
         }else{
             cell.textLabel?.text = self.section1Posts[indexPath.row].title
@@ -151,63 +157,49 @@ class Bulletin: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0{
-            return "店公告"
-        }else{
-            return "區公告"
-        }
-    }
-
-    //set delete function
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        let databaseRef = FIRDatabase.database().reference()
-        
-        if editingStyle == .Delete{
-            if indexPath.section == 0{
-                databaseRef.child("bulletin").child(section0Refs[indexPath.row] as! String).removeValue() //remove from database
-                section0Posts.removeAtIndex(indexPath.row)
-                section0Refs.removeAtIndex(indexPath.row) //remove from local array
-            }else{
-                
-                databaseRef.child("bulletin").child(section1Refs[indexPath.row] as! String).removeValue()
-                section1Posts.removeAtIndex(indexPath.row)
-                section1Refs.removeAtIndex(indexPath.row) //remove from local array
-                //remove from database
-            }
-        }
-        tableView.reloadData()
-        
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    //pressed cell
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.title = "Back" //set back button
+        if tableView == tableView0{
+            sectionSelected = 0
+        }else{
+            sectionSelected = 1
+        }
         performSegueWithIdentifier("bulletinDetail", sender: self)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
+            }
     
+    //pressed compose
     @IBAction func composeButton(sender: UIBarButtonItem) {
         self.title = "Cancel"
         performSegueWithIdentifier("bulletinCompose", sender: nil)
     }
     
-
     //pass value to DetailVC
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let indexPath = self.tableView.indexPathForSelectedRow
-
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
         if segue.identifier == "bulletinDetail"{
+            var indexPath = NSIndexPath()
+            if sectionSelected == 0{
+                indexPath = self.tableView0.indexPathForSelectedRow!
+            }else{
+                indexPath = self.tableView1.indexPathForSelectedRow!
+            }
+            
             let detailVC = segue.destinationViewController as! BulletinDetail
-            detailVC.selectedSection = indexPath!.section
-            detailVC.selectedRow = indexPath!.row
+            detailVC.selectedSection = sectionSelected
+            detailVC.selectedRow = indexPath.row
             detailVC.section0Posts = section0Posts
             detailVC.section1Posts = section1Posts
             detailVC.section0Refs = section0Refs
             detailVC.section1Refs = section1Refs
+            detailVC.currentUID = currentUID
         }else{
             let composeVC = segue.destinationViewController as! BulletinCompose
             composeVC.currentUID = currentUID
         }
     }
+
+
     
+
 }

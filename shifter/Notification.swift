@@ -7,31 +7,66 @@
 //
 
 import UIKit
-let notificationArray = ["[開會提醒] 明天早上十一點要開會噢"]//[String]()
+import Firebase
+import FirebaseDatabase
 
-class Notification: UITableViewController {
-   
-    //set tableView
+let notificationKey = "notificationCellSelected"
+
+class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var titleArray = [String]()
+    var typeArray = [String]()
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notificationArray.count
-    }
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = notificationArray[indexPath.row]
+    @IBOutlet weak var tableView: UITableView!
+    override func viewDidLoad() {
+        tableView.registerNib(UINib(nibName: "NotificationTableViewCell", bundle: nil), forCellReuseIdentifier: "notificationCell")
         
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let notificationDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("notificationDetail")
-        self.navigationController?.pushViewController(notificationDetailVC, animated: true)
-        self.title = "Back"
+        //set listener
+        let databaseRef = FIRDatabase.database().reference()
+        
+        databaseRef.child("bulletin").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: { snapshot in
+            let title = snapshot.value!["title"] as? String
+           
+            self.titleArray.insert(title!, atIndex: 0)
+            self.typeArray.insert("公告欄", atIndex: 0)
+            
+            self.tableView.reloadData()
+        })
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         self.title = "通知"
+        tabBarController?.tabBar.items?[2].badgeValue = nil
+        let tabBarVC = self.tabBarController as? TabBarViewController
+        tabBarVC?.newNotification = 0
+        
     }
+    
+    //set tableView
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return titleArray.count
+    }
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("notificationCell") as? NotificationTableViewCell
+        cell?.setType(typeArray[indexPath.row])
+        cell?.setTitle(titleArray[indexPath.row])
+        return cell!
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if typeArray[indexPath.row] == "公告欄"{
+            print("present post")            
+//            NSNotificationCenter.defaultCenter().postNotificationName(notificationKey, object: nil)
+//            let bulletinVC = UIViewController() as? Bulletin
+//            let section0Posts = bulletinVC?.section0Posts
+//            let section1Posts = bulletinVC?.section1Posts
+//            let indexPath = section0Posts?.indexOf({ $0 as? String == titleArray[indexPath.row] })
+//            print(indexPath)
+//            bulletinVC?.performSelector(#selector(Bulletin.tableView(_:didSelectRowAtIndexPath:)))
+//            self.tabBarController?.
+        }
+    }
+    
     
    
 }
