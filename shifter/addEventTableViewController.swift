@@ -27,6 +27,9 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     var selectedIndexPath: NSIndexPath? = nil
     
+    var shiftStartDateString: String!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -110,7 +113,9 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("managerEvent").child("010").child("2016-10-16").childByAutoId().setValue(event)
+        eventDBRef.child("managerEvent").child("010").child(shiftStartDateString).childByAutoId().setValue(event)
+        
+        
         
         //self.navigationController?.popToRootViewControllerAnimated(true)
         
