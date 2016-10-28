@@ -26,6 +26,17 @@ class BulletinDetail: UITableViewController {
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(BulletinDetail.editPressed))
         navigationItem.rightBarButtonItem = editButton
         
+        //get value from tab bar VC
+        let tabBarVC = self.tabBarController as! TabBarViewController
+        currentUID = tabBarVC.currentUID
+        section0Posts = tabBarVC.section0Posts
+        section1Posts = tabBarVC.section1Posts
+        section0Refs = tabBarVC.section0Refs
+        section1Refs = tabBarVC.section1Refs
+        selectedSection = tabBarVC.selectedSection
+        selectedRow = tabBarVC.selectedRow
+        
+        //check edit qualification
         if selectedSection == 0{
             if currentUID == section0Posts[selectedRow].employee{
                 navigationItem.rightBarButtonItem = editButton
@@ -41,21 +52,26 @@ class BulletinDetail: UITableViewController {
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.title = ""
+    }
+    
     func editPressed(){
         performSegueWithIdentifier("editPressed", sender: self)
+        self.title = "Cancel"
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "editPressed"{
             editMode = true
-            let composeVC = segue.destinationViewController as! BulletinCompose
-            composeVC.editMode = editMode
-            composeVC.section0Posts = section0Posts
-            composeVC.section1Posts = section1Posts
-            composeVC.selectedSection = selectedSection
-            composeVC.selectedRow = selectedRow
-            composeVC.section0Refs = section0Refs
-            composeVC.section1Refs = section1Refs
+//            let composeVC = segue.destinationViewController as! BulletinCompose
+//            composeVC.editMode = editMode
+//            composeVC.section0Posts = section0Posts
+//            composeVC.section1Posts = section1Posts
+//            composeVC.selectedSection = selectedSection
+//            composeVC.selectedRow = selectedRow
+//            composeVC.section0Refs = section0Refs
+//            composeVC.section1Refs = section1Refs
             
         }
     }
@@ -75,6 +91,7 @@ class BulletinDetail: UITableViewController {
         subjectLabel.text = subjectArray[indexPath.row]
         let valueLabel = UILabel(frame: CGRectMake(60,10,400,21))
         cell.addSubview(valueLabel)
+        
         
         if indexPath.row == 0 {
             if selectedSection == 0{

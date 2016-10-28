@@ -39,8 +39,21 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
         tableView.registerNib(UINib(nibName: "DateTableViewCell", bundle: nil), forCellReuseIdentifier: "dateCell")
 
         
+        //get value from tab bar VC
+        let tabBarVC = self.tabBarController as! TabBarViewController
+        currentUID = tabBarVC.currentUID
+        
         //set data for edit mode
         if editMode == true{
+            
+            //get value from tab bar VC
+            section0Posts = tabBarVC.section0Posts
+            section1Posts = tabBarVC.section1Posts
+            section0Refs = tabBarVC.section0Refs
+            section1Refs = tabBarVC.section1Refs
+            selectedSection = tabBarVC.selectedSection
+            selectedRow = tabBarVC.selectedRow
+            
             if selectedSection == 0{
                 inputTitle = section0Posts[selectedRow].title
                 inputTime = section0Posts[selectedRow].time
@@ -50,6 +63,8 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
                 inputTime = section1Posts[selectedRow].time
                 inputContent = section1Posts[selectedRow].content
             }
+            
+            tableView.reloadData()
         }
     }
     

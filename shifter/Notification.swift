@@ -10,8 +10,6 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-let notificationKey = "notificationCellSelected"
-
 class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var titleArray = [String]()
     var typeArray = [String]()
@@ -55,17 +53,13 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if typeArray[indexPath.row] == "公告欄"{
-            print("present post")            
-//            NSNotificationCenter.defaultCenter().postNotificationName(notificationKey, object: nil)
-//            let bulletinVC = UIViewController() as? Bulletin
-//            let section0Posts = bulletinVC?.section0Posts
-//            let section1Posts = bulletinVC?.section1Posts
-//            let indexPath = section0Posts?.indexOf({ $0 as? String == titleArray[indexPath.row] })
-//            print(indexPath)
-//            bulletinVC?.performSelector(#selector(Bulletin.tableView(_:didSelectRowAtIndexPath:)))
-//            self.tabBarController?.
+            print("present post")
+            let bulletinDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("bulletinDetail")
+            self.showViewController(bulletinDetailVC, sender: self)
+            
         }
     }
+    
     
     
    
