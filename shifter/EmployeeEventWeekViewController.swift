@@ -207,7 +207,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
     
     override func viewWillAppear(animated: Bool) {
         
-        var neweEventArray = [MSEvent]()
+        var newEventArray = [MSEvent]()
         
         let eventDBRef = FIRDatabase.database().reference()
         
@@ -248,10 +248,10 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
             
             print("aaaaaaaaaaaaaaaaaaaaaaaa")
             
-            neweEventArray.append(newEvent)
+            newEventArray.append(newEvent)
             
             
-            self.weeklyView.events = neweEventArray
+            self.weeklyView.events = newEventArray
             
             
             
