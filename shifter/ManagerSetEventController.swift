@@ -39,7 +39,7 @@ struct eventStruct{
 //}
 
 
-class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekViewDragableDelegate,MSWeekViewNewEventDelegate, MSWeekViewInfiniteDelegate{
+class ManagerSetEventViewController: UIViewController,UIPopoverPresentationControllerDelegate,MenuButtonDelegate,MSWeekViewDelegate,MSWeekViewDragableDelegate,MSWeekViewNewEventDelegate, MSWeekViewInfiniteDelegate{
 
    
     
@@ -61,6 +61,8 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
     var shiftStartDateString: String!
         
     var shiftDate : NSDate!
+    
+    var menuButtonTapped : String?
     
     
 
@@ -94,6 +96,9 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
     
     
     
+    @IBAction func popoverMenu(sender: UIBarButtonItem) {
+        performSegueWithIdentifier("popoverMenu", sender: nil)
+    }
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -126,11 +131,25 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
             navigationItem.backBarButtonItem = backItem
 
             
+        }else if segue.identifier == "popoverMenu"{
+            
+            let destinationVC = segue.destinationViewController as! PopoverMenuViewController
+            destinationVC.preferredContentSize = CGSizeMake(200, 100)
+            
+            let popoverController = destinationVC.popoverPresentationController
+            
+            if popoverController != nil{
+                popoverController?.delegate = self
+            }
+            
+            destinationVC.delegate = self
         }
     }
     
    
-    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
     
     
    
@@ -207,6 +226,15 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
             
         })
         
+    }
+    
+    func buttonTapped(buttonTapped: String) {
+        self.menuButtonTapped = buttonTapped
+        print("MenuButtonTapped : ", menuButtonTapped)
+        
+        if menuButtonTapped == "send"{
+        }else if menuButtonTapped == "drop"{
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -308,7 +336,6 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
             
             
         })
-        
         
         
         self.weeklyView.forceReload()
