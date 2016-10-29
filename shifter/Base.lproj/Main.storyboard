@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eF3-Ay-tQ1">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="P7i-vP-nTc">
     <dependencies>
         <deployment identifier="iOS"/>
         <development version="7000" identifier="xcode"/>
@@ -773,8 +773,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cAK-eJ-zdR">
                                 <rect key="frame" x="0.0" y="627" width="375" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B34-8B-9a1">
-                                        <rect key="frame" x="165" y="5" width="45" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B34-8B-9a1">
+                                        <rect key="frame" x="166" y="5" width="45" height="30"/>
                                         <state key="normal" title="Delete"/>
                                         <connections>
                                             <action selector="deleteEvent:" destination="cUO-ZN-Qgu" eventType="touchUpInside" id="wZ6-r2-SyW"/>
@@ -819,6 +819,60 @@
             </objects>
             <point key="canvasLocation" x="2318" y="-3107"/>
         </scene>
+        <!--Popover Menu View Controller-->
+        <scene sceneID="Y9g-4g-KR1">
+            <objects>
+                <viewController id="K9b-Ca-Bi2" customClass="PopoverMenuViewController" customModule="shifter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kaq-uY-heW"/>
+                        <viewControllerLayoutGuide type="bottom" id="Aut-0l-sjd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hT6-c8-dDx">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="100"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-DQ-jaY">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="shr-Sc-no8"/>
+                                </constraints>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="sendEvent:" destination="K9b-Ca-Bi2" eventType="touchUpInside" id="AlF-OE-qH7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4lK-LS-BGI">
+                                <rect key="frame" x="0.0" y="50" width="200" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="fQo-Sx-WNh"/>
+                                </constraints>
+                                <state key="normal" title="Drop"/>
+                                <connections>
+                                    <action selector="dropEvent:" destination="K9b-Ca-Bi2" eventType="touchUpInside" id="3HZ-1Z-iCL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="3Wv-DQ-jaY" secondAttribute="trailing" id="5BD-0h-yQJ"/>
+                            <constraint firstItem="4lK-LS-BGI" firstAttribute="top" secondItem="3Wv-DQ-jaY" secondAttribute="bottom" id="Hdn-j3-B6Z"/>
+                            <constraint firstItem="3Wv-DQ-jaY" firstAttribute="leading" secondItem="hT6-c8-dDx" secondAttribute="leading" id="Nie-Ey-8WP"/>
+                            <constraint firstItem="4lK-LS-BGI" firstAttribute="leading" secondItem="hT6-c8-dDx" secondAttribute="leading" id="Pkb-tE-VCk"/>
+                            <constraint firstItem="3Wv-DQ-jaY" firstAttribute="top" secondItem="hT6-c8-dDx" secondAttribute="top" id="fW2-QO-qy1"/>
+                            <constraint firstAttribute="trailing" secondItem="4lK-LS-BGI" secondAttribute="trailing" id="n0y-jx-pA8"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="200" height="100"/>
+                    <connections>
+                        <outlet property="dropButton" destination="4lK-LS-BGI" id="fym-PC-9p9"/>
+                        <outlet property="sendButton" destination="3Wv-DQ-jaY" id="q4y-h2-VGz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jtv-OK-uh1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1986" y="-3235"/>
+        </scene>
         <!--Manager Set Event-->
         <scene sceneID="dch-WD-cha">
             <objects>
@@ -844,12 +898,21 @@
                             <constraint firstItem="pUB-CP-EEF" firstAttribute="top" secondItem="gbO-8K-VAC" secondAttribute="bottom" id="ecF-kd-4kM"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="Rua-83-eDt"/>
+                    <navigationItem key="navigationItem" title="Title" id="Rua-83-eDt">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="QEQ-3K-LrJ">
+                            <connections>
+                                <action selector="popoverMenu:" destination="slN-L7-JYa" id="8Ym-Ng-T27"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="titleItem" destination="Rua-83-eDt" id="uq7-E6-0YI"/>
                         <outlet property="weeklyView" destination="gbO-8K-VAC" id="ZCN-J7-dKb"/>
                         <segue destination="N7w-N5-R5M" kind="show" identifier="addEventSegue" id="7Xa-ZZ-tWg"/>
                         <segue destination="cUO-ZN-Qgu" kind="show" identifier="delete" id="VWx-WO-6Ey"/>
+                        <segue destination="K9b-Ca-Bi2" kind="popoverPresentation" identifier="popoverMenu" popoverAnchorBarButtonItem="QEQ-3K-LrJ" id="o9b-6x-Gcm">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XhR-gi-6q4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -983,7 +1046,7 @@
                     <navigationItem key="navigationItem" title="Title" id="hR9-3Z-V4v">
                         <barButtonItem key="rightBarButtonItem" title="排班" id="cB7-bU-Xdo">
                             <connections>
-                                <segue destination="slN-L7-JYa" kind="show" identifier="setEvent" id="h1T-nF-gCW"/>
+                                <action selector="setEvent:" destination="tLJ-am-17s" id="XTs-eW-yfn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -993,6 +1056,7 @@
                         <outlet property="titleItem" destination="hR9-3Z-V4v" id="rzv-Qf-1r7"/>
                         <outlet property="weeklyView" destination="fb9-GT-pDR" id="INa-08-14d"/>
                         <segue destination="02p-nQ-d2Y" kind="show" identifier="showDetailSegue" id="fPU-2C-Qz1"/>
+                        <segue destination="slN-L7-JYa" kind="show" identifier="setEvent" id="2CS-Og-tVj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wSg-N7-KCP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1176,6 +1240,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="U5X-YH-5wq"/>
+        <segue reference="w88-VW-flA"/>
     </inferredMetricsTieBreakers>
 </document>
