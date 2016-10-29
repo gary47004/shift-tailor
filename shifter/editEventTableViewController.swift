@@ -45,12 +45,12 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
     
     var selectedIndexPath: NSIndexPath? = nil
     
-    var shiftStartDateString: String!
+    var shiftStartDate: String!
 
     
     @IBAction func deleteEvent(sender: UIButton) {
         let eventDBRef = FIRDatabase.database().reference()
-        eventDBRef.child("managerEvent").child("010").child(shiftStartDateString).child(event.key).removeValue()
+        eventDBRef.child("managerEvent").child("010").child(shiftStartDate).child(event.key).removeValue()
         //print(editEventButton.title)
         
         for (var i = 0; i < self.navigationController?.viewControllers.count; i = i + 1) {
@@ -191,7 +191,7 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
         let eventDBRef = FIRDatabase.database().reference()
         
         
-        eventDBRef.child("managerEvent").child("010").child(shiftStartDateString).child(event.key).updateChildValues(["Start Date":startDate, "End Date": endDate, "Coding":event.coding, "Dancing":event.dancing, "Cleaning": event.cleaning])
+        eventDBRef.child("managerEvent").child("010").child(shiftStartDate).child(event.key).updateChildValues(["Start Date":startDate, "End Date": endDate, "Coding":event.coding, "Dancing":event.dancing, "Cleaning": event.cleaning])
         
         
     

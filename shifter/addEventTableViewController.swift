@@ -27,7 +27,7 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     var selectedIndexPath: NSIndexPath? = nil
     
-    var shiftStartDateString: String!
+    var shiftStartDate: String!
 
     
     override func viewDidLoad() {
@@ -113,7 +113,7 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("managerEvent").child("010").child(shiftStartDateString).childByAutoId().setValue(event)
+        eventDBRef.child("managerEvent").child("010").child(shiftStartDate).childByAutoId().setValue(event)
         
         
         

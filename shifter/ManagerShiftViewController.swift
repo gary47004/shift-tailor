@@ -15,7 +15,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     
     var selectedDate: String = ""
     
-    var shiftStartDateString : String = "sssssssss"
+    var shiftStartDate : String = "sssssssss"
     
     var shiftEndDate: String = ""
     
@@ -158,7 +158,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler:
             {(alert: UIAlertAction!)in
                 
-                self.shiftStartDateString = ""
+                self.shiftStartDate = ""
                 self.selectedDate = ""
     
         })
@@ -174,11 +174,11 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         let presentSummaryViewAction = UIAlertAction(title: "Set", style: .Default, handler: {(alert: UIAlertAction!) in
             
             
-            self.shiftStartDateString = self.selectedDate
+            self.shiftStartDate = self.selectedDate
             
             
             
-            print("sssssssss", self.shiftStartDateString)
+            print("sssssssss", self.shiftStartDate)
             
             //print("endDate: ",self.shiftEndDate)
             
@@ -189,13 +189,13 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             //dateFormatter.timeZone = NSTimeZone.localTimeZone()
             
             
-            if self.shiftStartDateString == "" {
-                self.shiftStartDateString = dateFormatter.stringFromDate(NSDate.now())
+            if self.shiftStartDate == "" {
+                self.shiftStartDate = dateFormatter.stringFromDate(NSDate.now())
                 
             }
             
             
-            let summaryAlertVC = UIAlertController(title: "欲排班日期", message: self.shiftStartDateString ,preferredStyle: .ActionSheet)
+            let summaryAlertVC = UIAlertController(title: "欲排班日期", message: self.shiftStartDate ,preferredStyle: .ActionSheet)
             
             summaryAlertVC.addAction(setShiftAction)
             summaryAlertVC.addAction(cancelAction)
@@ -349,9 +349,9 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             snapshot in
             
-            self.shiftStartDateString = snapshot.value as! String
+            self.shiftStartDate = snapshot.value as! String
             
-            print("START",self.shiftStartDateString)
+            print("START",self.shiftStartDate)
             
             
         })
@@ -377,17 +377,17 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
         }else if segue.identifier == "setEvent"{
             
-            print(shiftStartDateString)
+            print(shiftStartDate)
             
 
             
             let destinationVC = segue.destinationViewController as! ManagerSetEventViewController
             
-            destinationVC.shiftStartDateString = self.shiftStartDateString
+            destinationVC.shiftStartDate = self.shiftStartDate
             
             let setEventDBREF = FIRDatabase.database().reference()
             setEventDBREF.child("managerEvent").child("010").child("setEventSwitch").setValue(true)
-            setEventDBREF.child("managerEvent").child("010").child("currentEvent").setValue(self.shiftStartDateString)
+            setEventDBREF.child("managerEvent").child("010").child("currentEvent").setValue(self.shiftStartDate)
 
             
         
