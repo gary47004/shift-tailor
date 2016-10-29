@@ -47,7 +47,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
     @IBOutlet weak var titleItem: UINavigationItem!
     
     
-    var  selectedEvent = MSEvent()
+    var selectedEvent = MSEvent()
     
     var eventList = [eventStruct]()
     
@@ -58,15 +58,18 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
     
     //let currentDate = NSDate()
     
-    var shiftStartDateString: String!
+    var shiftStartDate: String!
         
     var shiftDate : NSDate!
     
     var menuButtonTapped : String?
     
+    var deadlineDate : String!
     
-
-   
+    
+    let weekDateFormatter = NSDateFormatter()
+    
+    
     
     
     override func viewDidLoad() {
@@ -75,20 +78,22 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         
     
         let shiftDateFormatter = NSDateFormatter()
-        let weekStartDateFormatter = NSDateFormatter()
-        let weekEndDateFormatter = NSDateFormatter()
 
         shiftDateFormatter.dateFormat = "yyyy-M-dd"
-        weekStartDateFormatter.dateFormat = "MMM d"
-        weekEndDateFormatter.dateFormat = "MMM d"
+        weekDateFormatter.dateFormat = "MMM d"
         
-        self.shiftDate = shiftDateFormatter.dateFromString(shiftStartDateString)!
+        var shiftStartDateString: String!
+        var shiftEndDateString: String!
+
         
-        let convertedDate = weekStartDateFormatter.stringFromDate(shiftDate)
         
-        let weekEndDate = weekEndDateFormatter.stringFromDate(shiftDate.addDays(6))
+        self.shiftDate = shiftDateFormatter.dateFromString(shiftStartDate)!
         
-        titleItem.title = "\(convertedDate) - \(weekEndDate)"
+        
+        shiftStartDateString = weekDateFormatter.stringFromDate(shiftDate)
+        shiftEndDateString = weekDateFormatter.stringFromDate(shiftDate.addDays(6))
+        
+        titleItem.title = "\(shiftStartDateString) - \(shiftEndDateString)"
         
         self.setupWeekData()
 
@@ -109,7 +114,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
             
             let destinationVC = segue.destinationViewController as! addEventTableViewController
             
-            destinationVC.shiftStartDateString = self.shiftStartDateString
+            destinationVC.shiftStartDate = self.shiftStartDate
             
             destinationVC.longPressDate = longPressDate
             
@@ -124,7 +129,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
             
             destinationVC.event = selectedEvent //from eventSelected
             
-            destinationVC.shiftStartDateString = self.shiftStartDateString
+            destinationVC.shiftStartDate = self.shiftStartDate
             
             let backItem = UIBarButtonItem()
             backItem.title = "Back"
@@ -228,13 +233,108 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         
     }
     
+    func datePickerValueChanged(sender: UIDatePicker){
+        
+        // Create date formatter
+        let dateFormatter: NSDateFormatter = NSDateFormatter()
+        
+        // Set date format
+        dateFormatter.dateFormat = "yyyy-M-dd"
+        
+        // Apply date format
+        self.deadlineDate = dateFormatter.stringFromDate(sender.date)
+        
+        print("Selected value \(deadlineDate)")
+    }
+    
+    
+    func setDeadlineDate() {
+        let setDeadlineDateVC = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: "", preferredStyle: .ActionSheet)
+        
+        let datePickerView = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
+        
+        datePickerView.datePickerMode = .Date
+        
+        datePickerView.addTarget(self, action: #selector(ManagerShiftViewController.datePickerValueChanged(_:)), forControlEvents: .ValueChanged)
+        
+        
+        
+        let cancelAction = UIAlertAction(title: "Cancel",style: .Cancel, handler: {(alert:UIAlertAction) in
+            
+            self.deadlineDate = ""
+            
+        })
+        
+        let setDeadlineAction = UIAlertAction(title: "Send", style: .Default, handler:{(alert:UIAlertAction) in
+            
+            let eventDBRef = FIRDatabase.database().reference()
+            eventDBRef.child("managerEvent").child("010").child("currentEventDeadline").setValue(self.deadlineDate)
+            eventDBRef.child("managerEvent").child("010").child("setEventSwitch").setValue(false)
+            let completeVC = UIAlertController(title: "已完成排班", message: "將於 \(self.deadlineDate) 收到班表",preferredStyle: .Alert)
+            let confirmAction = UIAlertAction(title: "OK", style: .Default, handler: {(alert:UIAlertAction) in
+            
+                self.navigationController?.popToRootViewControllerAnimated(true)
+                
+            })
+            
+            completeVC.addAction(confirmAction)
+            
+            self.presentViewController(completeVC, animated: true, completion: nil)
+        })
+        
+        
+        setDeadlineDateVC.view.addSubview(datePickerView)
+        setDeadlineDateVC.addAction(cancelAction)
+        setDeadlineDateVC.addAction(setDeadlineAction)
+        
+        self.presentViewController(setDeadlineDateVC, animated: true, completion: nil)
+        
+        print("present send VC")
+
+
+    }
+    
+    func dropEvent() {
+        
+        let startDateFormatter = NSDateFormatter()
+        
+        startDateFormatter.dateFormat = "yyyy-M-dd"
+        
+        let endDateFormatter = NSDateFormatter()
+        endDateFormatter.dateFormat = "M-dd"
+        var shiftStartDateString: String!
+        var shiftEndDateString: String!
+
+        shiftStartDateString = startDateFormatter.stringFromDate(self.shiftDate)
+        shiftEndDateString = endDateFormatter.stringFromDate(self.shiftDate.addDays(6))
+        
+        
+        
+        
+        let dropEventVC = UIAlertController(title: "取消排班", message: "確定要取消 \(shiftStartDateString) - \(shiftEndDateString) 的排班嗎？", preferredStyle: .ActionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .Default, handler: {(alert:UIAlertAction) in
+        
+            let eventDBRef = FIRDatabase.database().reference()
+            eventDBRef.child("managerEvent").child("010").child(self.shiftStartDate).removeValue()
+            eventDBRef.child("managerEvent").child("010").child("setEventSwitch").setValue(false)
+            
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        
+        
+        })
+        
+        dropEventVC.addAction(cancelAction)
+        dropEventVC.addAction(confirmAction)
+        
+        self.presentViewController(dropEventVC, animated: true, completion: nil)
+    }
+
+    
     func buttonTapped(buttonTapped: String) {
         self.menuButtonTapped = buttonTapped
         print("MenuButtonTapped : ", menuButtonTapped)
         
-        if menuButtonTapped == "send"{
-        }else if menuButtonTapped == "drop"{
-        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -249,9 +349,9 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         
         
         
-        //eventDBRef.child("managerEvent").child("010").child(shiftStartDateString).child("00001").removeValue()
+        //eventDBRef.child("managerEvent").child("010").child(shiftStartDate).child("00001").removeValue()
         
-        eventDBRef.child("managerEvent").child("010").child(shiftStartDateString).queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
+        eventDBRef.child("managerEvent").child("010").child(shiftStartDate).queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
             snapshot in
             
 

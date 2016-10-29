@@ -11,7 +11,9 @@ import UIKit
 
 protocol MenuButtonDelegate {
     func buttonTapped(buttonTapped : String)
-}
+    func setDeadlineDate()
+    func dropEvent()
+    }
 class PopoverMenuViewController: UIViewController {
     
     var delegate : MenuButtonDelegate?
@@ -28,7 +30,7 @@ class PopoverMenuViewController: UIViewController {
         if self.delegate != nil {
             delegate?.buttonTapped("send")
             print("Send")
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismissViewControllerAnimated(true, completion: {self.delegate?.setDeadlineDate()})
         }
         
     }
@@ -37,7 +39,7 @@ class PopoverMenuViewController: UIViewController {
         if self.delegate != nil {
             delegate?.buttonTapped("drop")
             print("Drop")
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismissViewControllerAnimated(true, completion: {self.delegate?.dropEvent()})
 
         }
     }
