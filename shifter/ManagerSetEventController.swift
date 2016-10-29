@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import EasyDate
+import DateTools
 
 struct eventStruct{
     let startDate: NSDate!
@@ -37,7 +39,7 @@ struct eventStruct{
 //}
 
 
-class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekViewDragableDelegate,MSWeekViewNewEventDelegate, MSWeekViewInfiniteDelegate{
+class ManagerSetEventViewController: UIViewController,UIPopoverPresentationControllerDelegate,MenuButtonDelegate,MSWeekViewDelegate,MSWeekViewDragableDelegate,MSWeekViewNewEventDelegate, MSWeekViewInfiniteDelegate{
 
    
     
@@ -54,7 +56,13 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
  
     var longPressDate: NSDate!
     
-    let currentDate = NSDate()
+    //let currentDate = NSDate()
+    
+    var shiftStartDateString: String!
+        
+    var shiftDate : NSDate!
+    
+    var menuButtonTapped : String?
     
     
 
@@ -63,26 +71,34 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-        self.setupWeekData()
         
+        
+    
+        let shiftDateFormatter = NSDateFormatter()
         let weekStartDateFormatter = NSDateFormatter()
         let weekEndDateFormatter = NSDateFormatter()
 
+        shiftDateFormatter.dateFormat = "yyyy-M-dd"
+        weekStartDateFormatter.dateFormat = "MMM d"
+        weekEndDateFormatter.dateFormat = "MMM d"
         
-        weekStartDateFormatter.dateFormat = "MMMM d"
-        weekEndDateFormatter.dateFormat = "d"
+        self.shiftDate = shiftDateFormatter.dateFromString(shiftStartDateString)!
         
-        let convertedDate = weekStartDateFormatter.stringFromDate(currentDate)
+        let convertedDate = weekStartDateFormatter.stringFromDate(shiftDate)
         
-        let weekEndDate = weekEndDateFormatter.stringFromDate(currentDate.addDays(6))
+        let weekEndDate = weekEndDateFormatter.stringFromDate(shiftDate.addDays(6))
         
         titleItem.title = "\(convertedDate) - \(weekEndDate)"
+        
+        self.setupWeekData()
 
     }
     
     
     
+    @IBAction func popoverMenu(sender: UIBarButtonItem) {
+        performSegueWithIdentifier("popoverMenu", sender: nil)
+    }
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -92,6 +108,8 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
             
             
             let destinationVC = segue.destinationViewController as! addEventTableViewController
+            
+            destinationVC.shiftStartDateString = self.shiftStartDateString
             
             destinationVC.longPressDate = longPressDate
             
@@ -106,16 +124,32 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
             
             destinationVC.event = selectedEvent //from eventSelected
             
+            destinationVC.shiftStartDateString = self.shiftStartDateString
+            
             let backItem = UIBarButtonItem()
             backItem.title = "Back"
             navigationItem.backBarButtonItem = backItem
 
             
+        }else if segue.identifier == "popoverMenu"{
+            
+            let destinationVC = segue.destinationViewController as! PopoverMenuViewController
+            destinationVC.preferredContentSize = CGSizeMake(200, 100)
+            
+            let popoverController = destinationVC.popoverPresentationController
+            
+            if popoverController != nil{
+                popoverController?.delegate = self
+            }
+            
+            destinationVC.delegate = self
         }
     }
     
    
-    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
     
     
    
@@ -126,23 +160,29 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
     func setupWeekData(){
         
         self.decoratedWeekView = MSWeekViewDecoratorFactory.make(self.weeklyView, features: 3 , andDelegate: self)
-    
         
         
-        let event3: MSEvent = MSEvent.make(NSDate.tomorrow().addMinutes(10), duration: 0, title: "", location: "")
-    
-        
+        let event1: MSEvent = MSEvent.make(shiftDate, duration: 0, title: "", location: "")
+        let event2: MSEvent = MSEvent.make(shiftDate.addDays(1), duration: 0, title: "", location: "")
+        let event3: MSEvent = MSEvent.make(shiftDate.addDays(2), duration: 0, title: "", location: "")
+        let event4: MSEvent = MSEvent.make(shiftDate.addDays(3), duration: 0, title: "", location: "")
+        let event5: MSEvent = MSEvent.make(shiftDate.addDays(4), duration: 0, title: "", location: "")
+        let event6: MSEvent = MSEvent.make(shiftDate.addDays(5), duration: 0, title: "", location: "")
+        let event7: MSEvent = MSEvent.make(shiftDate.addDays(6), duration: 0, title: "", location: "")
+        print("Yeeeeeeeeeeeeeeees")
         weeklyView.delegate = self
         
         weeklyView.weekFlowLayout.show24Hours = true
         
         weeklyView.daysToShowOnScreen = 7
         
-        weeklyView.daysToShow = 7
+        weeklyView.daysToShow = 0
         
         weeklyView.weekFlowLayout.hourHeight = 50
-       
-        weeklyView.events = [event3]
+        
+        weeklyView.events = [event1,event2,event3,event4,event5,event6,event7]
+        
+        //weeklyView.removeEvent(event1)
     }
     
    
@@ -188,16 +228,33 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
         
     }
     
+    func buttonTapped(buttonTapped: String) {
+        self.menuButtonTapped = buttonTapped
+        print("MenuButtonTapped : ", menuButtonTapped)
+        
+        if menuButtonTapped == "send"{
+        }else if menuButtonTapped == "drop"{
+        }
+    }
+    
     override func viewWillAppear(animated: Bool) {
         
         var newEventArray = [MSEvent]()
         
-        self.weeklyView.events = []
+        
+        
+        //self.weeklyView.events = []
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("managerEvent").child("010").child("2016-10-16").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
+        
+        
+        //eventDBRef.child("managerEvent").child("010").child(shiftStartDateString).child("00001").removeValue()
+        
+        eventDBRef.child("managerEvent").child("010").child(shiftStartDateString).queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
             snapshot in
+            
+
             
             print(snapshot.value)
             let startDateString = snapshot.value!["Start Date"] as! String
@@ -232,13 +289,53 @@ class ManagerSetEventViewController: UIViewController,MSWeekViewDelegate,MSWeekV
             
             let newEvent = MSEvent.make(startDate, end: endDate, title: "\(shortStartDateString) \(coding)", location: "\(shortEndDateString)", key: eventID, coding: coding, dancing: dancing, cleaning: cleaning)
             
-            print("aaaaaaaaaaaaaaaaaaaaaaaa")
             
-            self.weeklyView.addEvent(newEvent)
+            
+            let event1: MSEvent = MSEvent.make(self.shiftDate, duration: 0, title: "", location: "")
+            let event2: MSEvent = MSEvent.make(self.shiftDate.addDays(1), duration: 0, title: "", location: "")
+            let event3: MSEvent = MSEvent.make(self.shiftDate.addDays(2), duration: 0, title: "", location: "")
+            let event4: MSEvent = MSEvent.make(self.shiftDate.addDays(3), duration: 0, title: "", location: "")
+            let event5: MSEvent = MSEvent.make(self.shiftDate.addDays(4), duration: 0, title: "", location: "")
+            let event6: MSEvent = MSEvent.make(self.shiftDate.addDays(5), duration: 0, title: "", location: "")
+            let event7: MSEvent = MSEvent.make(self.shiftDate.addDays(6), duration: 0, title: "", location: "")
+            
+            //newEventArray = [event1,event2,event3,event4,event5,event6,event7]
+            
+            
+            print("aaaaaaaaaaaaaaaaaaaaaaaa",newEvent.StartDate.day())
+            
+            
+            
+            newEventArray.append(newEvent)
+            
+            
+            
+            self.weeklyView.events = newEventArray
+            
+            self.weeklyView.addEvents([event1,event2,event3,event4,event5,event6,event7])
+            
+            for newEvent in newEventArray{
+                if newEvent.StartDate!.day() == self.shiftDate.day(){
+                    self.weeklyView.removeEvent(event1)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(1).day(){
+                    self.weeklyView.removeEvent(event2)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(2).day(){
+                    self.weeklyView.removeEvent(event3)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(3).day(){
+                    self.weeklyView.removeEvent(event4)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(4).day(){
+                    self.weeklyView.removeEvent(event5)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(5).day(){
+                    self.weeklyView.removeEvent(event6)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(6).day(){
+                    self.weeklyView.removeEvent(event7)
+                }
+
+            }
+            
             
             
         })
-        
         
         
         self.weeklyView.forceReload()
