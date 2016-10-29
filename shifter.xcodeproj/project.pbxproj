@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0463E87D1DC442C500D93E93 /* PopoverMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463E87C1DC442C500D93E93 /* PopoverMenuViewController.swift */; };
 		04852D241DB37F9700229CAE /* MSCollectionViewCalendarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 04852CFF1DB37F9700229CAE /* MSCollectionViewCalendarLayout.m */; };
 		04852D251DB37F9700229CAE /* MSWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04852D011DB37F9700229CAE /* MSWeekView.m */; };
 		04852D261DB37F9700229CAE /* MSCurrentTimeGridline.m in Sources */ = {isa = PBXBuildFile; fileRef = 04852D041DB37F9700229CAE /* MSCurrentTimeGridline.m */; };
@@ -60,6 +61,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0463E87C1DC442C500D93E93 /* PopoverMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverMenuViewController.swift; sourceTree = "<group>"; };
 		0468C0411DBA6E29003CC48A /* PopupDialog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupDialog.framework; path = "../../Library/Developer/Xcode/DerivedData/shifter-aqhidcuryzshjydgomlseguncljs/Build/Products/Debug-iphonesimulator/PopupDialog/PopupDialog.framework"; sourceTree = "<group>"; };
 		04852CF91DB37F6600229CAE /* shifter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "shifter-Bridging-Header.h"; path = "../shifter-Bridging-Header.h"; sourceTree = "<group>"; };
 		04852CFE1DB37F9700229CAE /* MSCollectionViewCalendarLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCollectionViewCalendarLayout.h; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				04BCE1331DB496C3004A8162 /* ManagerSetEventController.swift */,
 				04BCE1351DB496D1004A8162 /* addEventTableViewController.swift */,
 				04BCE1371DB496DA004A8162 /* editEventTableViewController.swift */,
+				0463E87C1DC442C500D93E93 /* PopoverMenuViewController.swift */,
 			);
 			name = ManagerSetEvent;
 			sourceTree = "<group>";
@@ -563,6 +566,7 @@
 				04852D271DB37F9700229CAE /* MSCurrentTimeIndicator.m in Sources */,
 				04BCE1221DB46D65004A8162 /* EmployeeAddEventViewController.swift in Sources */,
 				430738C71D59E108006F749A /* LoginViewContoller.swift in Sources */,
+				0463E87D1DC442C500D93E93 /* PopoverMenuViewController.swift in Sources */,
 				04BCE1291DB480FE004A8162 /* ShiftViewController.swift in Sources */,
 				04852D2C1DB37F9700229CAE /* MSEventCell.m in Sources */,
 				4310221A1D5F791A00C47D22 /* Bulletin.swift in Sources */,

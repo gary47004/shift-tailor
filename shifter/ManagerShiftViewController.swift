@@ -146,25 +146,13 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         print("Selected value \(selectedDate)")
     }
     
-        
-    @IBAction func setEvent(sender: UIBarButtonItem) {
-        
+    @IBAction func setEvent(sender: AnyObject) {
         let startDateAlertVC = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: "", preferredStyle: .ActionSheet)
-        
-        //let endDateAlertVC = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: "",preferredStyle: .ActionSheet)
-        
-        
+
         let datePickerView = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
         datePickerView.datePickerMode = .Date
         
         datePickerView.addTarget(self, action: #selector(ManagerShiftViewController.datePickerValueChanged(_:)), forControlEvents: .ValueChanged)
-        
-//        let endDatePickerView = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
-//        endDatePickerView.datePickerMode = .Date
-//        
-//        endDatePickerView.addTarget(self, action: #selector(ManagerShiftViewController.datePickerValueChanged(_:)), forControlEvents: .ValueChanged)
-        
-        
         
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler:
@@ -172,43 +160,16 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
                 
                 self.shiftStartDateString = ""
                 self.selectedDate = ""
-        
-        
-        
-        
-        
+    
         })
-        
-        
-//        let presentEndDateAction = UIAlertAction(title: "Set", style: .Default, handler: {(alert: UIAlertAction!) in
-//            
-//            
-//            self.shiftStartDate = self.selectedDate
-//            
-//            print("startDate: ",self.shiftStartDate)
-//            
-//            self.presentViewController(endDateAlertVC, animated: true, completion: nil)
-//            
-//            
-//        })
         
         
         
         let setShiftAction = UIAlertAction(title: "Confirm", style: .Default, handler:
             {(alert: UIAlertAction!) in
-                
-                
-                
-                self.performSegueWithIdentifier("setEvent", sender: nil)
-        
-        
-        
-        
+                 self.performSegueWithIdentifier("setEvent", sender: nil)
         })
         
-        
-        
-
         
         let presentSummaryViewAction = UIAlertAction(title: "Set", style: .Default, handler: {(alert: UIAlertAction!) in
             
@@ -238,55 +199,31 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             summaryAlertVC.addAction(setShiftAction)
             summaryAlertVC.addAction(cancelAction)
-
+            
             self.presentViewController(summaryAlertVC, animated: true, completion: nil)
-        
             
-            
-            
-            
-            
-
+         })
         
         
         
-        })
-        
-        
-        
-//        endDateAlertVC.view.addSubview(endDatePickerView)
-//        print("eeeeeeeeeee",endDateAlertVC.view.subviews)
         startDateAlertVC.view.addSubview(datePickerView)
-        //print("ssssssssssss",startDateAlertVC.view.subviews)
         
         startDateAlertVC.addAction(presentSummaryViewAction)
         startDateAlertVC.addAction(cancelAction)
-//        endDateAlertVC.addAction(presentSummaryViewAction)
-//        endDateAlertVC.addAction(cancelAction)
-        
-        
-        
-        
-        
-        
         
         if self.setEventSwitch == true{
-            
-            
-                let setEventDBREF = FIRDatabase.database().reference()
-
-            
             
             self.performSegueWithIdentifier("setEvent", sender: nil)
             
         }else {
             self.presentViewController(startDateAlertVC, animated: true, completion: nil)
-
+            
         }
         
         
 
     }
+        
     
        func setupWeekData(){
         
