@@ -83,10 +83,8 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
             tabBarVC.selectedRow = selectedRow
             
             //go to bulletinDetail
-            let bulletinDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("clockinVC")
-            self.tabBarController?.
-//            showViewController(bulletinDetailVC, sender: self)
-//            self.presentViewController(bulletinDetailVC, animated: true, completion: nil)
+            performSegueWithIdentifier("showPost", sender: nil)
+
         }
     }
     

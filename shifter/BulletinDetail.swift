@@ -26,6 +26,10 @@ class BulletinDetail: UITableViewController {
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(BulletinDetail.editPressed))
         navigationItem.rightBarButtonItem = editButton
         
+        let backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Done, target: self, action: #selector(BulletinDetail.backToBulletin))
+        navigationItem.leftBarButtonItem = backButton
+        
+        
         //get value from tab bar VC
         let tabBarVC = self.tabBarController as! TabBarViewController
         currentUID = tabBarVC.currentUID
@@ -54,6 +58,15 @@ class BulletinDetail: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         self.title = ""
+        
+        let bulletinNavigationVC = self.storyboard!.instantiateViewControllerWithIdentifier("tabBarVC") as? UINavigationController
+        self.view.window?.rootViewController = bulletinNavigationVC
+        
+    }
+    
+    func backToBulletin(){
+        self.tabBarController?.selectedIndex = 1
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func editPressed(){
