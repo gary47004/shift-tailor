@@ -42,7 +42,7 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
         //get value from tab bar VC
         let tabBarVC = self.tabBarController as! TabBarViewController
         currentUID = tabBarVC.currentUID
-        
+
         //set data for edit mode
         if editMode == true{
             
@@ -53,6 +53,8 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
             section1Refs = tabBarVC.section1Refs
             selectedSection = tabBarVC.selectedSection
             selectedRow = tabBarVC.selectedRow
+            
+            print(section0Posts)
             
             if selectedSection == 0{
                 inputTitle = section0Posts[selectedRow].title

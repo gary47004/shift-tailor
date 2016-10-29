@@ -62,17 +62,13 @@ class BulletinDetail: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let composeVC = segue.destinationViewController as! BulletinCompose
         if segue.identifier == "editPressed"{
             editMode = true
-//            let composeVC = segue.destinationViewController as! BulletinCompose
-//            composeVC.editMode = editMode
-//            composeVC.section0Posts = section0Posts
-//            composeVC.section1Posts = section1Posts
-//            composeVC.selectedSection = selectedSection
-//            composeVC.selectedRow = selectedRow
-//            composeVC.section0Refs = section0Refs
-//            composeVC.section1Refs = section1Refs
-            
+            composeVC.editMode = editMode
+        }else{
+            editMode = false
+            composeVC.editMode = editMode
         }
     }
     

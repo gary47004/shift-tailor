@@ -13,6 +13,10 @@ import FirebaseDatabase
 class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var titleArray = [String]()
     var typeArray = [String]()
+    var sectionArray = [Int]()
+    var section0Key = [String]()
+    var section1Key = [String]()
+    var keyArray = [String]()
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -23,9 +27,18 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         databaseRef.child("bulletin").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: { snapshot in
             let title = snapshot.value!["title"] as? String
-           
+            let section = snapshot.value!["section"] as? Int
+            let key = snapshot.key
+            
             self.titleArray.insert(title!, atIndex: 0)
             self.typeArray.insert("公告欄", atIndex: 0)
+            self.sectionArray.insert(section!, atIndex: 0)
+            self.keyArray.insert(key, atIndex: 0)
+            if section == 0{
+                self.section0Key.insert(key, atIndex: 0)
+            }else{
+                self.section1Key.insert(key, atIndex: 0)
+            }
             
             self.tableView.reloadData()
         })
@@ -54,9 +67,26 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if typeArray[indexPath.row] == "公告欄"{
             print("present post")
-            let bulletinDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("bulletinDetail")
-            self.showViewController(bulletinDetailVC, sender: self)
             
+            let tabBarVC = self.tabBarController as! TabBarViewController
+            
+            //set selected section and row
+            let selectedSection = sectionArray[indexPath.row]
+            var selectedRow = Int()
+            if selectedSection == 0{
+                selectedRow = section0Key.indexOf(keyArray[indexPath.row])!
+            }else{
+                selectedRow = section1Key.indexOf(keyArray[indexPath.row])!
+            }
+            
+            tabBarVC.selectedSection = selectedSection
+            tabBarVC.selectedRow = selectedRow
+            
+            //go to bulletinDetail
+            let bulletinDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("clockinVC")
+            self.tabBarController?.
+//            showViewController(bulletinDetailVC, sender: self)
+//            self.presentViewController(bulletinDetailVC, animated: true, completion: nil)
         }
     }
     
