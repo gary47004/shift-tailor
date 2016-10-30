@@ -49,7 +49,7 @@
 
 -(void)setup{
     
-    self.daysToShowOnScreen = 6;
+    self.daysToShowOnScreen = 7;
     self.daysToShow         = 30;
     self.weekFlowLayout     = [MSCollectionViewCalendarLayout new];
     self.weekFlowLayout.delegate = self;

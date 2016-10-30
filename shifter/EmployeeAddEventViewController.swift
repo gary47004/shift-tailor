@@ -28,6 +28,8 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
     
     var selectedIndexPath: NSIndexPath? = nil
     
+    var shiftStartDate: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -89,7 +91,7 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("employeeEvent").child("2016-10-16").child("102306111").childByAutoId().setValue(event)
+        eventDBRef.child("employeeEvent").child(shiftStartDate).child("102306111").childByAutoId().setValue(event)
         
         for (var i = 0; i < self.navigationController?.viewControllers.count; i += 1) {
             if(self.navigationController?.viewControllers[i].isKindOfClass(EmployeeEventWeekViewController) == true) {

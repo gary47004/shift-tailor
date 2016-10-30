@@ -208,7 +208,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         let editDBRef = FIRDatabase.database().reference()
         
         
-        editDBRef.child("managerEvent").child("010").child("2016-10-16").observeEventType(.ChildRemoved, withBlock: {
+        editDBRef.child("managerEvent").child("010").child(shiftStartDate).observeEventType(.ChildRemoved, withBlock: {
             
             snapshot in
             

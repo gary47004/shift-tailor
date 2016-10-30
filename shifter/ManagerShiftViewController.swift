@@ -87,19 +87,17 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             let eventType = post["Type"] as! String
             
-            print(snapshot.childSnapshotForPath("Cleaning"))
+            
             
             let codingList = snapshot.childSnapshotForPath("Coding").value
             let cleaningList = snapshot.childSnapshotForPath("Cleaning").value
             let dancingList = snapshot.childSnapshotForPath("Dancing").value
             
-            print(cleaningList![0][1])
-            
+                        
             let dateformatter = NSDateFormatter()
             
             dateformatter.dateFormat = "yyyy-M-dd-H:mm"
             
-            print("aaaaaaaaaaaaaaaa",startDateString)
             
             let startDate = dateformatter.dateFromString(startDateString)!
             
@@ -118,8 +116,6 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             let newEvent = MSEvent.make(startDate, end: endDate, title: "\(eventType)\n\(shortStartDateString)", location: "\(shortEndDateString)", key: eventID, codingList: codingList as! [[String]], cleaningList: cleaningList as! [[String]], dancingList:dancingList as![[String]] ,shiftType: eventType)
            
             
-            print(newEvent)
-            print(newEvent.StartDate)
            
             
             self.weeklyView.addEvent(newEvent)
@@ -178,7 +174,6 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             
             
-            print("sssssssss", self.shiftStartDate)
             
             //print("endDate: ",self.shiftEndDate)
             
@@ -256,8 +251,6 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     
     
     func weekView(sender: AnyObject!, eventSelected event: MSEvent!) {
-        print(event.StartDate, event.EndDate)
-        print(event.cleaningList)
         
         selectedEvent = event
         
@@ -315,12 +308,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             let newEvent = MSEvent.make(startDate, end: endDate, title: "\(eventType)\n\(shortStartDateString)", location: "\(shortEndDateString)", key: eventID, codingList: codingList as! [[String]], cleaningList: cleaningList as! [[String]], dancingList:dancingList as! [[String]] ,shiftType: eventType)
             
-            
-            print("aaaaaaaaaaaaaaaaaaaaaaaa")
-            
-            print(newEvent.StartDate)
-            
-            neweEventArray.append(newEvent)
+                       neweEventArray.append(newEvent)
             
             
             self.weeklyView.events = neweEventArray
@@ -336,11 +324,11 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             snapshot in
             
-            print("sssssssssssssnaaaaaaapshot",snapshot.value)
+            print("snapshot",snapshot.value)
+            
             
             self.setEventSwitch = snapshot.value as! Bool
             
-            print("SSSSSSSWWWWWWWWWWIIIIIII", self.setEventSwitch )
             
             
         })
@@ -351,7 +339,6 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             self.shiftStartDate = snapshot.value as! String
             
-            print("START",self.shiftStartDate)
             
             
         })
@@ -377,7 +364,6 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
         }else if segue.identifier == "setEvent"{
             
-            print(shiftStartDate)
             
 
             

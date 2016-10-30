@@ -36,6 +36,8 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
     
     let dateFormatter = NSDateFormatter()
     
+    var shiftStartDate :String! = ""
+    
     
     
     
@@ -65,7 +67,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("employeeEvent").child("2016-10-16").child("102306111").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
+        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
             snapshot in
             
             
@@ -124,6 +126,8 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
             
             let destinationVC = segue.destinationViewController as! EmployeeAddEventViewController
             
+            
+            destinationVC.shiftStartDate = self.shiftStartDate
             destinationVC.longPressDate = longPressDate
             
             let backItem = UIBarButtonItem()
@@ -211,7 +215,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("employeeEvent").child("2016-10-16").child("102306111").queryOrderedByKey().observeEventType(.ChildChanged, withBlock: {
+        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").queryOrderedByKey().observeEventType(.ChildChanged, withBlock: {
             
             snapshot in
             
@@ -258,8 +262,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
             
         })
         
-        
-        
+               
         self.weeklyView.forceReload()
         
     }
