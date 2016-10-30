@@ -16,15 +16,17 @@ struct post {
     let content : String!
     let section : Int!
     let employee : String!
+    let store : String!
+    let district : String!
 }
 
 class Bulletin: UIViewController, UITableViewDataSource, UITableViewDelegate {
-//    var sectionSelected = Int()
     var section0Posts = [post]()
     var section1Posts = [post]()
     var section0Refs = [AnyObject]()
     var section1Refs = [AnyObject]()
     var currentUID = String()
+    var currentSID = String()
     
     @IBOutlet weak var tableView0: UITableView!
     @IBOutlet weak var tableView1: UITableView!
@@ -38,6 +40,7 @@ class Bulletin: UIViewController, UITableViewDataSource, UITableViewDelegate {
         section1Posts = tabBarVC.section1Posts
         section0Refs = tabBarVC.section0Refs
         section1Refs = tabBarVC.section1Refs
+        currentSID = tabBarVC.currentSID
         
         //update arrays and reload tableView when detected changes
         let databaseRef = FIRDatabase.database().reference()
