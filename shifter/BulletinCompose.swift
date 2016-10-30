@@ -27,6 +27,8 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
     var didSelectDateCell = Bool()
     var firstLoad = Bool()
     var currentUID = String()
+    var currentSID = String()
+    var currentDID = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +44,8 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
         //get value from tab bar VC
         let tabBarVC = self.tabBarController as! TabBarViewController
         currentUID = tabBarVC.currentUID
+        currentSID = tabBarVC.currentSID
+        currentDID = tabBarVC.currentDID
 
         //set data for edit mode
         if editMode == true{
@@ -299,7 +303,7 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
             saveInputText()
             
             //save input to post
-            let post : [String : AnyObject] = ["title" : inputTitle, "time" : inputTime, "content" : inputContent, "section" : sectionPressed, "employee" : currentUID]
+            let post : [String : AnyObject] = ["title" : inputTitle, "time" : inputTime, "content" : inputContent, "section" : sectionPressed, "employee" : currentUID, "store" : currentSID, "district" : currentDID]
             
             //make reference to Firebase database
             let databaseRef = FIRDatabase.database().reference()
@@ -313,9 +317,9 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
             let databaseRef = FIRDatabase.database().reference()
             
             if selectedSection == 0{
-                databaseRef.child("bulletin").child(section0Refs[selectedRow] as! String).updateChildValues(["title" : inputTitle, "time" : inputTime, "content" : inputContent, "section" : sectionPressed, "employee" : currentUID])
+                databaseRef.child("bulletin").child(section0Refs[selectedRow] as! String).updateChildValues(["title" : inputTitle, "time" : inputTime, "content" : inputContent, "section" : sectionPressed, "employee" : currentUID, "store" : currentSID, "district" : currentDID])
             }else{
-                databaseRef.child("bulletin").child(section1Refs[selectedRow] as! String).updateChildValues(["title" : inputTitle, "time" : inputTime, "content" : inputContent, "section" : sectionPressed, "employee" : currentUID])
+                databaseRef.child("bulletin").child(section1Refs[selectedRow] as! String).updateChildValues(["title" : inputTitle, "time" : inputTime, "content" : inputContent, "section" : sectionPressed, "employee" : currentUID, "store" : currentSID, "district" : currentDID])
             }
             
         }

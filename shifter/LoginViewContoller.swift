@@ -7,13 +7,16 @@ import FirebaseDatabase
 struct accounts {
     let ID: String!
     let password: String!
+    let store: String!
+    let district : String!
 }
 
 class LoginViewContoller: UIViewController, UITextFieldDelegate {
-    //set test accovar ID/password
     var inputID = String()
     var inputPassword = String()
     var accountArray = [accounts]()
+    var currentSID = String()
+    var currentDID = String()
     
     @IBOutlet weak var idTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
@@ -23,12 +26,15 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
         self.idTextfield.delegate = self
         self.passwordTextfield.delegate = self
         
-        //save all users' account to array
+        //save all user accounts to array
         let databaseRef = FIRDatabase.database().reference()
         databaseRef.child("employee").observeEventType(.ChildAdded, withBlock: { snapshot in
-            let getID = snapshot.value!["ID"] as? String
-            let getPassword = snapshot.value!["password"] as? String
-            self.accountArray.append(accounts(ID: getID, password: getPassword))
+            let ID = snapshot.value!["ID"] as? String
+            let password = snapshot.value!["password"] as? String
+            let store = snapshot.value!["store"] as? String
+            let district = snapshot.value!["district"] as? String
+            
+            self.accountArray.append(accounts(ID: ID, password: password, store: store, district: district))
         })
     }
 
@@ -39,7 +45,7 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
         var IDArray = [String]()
         var passwordArray = [String]()
         
-        
+        //check-up account
         for i in 0...accountArray.count-1{
             IDArray.append(accountArray[i].ID)
             passwordArray.append(accountArray[i].password)
@@ -57,6 +63,8 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
                         errorStatusLabel.hidden = false
                     }else{
                         errorStatusLabel.hidden = true
+                        currentSID = accountArray[i].store
+                        currentDID = accountArray[i].district
                         performSegueWithIdentifier("showHome", sender: self)
                     }
                 }
@@ -68,8 +76,8 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
         if segue.identifier == "showHome"{
             let tabBarVC = segue.destinationViewController as? TabBarViewController
             tabBarVC!.currentUID = inputID
-            let composeVC = BulletinCompose() as BulletinCompose
-            composeVC.currentUID = inputID
+            tabBarVC!.currentSID = currentSID
+            tabBarVC!.currentDID = currentDID
         }
     }
     
