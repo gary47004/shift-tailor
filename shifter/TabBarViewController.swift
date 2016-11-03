@@ -14,6 +14,7 @@ class TabBarViewController: UITabBarController {
     var currentUID = String()
     var currentSID = String()
     var currentDID = String()
+    var currentRank = String()
     
     var newNotification = Int()
     
@@ -69,12 +70,14 @@ class TabBarViewController: UITabBarController {
                 //posted by other store
                 if district == self.currentDID{
                     //other store posted district post
-                    self.section1Posts.insert(post(title: title, time: time, content: content, section: section, employee: employee, store: store, district: district), atIndex: 0)
-                    self.section1Refs.insert(postRef, atIndex: 0)
-                    
-                    if employee != self.currentUID{
-                        self.newNotification += 1
-                        self.tabBar.items?[2].badgeValue = String(self.newNotification)
+                    if section == 1{
+                        self.section1Posts.insert(post(title: title, time: time, content: content, section: section, employee: employee, store: store, district: district), atIndex: 0)
+                        self.section1Refs.insert(postRef, atIndex: 0)
+                        
+                        if employee != self.currentUID{
+                            self.newNotification += 1
+                            self.tabBar.items?[2].badgeValue = String(self.newNotification)
+                        }
                     }
                 }
             }

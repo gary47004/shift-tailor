@@ -9,6 +9,7 @@ struct accounts {
     let password: String!
     let store: String!
     let district : String!
+    let rank : String!
 }
 
 class LoginViewContoller: UIViewController, UITextFieldDelegate {
@@ -17,6 +18,7 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
     var accountArray = [accounts]()
     var currentSID = String()
     var currentDID = String()
+    var currentRank = String()
     
     @IBOutlet weak var idTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
@@ -33,8 +35,9 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
             let password = snapshot.value!["password"] as? String
             let store = snapshot.value!["store"] as? String
             let district = snapshot.value!["district"] as? String
+            let rank = snapshot.value!["rank"] as? String
             
-            self.accountArray.append(accounts(ID: ID, password: password, store: store, district: district))
+            self.accountArray.append(accounts(ID: ID, password: password, store: store, district: district, rank: rank))
         })
     }
 
@@ -74,10 +77,11 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showHome"{
-            let tabBarVC = segue.destinationViewController as? TabBarViewController
-            tabBarVC!.currentUID = inputID
-            tabBarVC!.currentSID = currentSID
-            tabBarVC!.currentDID = currentDID
+            let tabBarVC = segue.destinationViewController as! TabBarViewController
+            tabBarVC.currentUID = inputID
+            tabBarVC.currentSID = currentSID
+            tabBarVC.currentDID = currentDID
+            tabBarVC.currentRank = currentRank
         }
     }
     
