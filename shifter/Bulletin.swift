@@ -27,6 +27,7 @@ class Bulletin: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var section1Refs = [AnyObject]()
     var currentUID = String()
     var currentSID = String()
+    var currentRank = String()
     
     @IBOutlet weak var tableView0: UITableView!
     @IBOutlet weak var tableView1: UITableView!
@@ -41,6 +42,12 @@ class Bulletin: UIViewController, UITableViewDataSource, UITableViewDelegate {
         section0Refs = tabBarVC.section0Refs
         section1Refs = tabBarVC.section1Refs
         currentSID = tabBarVC.currentSID
+        currentRank = tabBarVC.currentRank
+        
+        //only manager can compose
+        if currentRank != "storeManager"{
+            navigationItem.rightBarButtonItem = nil
+        }
         
         //update arrays and reload tableView when detected changes
         let databaseRef = FIRDatabase.database().reference()

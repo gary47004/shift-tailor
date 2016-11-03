@@ -17,10 +17,18 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
     var section0Key = [String]()
     var section1Key = [String]()
     var keyArray = [String]()
+    var currentUID = String()
+    var currentSID = String()
+    var currentDID = String()
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         tableView.registerNib(UINib(nibName: "NotificationTableViewCell", bundle: nil), forCellReuseIdentifier: "notificationCell")
+        
+        let tabBarVC = self.tabBarController as! TabBarViewController
+        currentUID = tabBarVC.currentUID
+        currentSID = tabBarVC.currentSID
+        currentDID = tabBarVC.currentDID
         
         //set listener
         let databaseRef = FIRDatabase.database().reference()
@@ -28,19 +36,39 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
         databaseRef.child("bulletin").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: { snapshot in
             let title = snapshot.value!["title"] as? String
             let section = snapshot.value!["section"] as? Int
+            let employee = snapshot.value!["employee"] as? String
+            let store = snapshot.value!["store"] as? String
+            let district = snapshot.value!["district"] as? String
             let key = snapshot.key
             
-            self.titleArray.insert(title!, atIndex: 0)
-            self.typeArray.insert("公告欄", atIndex: 0)
-            self.sectionArray.insert(section!, atIndex: 0)
-            self.keyArray.insert(key, atIndex: 0)
-            if section == 0{
-                self.section0Key.insert(key, atIndex: 0)
+            if store == self.currentSID{
+                if employee != self.currentUID{
+                    self.titleArray.insert(title!, atIndex: 0)
+                    self.typeArray.insert("公告欄", atIndex: 0)
+                    self.sectionArray.insert(section!, atIndex: 0)
+                    self.keyArray.insert(key, atIndex: 0)
+                    
+                    if section == 0{
+                        self.section0Key.insert(key, atIndex: 0)
+                    }else{
+                        self.section1Key.insert(key, atIndex: 0)
+                    }
+                }
             }else{
-                self.section1Key.insert(key, atIndex: 0)
+                if district == self.currentDID{
+                    if section == 1{
+                        self.titleArray.insert(title!, atIndex: 0)
+                        self.typeArray.insert("公告欄", atIndex: 0)
+                        self.sectionArray.insert(section!, atIndex: 0)
+                        self.keyArray.insert(key, atIndex: 0)
+                        self.section1Key.insert(key, atIndex: 0)
+                    }
+                }
             }
             
-            self.tableView.reloadData()
+                
+        self.tableView.reloadData()
+            
         })
         
     }
