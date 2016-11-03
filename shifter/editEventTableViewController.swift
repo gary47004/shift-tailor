@@ -13,7 +13,7 @@ import FirebaseDatabase
 class editEventTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     var event = MSEvent()
-    var eventseleted :eventStruct!
+
     //var isEditing: Bool = false
     
     var isExpandable = false
@@ -167,12 +167,6 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
         
         
         
-        let editedEvent : [String:AnyObject] = [itemArray[0][0] : startDate,
-                                          itemArray[0][1] : endDate,
-                                          itemArray[1][0] : jobArray[0],
-                                          itemArray[1][1] : jobArray[1],
-                                          itemArray[1][2] : jobArray[2]
-        ]
         
         
         event.StartDate = dateArray[0]

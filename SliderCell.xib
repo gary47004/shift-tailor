@@ -1,18 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="SliderCell" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SliderCell" rowHeight="198" id="KGk-i7-Jjw" customClass="SliderCell" customModule="shifter" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="149"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6k-U3-TCv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <color key="backgroundColor" red="0.48326167303417011" green="0.74364779751026233" blue="1" alpha="0.51950485641891897" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="kyY-5b-gqC"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="3" minValue="1" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="ofb-Iv-tkM">
+                        <rect key="frame" x="58" y="81" width="204" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="ljV-e7-Zdx"/>
+                        </constraints>
+                        <connections>
+                            <action selector="preferenceSliderValue:" destination="KGk-i7-Jjw" eventType="valueChanged" id="C65-kG-Mva"/>
+                        </connections>
+                    </slider>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="s6k-U3-TCv" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" id="8Ye-wQ-L39"/>
+                    <constraint firstItem="s6k-U3-TCv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="VNx-3D-GLu"/>
+                    <constraint firstItem="s6k-U3-TCv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="WKh-e9-Edb"/>
+                    <constraint firstItem="s6k-U3-TCv" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="bhp-x2-5Gt"/>
+                    <constraint firstItem="ofb-Iv-tkM" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="emU-Tq-AVU"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="ofb-Iv-tkM" secondAttribute="bottom" constant="30" id="s2f-hV-PAp"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="VNx-3D-GLu"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="preferenceLabel" destination="s6k-U3-TCv" id="Uzw-Ir-23t"/>
+                <outlet property="preferenceSlider" destination="ofb-Iv-tkM" id="rr3-l5-mYU"/>
+            </connections>
+            <point key="canvasLocation" x="193" y="349"/>
         </tableViewCell>
     </objects>
 </document>

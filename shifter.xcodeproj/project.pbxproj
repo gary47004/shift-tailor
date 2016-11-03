@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		043BA15A1DC89A2800262430 /* SliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043BA1581DC89A2800262430 /* SliderCell.swift */; };
+		043BA15B1DC89A2800262430 /* SliderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043BA1591DC89A2800262430 /* SliderCell.xib */; };
+		043BA15D1DCA148C00262430 /* EmployeeEditEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043BA15C1DCA148C00262430 /* EmployeeEditEventViewController.swift */; };
 		0463E87D1DC442C500D93E93 /* PopoverMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463E87C1DC442C500D93E93 /* PopoverMenuViewController.swift */; };
 		04852D241DB37F9700229CAE /* MSCollectionViewCalendarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 04852CFF1DB37F9700229CAE /* MSCollectionViewCalendarLayout.m */; };
 		04852D251DB37F9700229CAE /* MSWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04852D011DB37F9700229CAE /* MSWeekView.m */; };
@@ -62,6 +65,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		043BA1581DC89A2800262430 /* SliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderCell.swift; sourceTree = "<group>"; };
+		043BA1591DC89A2800262430 /* SliderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SliderCell.xib; sourceTree = "<group>"; };
+		043BA15C1DCA148C00262430 /* EmployeeEditEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeEditEventViewController.swift; sourceTree = "<group>"; };
 		0463E87C1DC442C500D93E93 /* PopoverMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverMenuViewController.swift; sourceTree = "<group>"; };
 		0468C0411DBA6E29003CC48A /* PopupDialog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupDialog.framework; path = "../../Library/Developer/Xcode/DerivedData/shifter-aqhidcuryzshjydgomlseguncljs/Build/Products/Debug-iphonesimulator/PopupDialog/PopupDialog.framework"; sourceTree = "<group>"; };
 		04852CF91DB37F6600229CAE /* shifter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "shifter-Bridging-Header.h"; path = "../shifter-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -232,6 +238,7 @@
 				04BCE11C1DB38C32004A8162 /* EmployeeWeekViewController.swift */,
 				04BCE11F1DB46AB4004A8162 /* EmployeeEventWeekViewController.swift */,
 				04BCE1211DB46D65004A8162 /* EmployeeAddEventViewController.swift */,
+				043BA15C1DCA148C00262430 /* EmployeeEditEventViewController.swift */,
 			);
 			name = Employee;
 			sourceTree = "<group>";
@@ -279,6 +286,8 @@
 		43173DFB1D5328620043399F = {
 			isa = PBXGroup;
 			children = (
+				043BA1581DC89A2800262430 /* SliderCell.swift */,
+				043BA1591DC89A2800262430 /* SliderCell.xib */,
 				43173E061D5328620043399F /* shifter */,
 				43173E051D5328620043399F /* Products */,
 				237C6B846E36FF82684AC830 /* Pods */,
@@ -478,6 +487,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043BA15B1DC89A2800262430 /* SliderCell.xib in Resources */,
 				435A374D1DBF261400BA6974 /* NotificationTableViewCell.xib in Resources */,
 				43173E121D5328620043399F /* LaunchScreen.storyboard in Resources */,
 				04EAAE821DBB49FD00AB7853 /* GoogleService-Info.plist in Resources */,
@@ -555,6 +565,7 @@
 				43F708261DBDE90A006432EB /* Bulletin.swift in Sources */,
 				04852D341DB37F9700229CAE /* MSWeekViewDecoratorNewEvent.m in Sources */,
 				04852D2A1DB37F9700229CAE /* MSDragableEvent.m in Sources */,
+				043BA15D1DCA148C00262430 /* EmployeeEditEventViewController.swift in Sources */,
 				43D2EDBC1DAF95AB00E5133E /* TabBarViewController.swift in Sources */,
 				04852D241DB37F9700229CAE /* MSCollectionViewCalendarLayout.m in Sources */,
 				04BCE11D1DB38C32004A8162 /* EmployeeWeekViewController.swift in Sources */,
@@ -566,6 +577,7 @@
 				43778AD71D6ECDDB00D74478 /* BulletinCompose.swift in Sources */,
 				04852D2B1DB37F9700229CAE /* MSEvent.m in Sources */,
 				4310221E1D60D6EB00C47D22 /* Notification.swift in Sources */,
+				043BA15A1DC89A2800262430 /* SliderCell.swift in Sources */,
 				04BCE12D1DB483B0004A8162 /* ManagerShiftDetailViewController.swift in Sources */,
 				04BCE1341DB496C3004A8162 /* ManagerSetEventController.swift in Sources */,
 				04852D271DB37F9700229CAE /* MSCurrentTimeIndicator.m in Sources */,

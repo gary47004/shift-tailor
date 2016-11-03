@@ -9,12 +9,17 @@
 import UIKit
 
 class SliderCell: UITableViewCell {
+    @IBOutlet weak var preferenceLabel: UILabel!
+    @IBOutlet weak var preferenceSlider: UISlider!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
+    @IBAction func preferenceSliderValue(sender: UISlider) {
+        preferenceLabel.text = "\(lroundf(preferenceSlider.value))"
+    }
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

@@ -22,7 +22,7 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
     
     var jobArray = Array<Int>()
     
-    let sectionArray = ["Select Date"]
+    let sectionArray = ["Select Date","喜好度"]
     
     let itemArray = ["Start Date", "End Date"]
     
@@ -34,6 +34,7 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
         super.viewDidLoad()
         
         employeeAddEventTableView.registerNib(UINib(nibName: "DatePickerCell", bundle: nil), forCellReuseIdentifier: "DatePickerCell")
+        employeeAddEventTableView.registerNib(UINib(nibName: "SliderCell", bundle: nil), forCellReuseIdentifier: "SliderCell")
         print("LongPressDate: ",longPressDate)
         
         /*
@@ -81,17 +82,21 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
         let startDate = dateFormatter.stringFromDate(dateArray[0])
         let endDate = dateFormatter.stringFromDate(dateArray[1])
         
+        let sliderCell = self.employeeAddEventTableView.dequeueReusableCellWithIdentifier("SliderCell") as! SliderCell
+        
+        let preference = lroundf(sliderCell.preferenceSlider.value)
         
         
         
         let event : [String:AnyObject] = [itemArray[0]: startDate,
                                           itemArray[1] : endDate,
+                                          "Preference": preference
                             
         ]
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("employeeEvent").child(shiftStartDate).child("102306111").childByAutoId().setValue(event)
+        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").childByAutoId().setValue(event)
         
         for (var i = 0; i < self.navigationController?.viewControllers.count; i += 1) {
             if(self.navigationController?.viewControllers[i].isKindOfClass(EmployeeEventWeekViewController) == true) {
@@ -115,7 +120,11 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.itemArray.count
+        if section == 0{
+            return self.itemArray.count
+        }else{
+            return 1
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -135,15 +144,16 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
             }else{
                 return 70
             }
-        }else{
-            return 70
+        }else {
+            return 150
         }
+
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
+        let sliderCell = employeeAddEventTableView.dequeueReusableCellWithIdentifier("SliderCell") as! SliderCell
         let dateCell = employeeAddEventTableView.dequeueReusableCellWithIdentifier("DatePickerCell") as! DatePickerCell
         
         dateCell.titleLabel.text = itemArray[indexPath.row]
@@ -160,18 +170,21 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
         }
         
         dateCell.clipsToBounds = true
-            
+        
+        
+        
+        if indexPath.section == 0{
             return dateCell
-            
+        }else{
+            return sliderCell
+        }
+        
    
         
         
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        
-        
         
         
         switch selectedIndexPath {

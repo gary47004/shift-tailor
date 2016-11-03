@@ -356,7 +356,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
             
 
             
-            print(snapshot.value)
+            
             let startDateString = snapshot.value!["Start Date"] as! String
             
             let eventID = snapshot.key

@@ -19,9 +19,6 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
     
     @IBOutlet weak var titleItem: UINavigationItem!
     
-    @IBOutlet weak var deleteView: UIView!
-    
-    @IBOutlet weak var weeklyViewHeight: NSLayoutConstraint!
     
     
     var  selectedEvent = MSEvent()
@@ -38,6 +35,10 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
     
     var shiftStartDate :String! = ""
     
+    var shiftDate: NSDate!
+    
+    let weekDateFormatter = NSDateFormatter()
+    
     
     
     
@@ -45,72 +46,24 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        let shiftDateFormatter = NSDateFormatter()
+        
+        shiftDateFormatter.dateFormat = "yyyy-M-dd"
+        weekDateFormatter.dateFormat = "MMM d"
+        
+        var shiftStartDateString: String!
+        var shiftEndDateString: String!
+        
+        self.shiftDate = shiftDateFormatter.dateFromString(shiftStartDate)
+        
+        shiftStartDateString = weekDateFormatter.stringFromDate(shiftDate)
+        shiftEndDateString = weekDateFormatter.stringFromDate(shiftDate.addDays(6))
+        
+        titleItem.title = "\(shiftStartDateString) - \(shiftEndDateString)"
+        
         self.setupWeekData()
-        
-        let weekStartDateFormatter = NSDateFormatter()
-        let weekEndDateFormatter = NSDateFormatter()
-        
-        
-        weekStartDateFormatter.dateFormat = "MMMM d"
-        weekEndDateFormatter.dateFormat = "d"
-        
-        let convertedDate = weekStartDateFormatter.stringFromDate(currentDate)
-        
-        let weekEndDate = weekEndDateFormatter.stringFromDate(currentDate.addDays(6))
-        
-        titleItem.title = "\(convertedDate) - \(weekEndDate)"
-        
-        
-        
-        
-        
-        
-        let eventDBRef = FIRDatabase.database().reference()
-        
-        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
-            snapshot in
-            
-            
-            let startDateString = snapshot.value!["Start Date"] as! String
-            
-            let eventID = snapshot.key
-            
-            let endDateString = snapshot.value!["End Date"] as! String
-            
-            let coding = 0
-            
-            
-            let dancing = 0
-            
-            let cleaning = 0
-            
-            let dateformatter = NSDateFormatter()
-            
-            dateformatter.dateFormat = "yyyy-M-dd-H:mm"
-            
-            let startDate = dateformatter.dateFromString(startDateString)!
-            
-            let endDate = dateformatter.dateFromString(endDateString)!
-            
-            let shortFormatter = NSDateFormatter()
-            shortFormatter.dateFormat = "H:mm"
-            
-            let shortStartDateString = shortFormatter.stringFromDate(startDate)
-            
-            let shortEndDateString = shortFormatter.stringFromDate(endDate)
-            
-            let newEvent = MSEvent.make(startDate, end: endDate, title: "\(shortStartDateString) \(coding)", location: "\(shortEndDateString)", key: eventID, coding: coding, dancing: dancing, cleaning: cleaning)
-            
-            print("aaaaaaaaaaaaaaaaaaaaaaaa")
-            
-            self.weeklyView.addEvent(newEvent)
-            
-            
-        })
-        
-        
-        
-        
         
     }
     
@@ -135,18 +88,27 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
             navigationItem.backBarButtonItem = backItem
 
             
+        }else if segue.identifier == "employeeEditEventSegue"{
+        
+            let destinationVC = segue.destinationViewController as! EmployeeEditEventViewController
+            
+            destinationVC.selectedEvent = selectedEvent
+            destinationVC.shiftStartDate = self.shiftStartDate
+            
+            let backItem = UIBarButtonItem()
+            backItem.title = "Back"
+            navigationItem.backBarButtonItem = backItem
+        
+        
+        
+        
         }
+        
     }
     
     
     
-    @IBAction func deleteEvent(sender: UIButton) {
-        let eventDBRef = FIRDatabase.database().referenceFromURL("https://shifter-35349.firebaseio.com/employeeEvent/2016-10-16/102306111")
-        eventDBRef.child(selectedEvent.key).removeValue()
-        deleteView.hidden = true
-        weeklyViewHeight.constant = 0
-
-    }
+    
     
     
     
@@ -157,18 +119,25 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
         self.decoratedWeekView = MSWeekViewDecoratorFactory.make(self.weeklyView, features: 3 , andDelegate: self)
         
         
-        let event1: MSEvent = MSEvent.make(NSDate.now(), duration: 0, title: "", location: "")
+        let event1: MSEvent = MSEvent.make(shiftDate, duration: 0, title: "", location: "")
+        let event2: MSEvent = MSEvent.make(shiftDate.addDays(1), duration: 0, title: "", location: "")
+        let event3: MSEvent = MSEvent.make(shiftDate.addDays(2), duration: 0, title: "", location: "")
+        let event4: MSEvent = MSEvent.make(shiftDate.addDays(3), duration: 0, title: "", location: "")
+        let event5: MSEvent = MSEvent.make(shiftDate.addDays(4), duration: 0, title: "", location: "")
+        let event6: MSEvent = MSEvent.make(shiftDate.addDays(5), duration: 0, title: "", location: "")
+        let event7: MSEvent = MSEvent.make(shiftDate.addDays(6), duration: 0, title: "", location: "")
         weeklyView.delegate = self
         
         weeklyView.weekFlowLayout.show24Hours = true
         
         weeklyView.daysToShowOnScreen = 7
         
-        weeklyView.daysToShow = 7
+        weeklyView.daysToShow = 0
         
         weeklyView.weekFlowLayout.hourHeight = 50
         
-        weeklyView.events = [event1]
+        weeklyView.events = [event1,event2,event3,event4,event5,event6,event7]
+
     }
     
     
@@ -183,12 +152,13 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
         
         
         selectedEvent = event
-        deleteView.hidden = false
-        weeklyViewHeight.constant = -40
-        let editDBRef = FIRDatabase.database().referenceFromURL("https://shifter-35349.firebaseio.com/employeeEvent/2016-10-16/102306111")
+        
+        performSegueWithIdentifier("employeeEditEventSegue", sender: nil)
+        
+        let editDBRef = FIRDatabase.database().reference()
         
         
-        editDBRef.observeEventType(.ChildRemoved, withBlock: {
+        editDBRef.child("employeeEvent").child("010").child(shiftStartDate).observeEventType(.ChildRemoved, withBlock: {
             
             snapshot in
             
@@ -211,13 +181,63 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
     
     override func viewWillAppear(animated: Bool) {
         
+//        var newEventArray = [MSEvent]()
+//        
+//        let eventDBRef = FIRDatabase.database().reference()
+//        
+//        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").queryOrderedByKey().observeEventType(.ChildChanged, withBlock: {
+//            
+//            snapshot in
+//            
+//            let startDateString = snapshot.value!["Start Date"] as! String
+//            
+//            let eventID = snapshot.key
+//            
+//            let endDateString = snapshot.value!["End Date"] as! String
+//            
+//            let coding = 0
+//            
+//            
+//            let dancing = 0
+//            let cleaning = 0
+//            
+//            let dateformatter = NSDateFormatter()
+//            
+//            dateformatter.dateFormat = "yyyy-M-dd-H:mm"
+//            
+//            let startDate = dateformatter.dateFromString(startDateString)!
+//            
+//            let endDate = dateformatter.dateFromString(endDateString)!
+//            
+//            let shortFormatter = NSDateFormatter()
+//            shortFormatter.dateFormat = "H:mm"
+//            
+//            let shortStartDateString = shortFormatter.stringFromDate(startDate)
+//            
+//            let shortEndDateString = shortFormatter.stringFromDate(endDate)
+//            
+//            //self.eventList.append(eventStruct(startDate: startDate,endDate: endDate, coding: coding, dancing: dancing, cleaning: cleaning, key: eventID))
+//            
+//            let newEvent = MSEvent.make(startDate, end: endDate, title: "\(shortStartDateString) \(coding)", location: "\(shortEndDateString)", key: eventID, coding: coding, dancing: dancing, cleaning: cleaning)
+//            
+//            
+//            newEventArray.append(newEvent)
+//            
+//            
+//            self.weeklyView.events = newEventArray
+//            
+//            
+//            
+//            
+//        })
         var newEventArray = [MSEvent]()
+        
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").queryOrderedByKey().observeEventType(.ChildChanged, withBlock: {
-            
+        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
             snapshot in
+            
             
             let startDateString = snapshot.value!["Start Date"] as! String
             
@@ -225,10 +245,11 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
             
             let endDateString = snapshot.value!["End Date"] as! String
             
-            let coding = 0
+            let coding = snapshot.value!["Preference"] as! Int
             
             
             let dancing = 0
+            
             let cleaning = 0
             
             let dateformatter = NSDateFormatter()
@@ -246,21 +267,48 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
             
             let shortEndDateString = shortFormatter.stringFromDate(endDate)
             
-            //self.eventList.append(eventStruct(startDate: startDate,endDate: endDate, coding: coding, dancing: dancing, cleaning: cleaning, key: eventID))
-            
             let newEvent = MSEvent.make(startDate, end: endDate, title: "\(shortStartDateString) \(coding)", location: "\(shortEndDateString)", key: eventID, coding: coding, dancing: dancing, cleaning: cleaning)
             
-            print("aaaaaaaaaaaaaaaaaaaaaaaa")
+            
+            
+            let event1: MSEvent = MSEvent.make(self.shiftDate, duration: 0, title: "", location: "")
+            let event2: MSEvent = MSEvent.make(self.shiftDate.addDays(1), duration: 0, title: "", location: "")
+            let event3: MSEvent = MSEvent.make(self.shiftDate.addDays(2), duration: 0, title: "", location: "")
+            let event4: MSEvent = MSEvent.make(self.shiftDate.addDays(3), duration: 0, title: "", location: "")
+            let event5: MSEvent = MSEvent.make(self.shiftDate.addDays(4), duration: 0, title: "", location: "")
+            let event6: MSEvent = MSEvent.make(self.shiftDate.addDays(5), duration: 0, title: "", location: "")
+            let event7: MSEvent = MSEvent.make(self.shiftDate.addDays(6), duration: 0, title: "", location: "")
             
             newEventArray.append(newEvent)
             
             
+            
             self.weeklyView.events = newEventArray
             
+            self.weeklyView.addEvents([event1,event2,event3,event4,event5,event6,event7])
             
+            for newEvent in newEventArray{
+                if newEvent.StartDate!.day() == self.shiftDate.day(){
+                    self.weeklyView.removeEvent(event1)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(1).day(){
+                    self.weeklyView.removeEvent(event2)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(2).day(){
+                    self.weeklyView.removeEvent(event3)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(3).day(){
+                    self.weeklyView.removeEvent(event4)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(4).day(){
+                    self.weeklyView.removeEvent(event5)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(5).day(){
+                    self.weeklyView.removeEvent(event6)
+                }else if newEvent.StartDate!.day() == self.shiftDate.addDays(6).day(){
+                    self.weeklyView.removeEvent(event7)
+                }
+                
+            }
             
             
         })
+
         
                
         self.weeklyView.forceReload()
