@@ -309,10 +309,10 @@
 				04BCE11E1DB39093004A8162 /* shifter.entitlements */,
 				04EAAE811DBB49FD00AB7853 /* GoogleService-Info.plist */,
 				43173E131D5328620043399F /* Info.plist */,
+				43173E0E1D5328620043399F /* Assets.xcassets */,
 				04852CFC1DB37F9700229CAE /* Lib */,
 				4378DA8C1DBCB04D00DCAE85 /* Views */,
 				43F2A6751DBCAFD0002E0D1A /* View Controllers */,
-				43173E0E1D5328620043399F /* Assets.xcassets */,
 			);
 			path = shifter;
 			sourceTree = "<group>";
@@ -454,7 +454,7 @@
 				TargetAttributes = {
 					43173E031D5328620043399F = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = QFZ2663XLK;
+						DevelopmentTeam = 993TN7KGWA;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -715,6 +715,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = shifter/shifter.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"${PODS_ROOT}/Firebase/Headers",
@@ -734,9 +735,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = chlorophyll.shifter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shifter/shifter-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PODS_ROOT}/\"/**";
 			};
 			name = Debug;
@@ -749,6 +752,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = shifter/shifter.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"${PODS_ROOT}/Firebase/Headers",
@@ -768,8 +772,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = chlorophyll.shifter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shifter/shifter-Bridging-Header.h";
 				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PODS_ROOT}/\"/**";
 			};
 			name = Release;
