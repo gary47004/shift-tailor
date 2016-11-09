@@ -29,6 +29,15 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {                                                               
         super.viewDidLoad()
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+        currentUID = defaults.objectForKey("currentUID") as! String
+        currentSID = defaults.objectForKey("currentSID") as! String
+        currentDID = defaults.objectForKey("currentDID") as! String
+        currentRank = defaults.objectForKey("currentRank") as! String
+        print("TTTTTTTTTTTTTTT",currentUID,currentSID,currentDID,currentRank)
+        
+        print("tabBar Loaded")
+        
         //set Firebase listener
         let databaseRef = FIRDatabase.database().reference()
         
@@ -45,12 +54,12 @@ class TabBarViewController: UITabBarController {
             
             //save to local array
             if store == self.currentSID{
-                //posted by self
+                //posted by store member
                 if section == 0{
                     // posted store post
                     self.section0Posts.insert(post(title: title, time: time, content: content, section: section, employee: employee, store: store, district: district), atIndex: 0)
                     self.section0Refs.insert(postRef, atIndex: 0)
-                    
+                                        
                     //notification
                     if employee != self.currentUID{
                         self.newNotification += 1

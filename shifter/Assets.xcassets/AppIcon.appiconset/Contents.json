@@ -3,37 +3,37 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "58 - Settings Copy@0.5x.png",
+      "filename" : "58 - Settings@0.5x-1.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "58 - Settings Copy@1x.png",
+      "filename" : "58 - Settings@1x-1.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "58 - Settings Copy@1.5x.png",
+      "filename" : "58 - Settings@1.5x-1.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "80 - Spotlight@1x.png",
+      "filename" : "80 - Spotlight@1x-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "80 - Spotlight@1.5x.png",
+      "filename" : "120 - iPhone@1x.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "120 - iPhone@1x.png",
+      "filename" : "120 - iPhone@1.5x-1.png",
       "scale" : "2x"
     },
     {
@@ -45,7 +45,7 @@
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "58 - Settings@0.5x-1.png",
+      "filename" : "58 - Settings@0.5x.png",
       "scale" : "1x"
     },
     {
@@ -63,7 +63,7 @@
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "80 - Spotlight@1x-1.png",
+      "filename" : "80 - Spotlight@1x.png",
       "scale" : "2x"
     },
     {
@@ -115,6 +115,7 @@
     {
       "size" : "40x40",
       "idiom" : "watch",
+      "filename" : "80 - Spotlight@0.5x-1.png",
       "scale" : "2x",
       "role" : "appLauncher",
       "subtype" : "38mm"
@@ -152,6 +153,10 @@
       "idiom" : "ipad",
       "size" : "20x20",
       "scale" : "2x"
+    },
+    {
+      "filename" : "58 - Settings@3x.png",
+      "unassigned" : true
     }
   ],
   "info" : {

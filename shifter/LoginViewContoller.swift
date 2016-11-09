@@ -6,27 +6,46 @@ import FirebaseDatabase
 
 struct accounts {
     let ID: String!
-    let password: String!
+    var password: String!
     let store: String!
     let district : String!
     let rank : String!
 }
 
+//extension UIColor {
+//    convenience init(red: Int, green: Int, blue: Int) {
+//        let newRed = CGFloat(red)/255
+//        let newGreen = CGFloat(green)/255
+//        let newBlue = CGFloat(blue)/255
+//        
+//        self.init(red: newRed, green: newGreen, blue: newBlue, alpha: 1.0)
+//    }
+//}
+
 class LoginViewContoller: UIViewController, UITextFieldDelegate {
     var inputID = String()
     var inputPassword = String()
     var accountArray = [accounts]()
-    var currentSID = String()
-    var currentDID = String()
-    var currentRank = String()
+    var IDArray = [String]()
+    var passwordArray = [String]()
+//    var currentSID = String()
+//    var currentDID = String()
+//    var currentRank = String()
     
     @IBOutlet weak var idTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
     @IBOutlet weak var errorStatusLabel: UILabel!
     
     override func viewDidLoad() {
-        self.idTextfield.delegate = self
-        self.passwordTextfield.delegate = self
+
+        //UI
+        idTextfield.underlined()
+        passwordTextfield.underlined()
+        
+        //keyboard observer
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewContoller.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewContoller.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+
         
         //save all user accounts to array
         let databaseRef = FIRDatabase.database().reference()
@@ -38,20 +57,30 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
             let rank = snapshot.value!["rank"] as? String
             
             self.accountArray.append(accounts(ID: ID, password: password, store: store, district: district, rank: rank))
+            self.IDArray.append(ID!)
+            self.passwordArray.append(password!)
+        })
+        
+        //when password changed
+        databaseRef.child("employee").observeEventType(.ChildChanged, withBlock: { snapshot in
+            let ID = snapshot.value!["ID"] as? String
+            let password = snapshot.value!["ID"] as? String
+
+            let index = self.IDArray.indexOf({ $0 == ID })
+            self.accountArray[index!].password = password
+            self.passwordArray[index!] = password!
         })
     }
 
     
     @IBAction func pressLogin(sender: UIButton) {
+
         inputID = idTextfield.text!
         inputPassword = passwordTextfield.text!
-        var IDArray = [String]()
-        var passwordArray = [String]()
+        
         
         //check-up account
-        for i in 0...accountArray.count-1{
-            IDArray.append(accountArray[i].ID)
-            passwordArray.append(accountArray[i].password)
+        for _ in 0...accountArray.count-1{
             
             if inputID == "" || inputPassword == ""{
                 errorStatusLabel.text = "please enter ID and password"
@@ -66,8 +95,15 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
                         errorStatusLabel.hidden = false
                     }else{
                         errorStatusLabel.hidden = true
-                        currentSID = accountArray[i].store
-                        currentDID = accountArray[i].district
+                        
+                        let defaults = NSUserDefaults.standardUserDefaults()
+                        defaults.setObject(inputID, forKey: "currentUID")
+                        defaults.setObject(accountArray[index].store, forKey: "currentSID")
+                        defaults.setObject(accountArray[index].district, forKey: "currentDID")
+                        defaults.setObject(accountArray[index].rank, forKey: "currentRank")
+                        defaults.setObject(accountArray[index].password, forKey: "currentPassword")
+                        defaults.setBool(true, forKey: "loggedin")
+
                         performSegueWithIdentifier("showHome", sender: self)
                     }
                 }
@@ -75,23 +111,52 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showHome"{
-            let tabBarVC = segue.destinationViewController as! TabBarViewController
-            tabBarVC.currentUID = inputID
-            tabBarVC.currentSID = currentSID
-            tabBarVC.currentDID = currentDID
-            tabBarVC.currentRank = currentRank
+    //resign keyboard when return pressed
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if textField.isFirstResponder() == true{
+            textField.placeholder = nil
         }
     }
     
-    //resign keyboard when return pressed
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        idTextfield.resignFirstResponder()
-        passwordTextfield.resignFirstResponder()
-        return true
+    func textFieldDidEndEditing(textField: UITextField) {
+        if textField.text == ""{
+            if textField == idTextfield{
+                textField.placeholder = "ID"
+            }else{
+                textField.placeholder = "password"
+            }
+        }
+    }
+    
+    //scroll view when keyboard toggled
+    func keyboardWillShow(notification: NSNotification){
+//        if self.view.subviews[0].frame.origin.y == 114{
+//            self.view.subviews[0].frame.origin.y += 86
+//        }
+        
+        if let keyboardSize = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue(){
+            if view.frame.origin.y == 0{
+                view.frame.origin.y -= keyboardSize.height
+            }
+            
+        }
     }
 
+    func keyboardWillHide(notification: NSNotification){
+//        self.view.subviews[0].frame.origin.y -= 86
+        
+        if let keyboardSize = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue(){
+            if view.frame.origin.y != 0{
+                view.frame.origin.y += keyboardSize.height
+            }
+            
+        }
+    }
 }
 
 

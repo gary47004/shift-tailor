@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+//import FirebaseDatabase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         FIRApp.configure()
+        
+        //set initial view controller
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        print(defaults.boolForKey("loggedin"))
+        if defaults.boolForKey("loggedin") != true{
+            let loginVC: LoginViewContoller = mainStoryboard.instantiateViewControllerWithIdentifier("loginVC") as! LoginViewContoller
+            self.window?.rootViewController = loginVC
+            self.window?.makeKeyAndVisible()
+        }else{
+            let tabBarVC: TabBarViewController = mainStoryboard.instantiateViewControllerWithIdentifier("tabBarVC") as! TabBarViewController
+            self.window?.rootViewController = tabBarVC
+            self.window?.makeKeyAndVisible()
+        }
+        
         return true
     }
 

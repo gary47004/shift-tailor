@@ -47,6 +47,7 @@
 		4310221E1D60D6EB00C47D22 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4310221D1D60D6EB00C47D22 /* Notification.swift */; };
 		431022201D60E07800C47D22 /* ClockIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4310221F1D60E07800C47D22 /* ClockIn.swift */; };
 		431022221D60E8F400C47D22 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431022211D60E8F400C47D22 /* Settings.swift */; };
+		431554F01DD06123008434BB /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431554EF1DD06123008434BB /* Helpers.swift */; };
 		43173E081D5328620043399F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43173E071D5328620043399F /* AppDelegate.swift */; };
 		43173E0D1D5328620043399F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43173E0B1D5328620043399F /* Main.storyboard */; };
 		43173E0F1D5328620043399F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43173E0E1D5328620043399F /* Assets.xcassets */; };
@@ -125,6 +126,7 @@
 		4310221D1D60D6EB00C47D22 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		4310221F1D60E07800C47D22 /* ClockIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockIn.swift; sourceTree = "<group>"; };
 		431022211D60E8F400C47D22 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		431554EF1DD06123008434BB /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		43173E041D5328620043399F /* shifter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shifter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43173E071D5328620043399F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43173E0C1D5328620043399F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 			isa = PBXGroup;
 			children = (
 				43173E071D5328620043399F /* AppDelegate.swift */,
+				431554EF1DD06123008434BB /* Helpers.swift */,
 				04BCE13C1DB4BBE2004A8162 /* Shift Schedule */,
 				4378DA8D1DBCB09000DCAE85 /* Login */,
 				4378DA8E1DBCB0A800DCAE85 /* Tab Bar */,
@@ -581,6 +584,7 @@
 				04BCE12D1DB483B0004A8162 /* ManagerShiftDetailViewController.swift in Sources */,
 				04BCE1341DB496C3004A8162 /* ManagerSetEventController.swift in Sources */,
 				04852D271DB37F9700229CAE /* MSCurrentTimeIndicator.m in Sources */,
+				431554F01DD06123008434BB /* Helpers.swift in Sources */,
 				04BCE1221DB46D65004A8162 /* EmployeeAddEventViewController.swift in Sources */,
 				430738C71D59E108006F749A /* LoginViewContoller.swift in Sources */,
 				0463E87D1DC442C500D93E93 /* PopoverMenuViewController.swift in Sources */,
