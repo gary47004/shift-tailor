@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eF3-Ay-tQ1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <development version="7000" identifier="xcode"/>
@@ -132,7 +132,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1P9-vJ-JAK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-478.5" y="1805.5"/>
+            <point key="canvasLocation" x="-258.5" y="1805.5"/>
         </scene>
         <!--ClockIn-->
         <scene sceneID="Pb9-0K-wrX">
@@ -243,66 +243,61 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rfC-PA-yra">
-                                <rect key="frame" x="107" y="347" width="160" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="eF3-Ay-tQ1" id="2yc-i4-Lqr"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Olg-eg-bGJ">
-                                <rect key="frame" x="107" y="399" width="160" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="eF3-Ay-tQ1" id="1OO-py-yxt"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KfU-cs-Qp3">
-                                <rect key="frame" x="20" y="525" width="335" height="30"/>
-                                <state key="normal" title="忘記密碼">
-                                    <color key="titleColor" red="0.15686274510000001" green="0.38431372549999998" blue="0.42745098040000001" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="7AW-LF-vEz" kind="show" identifier="forgotPassword" id="PTX-jj-UgV"/>
-                                </connections>
-                            </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Error Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdw-cY-lIb">
-                                <rect key="frame" x="20" y="449" width="335" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxl-Sp-ZNY">
-                                <rect key="frame" x="20" y="497" width="335" height="30"/>
-                                <state key="normal" title="登入">
-                                    <color key="titleColor" red="0.15686274510000001" green="0.38431372549999998" blue="0.42745098040000001" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="pressLogin:" destination="eF3-Ay-tQ1" eventType="touchUpInside" id="jL9-hP-XOX"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="loginImage" translatesAutoresizingMaskIntoConstraints="NO" id="dpE-ef-fEz">
-                                <rect key="frame" x="92" y="63" width="206" height="206"/>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="login image-1" translatesAutoresizingMaskIntoConstraints="NO" id="jCf-hB-stv">
+                                <rect key="frame" x="82" y="114" width="211" height="219"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Shift Tailor" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESU-zE-iUV">
-                                <rect key="frame" x="20" y="262" width="335" height="71"/>
-                                <fontDescription key="fontDescription" name="Optima-BoldItalic" family="Optima" pointSize="50"/>
-                                <color key="textColor" red="0.43406250000000002" green="0.43406250000000002" blue="0.43406250000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="userInteractionView" translatesAutoresizingMaskIntoConstraints="NO" id="t94-WM-p07" userLabel="userInteractionView">
+                                <rect key="frame" x="0.0" y="353" width="375" height="184"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rfC-PA-yra">
+                                        <rect key="frame" x="107" y="29" width="160" height="30"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="eF3-Ay-tQ1" id="2yc-i4-Lqr"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Olg-eg-bGJ">
+                                        <rect key="frame" x="107" y="72" width="160" height="30"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="eF3-Ay-tQ1" id="1OO-py-yxt"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KfU-cs-Qp3">
+                                        <rect key="frame" x="107" y="154" width="160" height="30"/>
+                                        <state key="normal" title="忘記密碼">
+                                            <color key="titleColor" red="0.2901675105" green="0.29021435979999999" blue="0.29015725850000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="7AW-LF-vEz" kind="show" identifier="forgotPassword" id="PTX-jj-UgV"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxl-Sp-ZNY">
+                                        <rect key="frame" x="107" y="116" width="160" height="30"/>
+                                        <state key="normal" image="login button">
+                                            <color key="titleColor" red="0.15686274510000001" green="0.38431372549999998" blue="0.42745098040000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="pressLogin:" destination="eF3-Ay-tQ1" eventType="touchUpInside" id="jL9-hP-XOX"/>
+                                        </connections>
+                                    </button>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdw-cY-lIb">
+                                        <rect key="frame" x="20" y="0.0" width="335" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.92019361259999999" green="0.65286159519999998" blue="0.23868182299999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="bdw-cY-lIb" firstAttribute="centerX" secondItem="Kna-HK-miZ" secondAttribute="centerX" id="DNy-4R-s7c"/>
-                            <constraint firstItem="dpE-ef-fEz" firstAttribute="centerX" relation="greaterThanOrEqual" secondItem="Kna-HK-miZ" secondAttribute="centerX" constant="8" id="LT1-f7-hO9"/>
-                            <constraint firstItem="ESU-zE-iUV" firstAttribute="centerX" secondItem="Kna-HK-miZ" secondAttribute="centerX" id="PH1-bB-Tzi"/>
-                            <constraint firstItem="KfU-cs-Qp3" firstAttribute="centerX" secondItem="Kna-HK-miZ" secondAttribute="centerX" id="SIh-8e-HUK"/>
-                            <constraint firstItem="rfC-PA-yra" firstAttribute="centerX" secondItem="Kna-HK-miZ" secondAttribute="centerX" id="ajS-PW-giC"/>
-                            <constraint firstItem="Olg-eg-bGJ" firstAttribute="centerX" secondItem="Kna-HK-miZ" secondAttribute="centerX" id="oEd-Yr-DBx"/>
-                            <constraint firstItem="hxl-Sp-ZNY" firstAttribute="centerX" secondItem="Kna-HK-miZ" secondAttribute="centerX" id="xFT-Nz-7AD"/>
-                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -611,7 +606,7 @@
                                 </connections>
                             </containerView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="1Hd-s7-NV3">
-                                <rect key="frame" x="114" y="20" width="147" height="29"/>
+                                <rect key="frame" x="115" y="20" width="147" height="29"/>
                                 <segments>
                                     <segment title="Manager"/>
                                     <segment title="Employee"/>
@@ -1322,7 +1317,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="loginImage" width="456" height="456"/>
+        <image name="login button" width="160" height="30"/>
+        <image name="login image-1" width="211" height="219"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="w88-VW-flA"/>

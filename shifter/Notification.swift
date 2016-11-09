@@ -48,6 +48,7 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
                     self.sectionArray.insert(section!, atIndex: 0)
                     self.keyArray.insert(key, atIndex: 0)
                     
+                    print(self.titleArray)
                     if section == 0{
                         self.section0Key.insert(key, atIndex: 0)
                     }else{
@@ -66,7 +67,6 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
                 }
             }
             
-                
         self.tableView.reloadData()
             
         })
