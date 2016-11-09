@@ -51,6 +51,20 @@
     return event;
 }
 
++(MSEvent*)makeEmployeeShiftEvent:(NSDate *)start end:(NSDate *)end title:(NSString *)title location:(NSString *)location key:(NSString *)key{
+    MSEvent* event = [MSEvent new];
+    
+    event.StartDate = start;
+    event.EndDate   = end;
+    event.title     = title;
+    event.location  = location;
+    event.key = key;
+    
+    return event;
+
+    
+}
+
 
 - (NSDate *)day{
     return [[NSCalendar currentCalendar] startOfDayForDate:self.StartDate];
