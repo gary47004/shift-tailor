@@ -32,6 +32,8 @@
 
 +(MSEvent*)make:(NSDate*)start end:(NSDate*)end title:(NSString*)title location:(NSString*)location key:(NSString*)key codingList:(NSArray*)codinList cleaningList:(NSArray*)cleaningList dancingList:(NSArray*)dancingList shiftType:(NSString*)shiftType;
 
++(MSEvent*)makeEmployeeShiftEvent:(NSDate*)start end:(NSDate*)end title:(NSString*)title location:(NSString*)location key:(NSString*)key;
+
 - (NSDate *)day;
 
 @end
