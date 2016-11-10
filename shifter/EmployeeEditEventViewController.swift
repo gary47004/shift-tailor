@@ -126,7 +126,7 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
         
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-M-dd-H:mm"
+        dateFormatter.dateFormat = "yyyy-M-dd-HH:mm"
         
         let startDate = dateFormatter.stringFromDate(dateArray[0])
         let endDate = dateFormatter.stringFromDate(dateArray[1])

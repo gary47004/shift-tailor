@@ -254,7 +254,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
             
             let dateformatter = NSDateFormatter()
             
-            dateformatter.dateFormat = "yyyy-M-dd-H:mm"
+            dateformatter.dateFormat = "yyyy-M-dd-HH:mm"
             
             let startDate = dateformatter.dateFromString(startDateString)!
             

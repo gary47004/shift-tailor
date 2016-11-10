@@ -62,25 +62,25 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
         
         let dateformatter = NSDateFormatter()
         
-        dateformatter.dateFormat = "yyyy-M-dd-H:mm"
+        dateformatter.dateFormat = "yyyy-M-dd-HH:mm"
         if indexPath.section == 1{
-            employeeCell.employeeNameLabel.text = selectedEvent.codingList[indexPath.row][0] as? String
+            employeeCell.employeeNameLabel.text = (selectedEvent.codingList[indexPath.row] as? NSArray)![0] as? String
             
         
             
             
         }else if indexPath.section == 2 {
-            employeeCell.employeeNameLabel.text = selectedEvent.cleaningList[indexPath.row][0] as? String
+            employeeCell.employeeNameLabel.text = (selectedEvent.cleaningList[indexPath.row] as? NSArray)![0] as? String
             
             print(selectedEvent.cleaningList[indexPath.row][1])
             
-            empStartDate = dateformatter.dateFromString((selectedEvent.cleaningList[indexPath.row][1] as? String)!)!
-            empEndDate = dateformatter.dateFromString((selectedEvent.cleaningList[indexPath.row][2] as? String)!)!
+            empStartDate = dateformatter.dateFromString(((selectedEvent.cleaningList[indexPath.row] as? NSArray)![1] as? String)!)!
+            empEndDate = dateformatter.dateFromString(((selectedEvent.cleaningList[indexPath.row] as? NSArray)![2] as? String)!)!
             employeeCell.startTimeLabel.text = shortFormatter.stringFromDate(empStartDate)
             employeeCell.endTimeLabel.text = shortFormatter.stringFromDate(empEndDate)
             
         }else if indexPath.section == 3 {
-            employeeCell.employeeNameLabel.text = selectedEvent.dancingList[indexPath.row][0] as? String
+            employeeCell.employeeNameLabel.text = (selectedEvent.dancingList[indexPath.row] as? NSArray)![0] as? String
         }
         
         

@@ -174,7 +174,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         let event5: MSEvent = MSEvent.make(shiftDate.addDays(4), duration: 0, title: "", location: "")
         let event6: MSEvent = MSEvent.make(shiftDate.addDays(5), duration: 0, title: "", location: "")
         let event7: MSEvent = MSEvent.make(shiftDate.addDays(6), duration: 0, title: "", location: "")
-        print("Yeeeeeeeeeeeeeeees")
+        
         weeklyView.delegate = self
         
         weeklyView.weekFlowLayout.show24Hours = true
@@ -354,14 +354,15 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         eventDBRef.child("managerEvent").child("010").child(shiftStartDate).queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
             snapshot in
             
+            print("Snapshot",snapshot.value)
 
+        
             
-            
-            let startDateString = snapshot.value!["Start Date"] as! String
+            let startDateString = snapshot.value!["StartDate"] as! String
             
             let eventID = snapshot.key
             
-            let endDateString = snapshot.value!["End Date"] as! String
+            let endDateString = snapshot.value!["EndDate"] as! String
             
             let coding = snapshot.value!["Coding"] as! Int
             
@@ -372,7 +373,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
             
             let dateformatter = NSDateFormatter()
             
-            dateformatter.dateFormat = "yyyy-M-dd-H:mm"
+            dateformatter.dateFormat = "yyyy-M-dd-HH:mm"
             
             let startDate = dateformatter.dateFromString(startDateString)!
             

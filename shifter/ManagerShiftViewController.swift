@@ -34,6 +34,8 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     
     var shiftDate : NSDate!
     
+    var currentEventDeadline : NSDate!
+    
     
     
     @IBOutlet weak var titleItem: UINavigationItem!
@@ -69,9 +71,10 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
 
         
         let shiftDBRef = FIRDatabase.database().reference()
-        shiftDBRef.child("ManagerShift").child("010").child("currentShift").observeEventType(.Value, withBlock: {snapshot in
+        shiftDBRef.child("managerShift").child("010").observeEventType(.Value, withBlock: {snapshot in
             
-            self.currentWeekStartDate = snapshot.value as! String
+            self.currentWeekStartDate = snapshot.childSnapshotForPath("currentShift").value as! String
+            
             self.shiftDate = shiftDateFormatter.dateFromString(self.currentWeekStartDate)
             shiftStartDateString = weekDateFormatter.stringFromDate(self.shiftDate)
             shiftEndDateString = weekDateFormatter.stringFromDate(self.shiftDate.addDays(6))
@@ -201,9 +204,9 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         
         
         let event1: MSEvent = MSEvent.make(shiftDate, duration: 0, title: "", location: "")
-        print("event1")
+        
         let event2: MSEvent = MSEvent.make(shiftDate.addDays(1), duration: 0, title: "", location: "")
-        print("event2")
+    
         let event3: MSEvent = MSEvent.make(shiftDate.addDays(2), duration: 0, title: "", location: "")
         let event4: MSEvent = MSEvent.make(shiftDate.addDays(3), duration: 0, title: "", location: "")
         let event5: MSEvent = MSEvent.make(shiftDate.addDays(4), duration: 0, title: "", location: "")
@@ -244,89 +247,28 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         
-        var neweEventArray = [MSEvent]()
-        
-        let eventDBRef = FIRDatabase.database().referenceFromURL("https://shifter-35349.firebaseio.com/ManagerShift/010/2016-10-16")
-        
-        eventDBRef.observeEventType(.ChildChanged, withBlock: {
-            
-            snapshot in
-            
-            let post = snapshot.value as! [String :AnyObject ]
-            
-            let startDateString = post["Start Date"] as! String
-            
-            let eventID = snapshot.key
-            
-            let endDateString = post["End Date"] as! String
-            
-            let eventType = post["Type"] as! String
-            
-            //print(snapshot.childSnapshotForPath("Coding"))
-            
-            let codingList = snapshot.childSnapshotForPath("Coding").value
-            let cleaningList = snapshot.childSnapshotForPath("Cleaning").value
-            let dancingList = snapshot.childSnapshotForPath("Dancing").value
-            
-            //print(codingList![0])
-            
-            let dateformatter = NSDateFormatter()
-            
-            dateformatter.dateFormat = "yyyy-M-dd-H:mm"
-            
-            let startDate = dateformatter.dateFromString(startDateString)!
-            
-            let endDate = dateformatter.dateFromString(endDateString)!
-            
-            let shortFormatter = NSDateFormatter()
-            
-            shortFormatter.dateFormat = "H:mm"
-            
-            let shortStartDateString = shortFormatter.stringFromDate(startDate)
-            
-            let shortEndDateString = shortFormatter.stringFromDate(endDate)
-            
-            //self.eventList.append(eventStruct(startDate: startDate,endDate: endDate, coding: coding, dancing: dancing, cleaning: cleaning, key: eventID))
-            
-            let newEvent = MSEvent.make(startDate, end: endDate, title: "\(eventType)\n\(shortStartDateString)", location: "\(shortEndDateString)", key: eventID, codingList: codingList as! [[String]], cleaningList: cleaningList as! [[String]], dancingList:dancingList as! [[String]] ,shiftType: eventType)
-            
-                       neweEventArray.append(newEvent)
-            
-            
-            self.weeklyView.events = neweEventArray
-            
-            
-            
-            
-        })
         
         let setEventDBREF = FIRDatabase.database().reference()
         
-        setEventDBREF.child("managerEvent").child("010").child("setEventSwitch").observeEventType(.Value, withBlock:{
+        setEventDBREF.child("managerEvent").child("010").observeEventType(.Value, withBlock:{
             
             snapshot in
             
-            print("snapshot",snapshot.value)
             
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-M-dd"
             
-            self.setEventSwitch = snapshot.value as! Bool
+            self.setEventSwitch = snapshot.childSnapshotForPath("setEventSwitch").value as! Bool
+            self.shiftStartDate = snapshot.childSnapshotForPath("currentEvent").value as! String
+            
+            let deadlineString = snapshot.childSnapshotForPath("currentEventDeadline").value as! String
+            print(deadlineString)
+            self.currentEventDeadline = dateFormatter.dateFromString(deadlineString)
+            print("DL",self.currentEventDeadline)
             
             
             
         })
-        
-        setEventDBREF.child("managerEvent").child("010").child("currentEvent").observeEventType(.Value, withBlock: {
-            
-            snapshot in
-            
-            self.shiftStartDate = snapshot.value as! String
-            
-            
-            
-        })
-        
-        
-        
         
         self.weeklyView.forceReload()
         
@@ -346,12 +288,28 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
         }else if segue.identifier == "setEvent"{
             
-            
-
-            
             let destinationVC = segue.destinationViewController as! ManagerSetEventViewController
             
             destinationVC.shiftStartDate = self.shiftStartDate
+            
+            print("ShiftStartDate",self.shiftStartDate)
+            
+            let dateFormatTer = NSDateFormatter()
+            var currentTime = NSDate()
+            
+            
+            dateFormatTer.dateFormat = "yyyy-M-dd-HH:mm"
+            let currentTimeString = dateFormatTer.stringFromDate(currentTime)
+            currentTime = dateFormatTer.dateFromString(currentTimeString)!
+            
+            
+            print("ct",currentTime)
+            print("dl",self.currentEventDeadline)
+            
+            let dateComponentsFormatter = NSDateComponentsFormatter ()
+            dateComponentsFormatter.unitsStyle = NSDateComponentsFormatterUnitsStyle.Full
+            let interval = self.currentEventDeadline!.timeIntervalSinceDate(currentTime)
+            print("剩餘時間：",dateComponentsFormatter.stringFromTimeInterval(interval)!)
             
             let setEventDBREF = FIRDatabase.database().reference()
             setEventDBREF.child("managerEvent").child("010").child("setEventSwitch").setValue(true)
@@ -377,7 +335,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
 
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("ManagerShift").child("010").child(self.currentWeekStartDate).observeEventType(.ChildAdded, withBlock: {
+        eventDBRef.child("managerShift").child("010").child(self.currentWeekStartDate).observeEventType(.ChildAdded, withBlock: {
             
             snapshot in
             
@@ -400,7 +358,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             let dateformatter = NSDateFormatter()
             
-            dateformatter.dateFormat = "yyyy-M-dd-H:mm"
+            dateformatter.dateFormat = "yyyy-M-dd-HH:mm"
             
             
             let startDate = dateformatter.dateFromString(startDateString)!

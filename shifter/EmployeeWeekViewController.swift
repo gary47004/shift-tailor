@@ -64,17 +64,12 @@ class EmployeeWeekViewController: UIViewController,MSWeekViewDelegate {
         
         let shiftDBRef = FIRDatabase.database().reference()
         
-        shiftDBRef.child("employeeShift").child("010").child("2016-10-30").child("102306111").observeEventType(.Value, withBlock: {snapshot in
-            
-            print("sssssssssssnaaaaaaaaaapshot",snapshot.value)
-            
-        })
+       
         shiftDBRef.child("employeeShift").child("010").child("currentShift").observeEventType(.Value, withBlock: {
             
             
             snapshot in
             
-            print("currentShift",snapshot.value)
             
             self.currentWeekStartDate = snapshot.value as! String
             
@@ -86,7 +81,6 @@ class EmployeeWeekViewController: UIViewController,MSWeekViewDelegate {
             
             self.titleItem.title = "\(shiftStartDateString) - \(shiftEndDateString)"
             
-            print("shift Date",self.currentWeekStartDate)
             
             self.setupWeekData()
             
@@ -127,9 +121,7 @@ class EmployeeWeekViewController: UIViewController,MSWeekViewDelegate {
         
         self.decoratedWeekView = MSWeekViewDecoratorFactory.make(self.weeklyView, features: 3 , andDelegate: self)
         let event1: MSEvent = MSEvent.make(shiftDate, duration: 0, title: "", location: "")
-        print("event1")
         let event2: MSEvent = MSEvent.make(shiftDate.addDays(1), duration: 0, title: "", location: "")
-        print("event2")
         let event3: MSEvent = MSEvent.make(shiftDate.addDays(2), duration: 0, title: "", location: "")
         let event4: MSEvent = MSEvent.make(shiftDate.addDays(3), duration: 0, title: "", location: "")
         let event5: MSEvent = MSEvent.make(shiftDate.addDays(4), duration: 0, title: "", location: "")
@@ -211,8 +203,6 @@ class EmployeeWeekViewController: UIViewController,MSWeekViewDelegate {
             
             snapshot in
             
-            print("AAAAAAAAAAAAADDDDDDDD",snapshot.value)
-            
             
             
             let startDateString = snapshot.value!["Start Date"] as! String
@@ -223,7 +213,7 @@ class EmployeeWeekViewController: UIViewController,MSWeekViewDelegate {
             
             let dateformatter = NSDateFormatter()
             
-            dateformatter.dateFormat = "yyyy-M-dd-H:mm"
+            dateformatter.dateFormat = "yyyy-M-dd-HH:mm"
             
             let startDate = dateformatter.dateFromString(startDateString)!
             

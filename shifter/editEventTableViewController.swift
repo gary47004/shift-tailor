@@ -160,7 +160,7 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
         
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-M-dd-H:mm"
+        dateFormatter.dateFormat = "yyyy-M-dd-HH:mm"
         
         let startDate = dateFormatter.stringFromDate(dateArray[0])
         let endDate = dateFormatter.stringFromDate(dateArray[1])
@@ -185,7 +185,7 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
         let eventDBRef = FIRDatabase.database().reference()
         
         
-        eventDBRef.child("managerEvent").child("010").child(shiftStartDate).child(event.key).updateChildValues(["Start Date":startDate, "End Date": endDate, "Coding":event.coding, "Dancing":event.dancing, "Cleaning": event.cleaning])
+        eventDBRef.child("managerEvent").child("010").child(shiftStartDate).child(event.key).updateChildValues(["StartDate":startDate, "EndDate": endDate, "Coding":event.coding, "Dancing":event.dancing, "Cleaning": event.cleaning])
         
         
     

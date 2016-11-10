@@ -95,7 +95,7 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-M-dd-H:mm"
+        dateFormatter.dateFormat = "yyyy-M-dd-HH:mm"
         
         let startDate = dateFormatter.stringFromDate(dateArray[0])
         let endDate = dateFormatter.stringFromDate(dateArray[1])
@@ -104,8 +104,8 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
         
        
         
-        let event : [String:AnyObject] = [itemArray[0][0]: startDate,
-                                          itemArray[0][1] : endDate,
+        let event : [String:AnyObject] = ["StartDate" : startDate,
+                                          "EndDate" : endDate,
                                           itemArray[1][0] : jobArray[0],
                                           itemArray[1][1] : jobArray[1],
                                           itemArray[1][2] : jobArray[2]
