@@ -48,7 +48,6 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
                     self.sectionArray.insert(section!, atIndex: 0)
                     self.keyArray.insert(key, atIndex: 0)
                     
-                    print(self.titleArray)
                     if section == 0{
                         self.section0Key.insert(key, atIndex: 0)
                     }else{
@@ -76,8 +75,12 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
     override func viewWillAppear(animated: Bool) {
         self.title = "通知"
         tabBarController?.tabBar.items?[2].badgeValue = nil
-        let tabBarVC = self.tabBarController as? TabBarViewController
-        tabBarVC?.newNotification = 0
+        let tabBarVC = self.tabBarController as! TabBarViewController
+        tabBarVC.oldNotifications += tabBarVC.newNotifications
+        tabBarVC.newNotifications = 0
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(tabBarVC.oldNotifications, forKey: "oldNotifications")
         
     }
     
@@ -94,8 +97,6 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if typeArray[indexPath.row] == "公告欄"{
-            print("present post")
-            
             let tabBarVC = self.tabBarController as! TabBarViewController
             
             //set selected section and row

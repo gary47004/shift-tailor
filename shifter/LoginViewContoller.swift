@@ -141,7 +141,7 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
         
         if let keyboardSize = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue(){
             if view.frame.origin.y == 0{
-                view.frame.origin.y -= keyboardSize.height
+                view.frame.origin.y -= keyboardSize.height - 100
             }
             
         }
@@ -152,7 +152,7 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
         
         if let keyboardSize = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue(){
             if view.frame.origin.y != 0{
-                view.frame.origin.y += keyboardSize.height
+                view.frame.origin.y += keyboardSize.height - 100
             }
             
         }

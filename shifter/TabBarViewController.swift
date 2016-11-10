@@ -16,7 +16,9 @@ class TabBarViewController: UITabBarController {
     var currentDID = String()
     var currentRank = String()
     
-    var newNotification = Int()
+    var newNotifications = Int()
+    var oldNotifications = Int()
+    var notifications = Int()
     
     var section0Posts = [post]()
     var section1Posts = [post]()
@@ -34,9 +36,7 @@ class TabBarViewController: UITabBarController {
         currentSID = defaults.objectForKey("currentSID") as! String
         currentDID = defaults.objectForKey("currentDID") as! String
         currentRank = defaults.objectForKey("currentRank") as! String
-        print("TTTTTTTTTTTTTTT",currentUID,currentSID,currentDID,currentRank)
         
-        print("tabBar Loaded")
         
         //set Firebase listener
         let databaseRef = FIRDatabase.database().reference()
@@ -62,8 +62,15 @@ class TabBarViewController: UITabBarController {
                                         
                     //notification
                     if employee != self.currentUID{
-                        self.newNotification += 1
-                        self.tabBar.items?[2].badgeValue = String(self.newNotification)
+                        self.notifications += 1
+                        let defaults = NSUserDefaults.standardUserDefaults()
+                        if defaults.objectForKey("oldNotifications") != nil{
+                            self.oldNotifications = defaults.objectForKey("oldNotifications") as! Int
+                        }
+                        self.newNotifications = self.notifications - self.oldNotifications
+                        if self.newNotifications > 0{
+                            self.tabBar.items?[2].badgeValue = String(self.newNotifications)
+                        }
                     }
                 }else{
                     //posted district post
@@ -71,9 +78,15 @@ class TabBarViewController: UITabBarController {
                     self.section1Refs.insert(postRef, atIndex: 0)
                     
                     if employee != self.currentUID{
-                        self.newNotification += 1
-                        self.tabBar.items?[2].badgeValue = String(self.newNotification)
-                    }
+                        self.notifications += 1
+                        let defaults = NSUserDefaults.standardUserDefaults()
+                        if defaults.objectForKey("oldNotifications") != nil{
+                            self.oldNotifications = defaults.objectForKey("oldNotifications") as! Int
+                        }
+                        self.newNotifications = self.notifications - self.oldNotifications
+                        if self.newNotifications > 0{
+                            self.tabBar.items?[2].badgeValue = String(self.newNotifications)
+                        }                    }
                 }
             }else{
                 //posted by other store
@@ -84,9 +97,15 @@ class TabBarViewController: UITabBarController {
                         self.section1Refs.insert(postRef, atIndex: 0)
                         
                         if employee != self.currentUID{
-                            self.newNotification += 1
-                            self.tabBar.items?[2].badgeValue = String(self.newNotification)
-                        }
+                            self.notifications += 1
+                            let defaults = NSUserDefaults.standardUserDefaults()
+                            if defaults.objectForKey("oldNotifications") != nil{
+                                self.oldNotifications = defaults.objectForKey("oldNotifications") as! Int
+                            }
+                            self.newNotifications = self.notifications - self.oldNotifications
+                            if self.newNotifications > 0{
+                                self.tabBar.items?[2].badgeValue = String(self.newNotifications)
+                            }                        }
                     }
                 }
             }
@@ -198,8 +217,15 @@ class TabBarViewController: UITabBarController {
                                 self.section1Posts.insert(post(title: title, time: time, content: content, section: section, employee: employee, store: store, district: district), atIndex: index)
                                 
                                 if employee != self.currentUID{
-                                    self.newNotification += 1
-                                    self.tabBar.items?[2].badgeValue = String(self.newNotification)
+                                    self.notifications += 1
+                                    let defaults = NSUserDefaults.standardUserDefaults()
+                                    if defaults.objectForKey("oldNotifications") != nil{
+                                        self.oldNotifications = defaults.objectForKey("oldNotifications") as! Int
+                                    }
+                                    self.newNotifications = self.notifications - self.oldNotifications
+                                    if self.newNotifications > 0{
+                                        self.tabBar.items?[2].badgeValue = String(self.newNotifications)
+                                    }
                                 }
                             }
                         }
