@@ -47,6 +47,7 @@
     event.cleaningList = cleaningList;
     event.dancingList = dancingList;
     event.shiftType = shiftType;
+    event.key = key;
     
     return event;
 }

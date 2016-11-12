@@ -270,6 +270,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
             let eventDBRef = FIRDatabase.database().reference()
             eventDBRef.child("managerEvent").child("010").child("currentEventDeadline").setValue(self.deadlineDate)
             eventDBRef.child("managerEvent").child("010").child("setEventSwitch").setValue(false)
+            eventDBRef.child("managerEvent").child("010").child("isSchedulingSwitch").setValue(true)
             let completeVC = UIAlertController(title: "已完成排班", message: "將於 \(self.deadlineDate) 收到班表",preferredStyle: .Alert)
             let confirmAction = UIAlertAction(title: "OK", style: .Default, handler: {(alert:UIAlertAction) in
             
