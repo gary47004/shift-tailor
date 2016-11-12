@@ -13,9 +13,9 @@ class NotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     
-    func setType(type: String){
-        typeLabel.text = "[\(type)]"
-    }
+//    func setType(type: String){
+//        typeLabel.text = "[\(type)]"
+//    }
     
     func setTitle(title: String){
         titleLabel.text = title

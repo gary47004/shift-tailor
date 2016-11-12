@@ -22,6 +22,10 @@ class Settings: UITableViewController {
         let tabBarVC = self.tabBarController as! TabBarViewController
         currentUID = tabBarVC.currentUID
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.title = "設定"
+    }
 
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,7 +39,12 @@ class Settings: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 2{
+        
+        if indexPath.row == 1{
+            performSegueWithIdentifier("showTransferable", sender: nil)
+            self.title = "Back"
+    
+        }else if indexPath.row == 2{
             
             let alertController = UIAlertController(title: "Change Password", message: "please enter new password", preferredStyle: UIAlertControllerStyle.Alert)
                 alertController.addTextFieldWithConfigurationHandler({ (textField: UITextField) in

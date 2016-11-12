@@ -61,6 +61,7 @@
 		435A374F1DBF2E3F00BA6974 /* BulletinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435A374E1DBF2E3F00BA6974 /* BulletinDetail.swift */; };
 		43778AD71D6ECDDB00D74478 /* BulletinCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43778AD61D6ECDDB00D74478 /* BulletinCompose.swift */; };
 		43D2EDBC1DAF95AB00E5133E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D2EDBB1DAF95AB00E5133E /* TabBarViewController.swift */; };
+		43DBC69C1DD4A90200B8A426 /* TransferableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DBC69B1DD4A90200B8A426 /* TransferableViewController.swift */; };
 		43F708261DBDE90A006432EB /* Bulletin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F708251DBDE90A006432EB /* Bulletin.swift */; };
 		CDCF55F9FA1EE4396F39383B /* Pods_shifter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735680C7B9CA8A9AB24F547B /* Pods_shifter.framework */; };
 /* End PBXBuildFile section */
@@ -142,6 +143,7 @@
 		435A374E1DBF2E3F00BA6974 /* BulletinDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinDetail.swift; sourceTree = "<group>"; };
 		43778AD61D6ECDDB00D74478 /* BulletinCompose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinCompose.swift; sourceTree = "<group>"; };
 		43D2EDBB1DAF95AB00E5133E /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		43DBC69B1DD4A90200B8A426 /* TransferableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferableViewController.swift; sourceTree = "<group>"; };
 		43F708251DBDE90A006432EB /* Bulletin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bulletin.swift; sourceTree = "<group>"; };
 		735680C7B9CA8A9AB24F547B /* Pods_shifter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_shifter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74F47A4D01FED2182C3E71B5 /* Pods-shifter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shifter.release.xcconfig"; path = "Pods/Target Support Files/Pods-shifter/Pods-shifter.release.xcconfig"; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				431022211D60E8F400C47D22 /* Settings.swift */,
+				43DBC69B1DD4A90200B8A426 /* TransferableViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				04852D241DB37F9700229CAE /* MSCollectionViewCalendarLayout.m in Sources */,
 				04BCE11D1DB38C32004A8162 /* EmployeeWeekViewController.swift in Sources */,
 				431022221D60E8F400C47D22 /* Settings.swift in Sources */,
+				43DBC69C1DD4A90200B8A426 /* TransferableViewController.swift in Sources */,
 				04BCE1311DB490B9004A8162 /* ShiftEmployeeTableViewCell.swift in Sources */,
 				04852D321DB37F9700229CAE /* MSWeekViewDecoratorFactory.m in Sources */,
 				04BCE1361DB496D1004A8162 /* addEventTableViewController.swift in Sources */,

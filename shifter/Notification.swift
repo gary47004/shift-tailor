@@ -90,7 +90,7 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("notificationCell") as? NotificationTableViewCell
-        cell?.setType(typeArray[indexPath.row])
+//        cell?.setType(typeArray[indexPath.row])
         cell?.setTitle(titleArray[indexPath.row])
         return cell!
     }

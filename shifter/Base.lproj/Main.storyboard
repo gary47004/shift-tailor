@@ -204,7 +204,7 @@
         <!--Settings-->
         <scene sceneID="JgO-hV-1gT">
             <objects>
-                <tableViewController id="oYz-dZ-LEq" userLabel="Settings" customClass="Settings" customModule="shifter" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="oYz-dZ-LEq" userLabel="Settings" customClass="Settings" customModule="shifter" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ncW-f1-eZl" userLabel="settings">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -219,31 +219,27 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="oYz-dZ-LEq" id="381-AH-zq5"/>
-                            <outlet property="delegate" destination="oYz-dZ-LEq" id="E42-fv-i39"/>
-                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="3u7-YE-v1K"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="WYd-lt-b4q" kind="show" identifier="showDetail" id="tzu-sb-8nP"/>
+                        <segue destination="WYd-lt-b4q" kind="show" identifier="showTransferable" id="tzu-sb-8nP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7QD-cU-Vc1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-349.5" y="3501.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Transferable View Controller-->
         <scene sceneID="hwY-6s-ejm">
             <objects>
-                <tableViewController id="WYd-lt-b4q" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Hpb-Dt-Aki">
+                <tableViewController id="WYd-lt-b4q" customClass="TransferableViewController" customModule="shifter" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" canCancelContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelection="YES" allowsMultipleSelectionDuringEditing="YES" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Hpb-Dt-Aki">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="F1F-fl-Uk8">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="F1F-fl-Uk8">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F1F-fl-Uk8" id="zAl-SM-FGc">
@@ -403,7 +399,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Dh8-UR-kgA">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="oNF-JU-q4Z" kind="relationship" relationship="viewControllers" id="J8q-Jj-zo7"/>
@@ -777,7 +773,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="oYz-dZ-LEq" kind="show" identifier="showTransferable" id="gry-xo-kbs"/>
+                        <segue destination="oYz-dZ-LEq" kind="relationship" relationship="rootViewController" id="9sk-OS-NYh"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lqE-Pd-RYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
