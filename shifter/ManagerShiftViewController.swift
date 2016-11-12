@@ -36,6 +36,8 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     
     var currentEventDeadline : NSDate!
     
+    var isSchedulingSwitch : Bool!
+    
     
     
     @IBOutlet weak var titleItem: UINavigationItem!
@@ -121,7 +123,23 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     }
     
     @IBAction func setEvent(sender: AnyObject) {
+        
+        let dateFormatter = NSDateFormatter()
+        var currentTime = NSDate()
+        
+        
+        dateFormatter.dateFormat = "yyyy-M-dd-HH:mm"
+        let currentTimeString = dateFormatter.stringFromDate(currentTime)
+        currentTime = dateFormatter.dateFromString(currentTimeString)!
+    
+        let dateComponentsFormatter = NSDateComponentsFormatter ()
+        dateComponentsFormatter.unitsStyle = NSDateComponentsFormatterUnitsStyle.Full
+        let interval = self.currentEventDeadline!.timeIntervalSinceDate(currentTime)
+        print("剩餘時間：",dateComponentsFormatter.stringFromTimeInterval(interval)!)
+        
+        
         let startDateAlertVC = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: "", preferredStyle: .ActionSheet)
+        let isSchedulingVC = UIAlertController(title: "正在排班中", message: "剩餘時間：\n\(dateComponentsFormatter.stringFromTimeInterval(interval)!)", preferredStyle: .Alert)
 
         let datePickerView = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
         datePickerView.datePickerMode = .Date
@@ -137,8 +155,8 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     
         })
         
-        
-        
+        let okAction = UIAlertAction(title: "確認", style: .Default, handler:nil)
+    
         let setShiftAction = UIAlertAction(title: "Confirm", style: .Default, handler:
             {(alert: UIAlertAction!) in
                  self.performSegueWithIdentifier("setEvent", sender: nil)
@@ -184,17 +202,23 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         startDateAlertVC.addAction(presentSummaryViewAction)
         startDateAlertVC.addAction(cancelAction)
         
-        if self.setEventSwitch == true{
-            
-            self.performSegueWithIdentifier("setEvent", sender: nil)
-            
-        }else {
-            self.presentViewController(startDateAlertVC, animated: true, completion: nil)
+        isSchedulingVC.addAction(okAction)
+        
+        if self.isSchedulingSwitch == true{
+            print("is scheduling")
+            self.presentViewController(isSchedulingVC, animated: true, completion: nil)
+        }else{
+            if self.setEventSwitch == true{
+                
+                self.performSegueWithIdentifier("setEvent", sender: nil)
+                
+            }else {
+                self.presentViewController(startDateAlertVC, animated: true, completion: nil)
+                
+            }
             
         }
         
-        
-
     }
         
     
@@ -260,6 +284,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             self.setEventSwitch = snapshot.childSnapshotForPath("setEventSwitch").value as! Bool
             self.shiftStartDate = snapshot.childSnapshotForPath("currentEvent").value as! String
+            self.isSchedulingSwitch = snapshot.childSnapshotForPath("isSchedulingSwitch").value as! Bool
             
             let deadlineString = snapshot.childSnapshotForPath("currentEventDeadline").value as! String
             print(deadlineString)
@@ -279,6 +304,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         if segue.identifier == "showDetailSegue"{
             let destinationVC = segue.destinationViewController as! ManagerShiftDetailViewController
             
+            destinationVC.currentWeekStartDate = currentWeekStartDate
             destinationVC.selectedEvent = selectedEvent //from eventSelected
             
             let backItem = UIBarButtonItem()
@@ -294,22 +320,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             print("ShiftStartDate",self.shiftStartDate)
             
-            let dateFormatTer = NSDateFormatter()
-            var currentTime = NSDate()
-            
-            
-            dateFormatTer.dateFormat = "yyyy-M-dd-HH:mm"
-            let currentTimeString = dateFormatTer.stringFromDate(currentTime)
-            currentTime = dateFormatTer.dateFromString(currentTimeString)!
-            
-            
-            print("ct",currentTime)
-            print("dl",self.currentEventDeadline)
-            
-            let dateComponentsFormatter = NSDateComponentsFormatter ()
-            dateComponentsFormatter.unitsStyle = NSDateComponentsFormatterUnitsStyle.Full
-            let interval = self.currentEventDeadline!.timeIntervalSinceDate(currentTime)
-            print("剩餘時間：",dateComponentsFormatter.stringFromTimeInterval(interval)!)
+      
             
             let setEventDBREF = FIRDatabase.database().reference()
             setEventDBREF.child("managerEvent").child("010").child("setEventSwitch").setValue(true)
@@ -344,12 +355,12 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             let startDateString = post["Start Date"] as! String
             
             let eventID = snapshot.key
-            
+        
             let endDateString = post["End Date"] as! String
             
             let eventType = post["Type"] as! String
             
-            
+            print(snapshot.childSnapshotForPath("Cleaning").value)
             
             let codingList = snapshot.childSnapshotForPath("Coding").value
             let cleaningList = snapshot.childSnapshotForPath("Cleaning").value
@@ -375,7 +386,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             //self.eventList.append(eventStruct(startDate: startDate,endDate: endDate, coding: coding, dancing: dancing, cleaning: cleaning, key: eventID))
             
-            let newEvent = MSEvent.make(startDate, end: endDate, title: "\(eventType)\n\(shortStartDateString)", location: "\(shortEndDateString)", key: eventID, codingList: codingList as! [[String]], cleaningList: cleaningList as! [[String]], dancingList:dancingList as![[String]] ,shiftType: eventType)
+            let newEvent = MSEvent.make(startDate, end: endDate, title: "\(eventType)\n\(shortStartDateString)", location: "\(shortEndDateString)", key: eventID, codingList: codingList as! [[String:String]], cleaningList: cleaningList as! [[String:String]], dancingList:dancingList as![[String:String]] ,shiftType: eventType)
             
             
             
@@ -390,11 +401,9 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             
             
-            
             newEventArray.append(newEvent)
             
-            
-            
+                        
             self.weeklyView.events = newEventArray
             
             self.weeklyView.addEvents([event1,event2,event3,event4,event5,event6,event7])

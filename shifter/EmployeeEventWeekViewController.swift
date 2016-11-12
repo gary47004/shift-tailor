@@ -151,6 +151,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
     func weekView(sender: AnyObject!, eventSelected event: MSEvent!) {
         
         
+        
         selectedEvent = event
         
         performSegueWithIdentifier("employeeEditEventSegue", sender: nil)

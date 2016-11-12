@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -16,7 +18,9 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
     
     var sectionTitleArray = [String]()
     
-    let jobArray = ["","Coding","Cleaning","Dancing"]
+    let jobArray = ["Coding","Cleaning","Dancing"]
+    
+    var currentWeekStartDate: String!
     
     
     
@@ -27,13 +31,13 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.sectionTitleArray = ["排班概況","Coding: \(selectedEvent.codingList.count) 位", "Cleaning: \(selectedEvent.cleaningList.count) 位", "Dancing: \(selectedEvent.dancingList.count) 位"]
+        print(currentWeekStartDate)
+        self.sectionTitleArray = ["Coding: \(selectedEvent.codingList.count) 位", "Cleaning: \(selectedEvent.cleaningList.count) 位", "Dancing: \(selectedEvent.dancingList.count) 位"]
         
         let titleFormatter = NSDateFormatter()
         titleFormatter.dateFormat = "MMM dd eee"
         
-        self.titleItem.title = titleFormatter.stringFromDate(selectedEvent.StartDate) + "  " + selectedEvent.shiftType
+        self.titleItem.title = titleFormatter.stringFromDate(selectedEvent.StartDate)
 
         // Do any additional setup after loading the view.
     }
@@ -43,16 +47,12 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        return 3
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let conditionCell = self.managerShiftDetailTableView.dequeueReusableCellWithIdentifier("ConditionCell") as! ConditionTableViewCell
         let employeeCell = self.managerShiftDetailTableView.dequeueReusableCellWithIdentifier("EmployeeCell") as! ShiftEmployeeTableViewCell
-        
-        conditionCell.totalEmployeeLabel.text = "總共： 人"
-        conditionCell.lackingEmployeeLabel.text = "缺少： 人"
         
         let empStartDate: NSDate
         let empEndDate: NSDate
@@ -63,24 +63,32 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
         let dateformatter = NSDateFormatter()
         
         dateformatter.dateFormat = "yyyy-M-dd-HH:mm"
-        if indexPath.section == 1{
-            employeeCell.employeeNameLabel.text = (selectedEvent.codingList[indexPath.row] as? NSArray)![0] as? String
+        if indexPath.section == 0{
+            employeeCell.employeeNameLabel.text = (selectedEvent.codingList[indexPath.row] as? NSDictionary)!["Name"] as? String
             
-        
-            
-            
-        }else if indexPath.section == 2 {
-            employeeCell.employeeNameLabel.text = (selectedEvent.cleaningList[indexPath.row] as? NSArray)![0] as? String
-            
-            print(selectedEvent.cleaningList[indexPath.row][1])
-            
-            empStartDate = dateformatter.dateFromString(((selectedEvent.cleaningList[indexPath.row] as? NSArray)![1] as? String)!)!
-            empEndDate = dateformatter.dateFromString(((selectedEvent.cleaningList[indexPath.row] as? NSArray)![2] as? String)!)!
+            empStartDate = dateformatter.dateFromString(((selectedEvent.codingList[indexPath.row] as? NSDictionary)!["StartDate"] as? String)!)!
+            empEndDate = dateformatter.dateFromString(((selectedEvent.codingList[indexPath.row] as? NSDictionary)!["EndDate"] as? String)!)!
             employeeCell.startTimeLabel.text = shortFormatter.stringFromDate(empStartDate)
             employeeCell.endTimeLabel.text = shortFormatter.stringFromDate(empEndDate)
             
-        }else if indexPath.section == 3 {
-            employeeCell.employeeNameLabel.text = (selectedEvent.dancingList[indexPath.row] as? NSArray)![0] as? String
+            
+        }else if indexPath.section == 1 {
+            employeeCell.employeeNameLabel.text = (selectedEvent.cleaningList[indexPath.row] as? NSDictionary)!["Name"] as? String
+            
+            
+            
+            empStartDate = dateformatter.dateFromString(((selectedEvent.cleaningList[indexPath.row] as? NSDictionary)!["StartDate"] as? String)!)!
+            empEndDate = dateformatter.dateFromString(((selectedEvent.cleaningList[indexPath.row] as? NSDictionary)!["EndDate"] as? String)!)!
+            employeeCell.startTimeLabel.text = shortFormatter.stringFromDate(empStartDate)
+            employeeCell.endTimeLabel.text = shortFormatter.stringFromDate(empEndDate)
+            
+        }else if indexPath.section == 2 {
+            employeeCell.employeeNameLabel.text = (selectedEvent.dancingList[indexPath.row] as? NSDictionary)!["Name"] as? String
+            
+            empStartDate = dateformatter.dateFromString(((selectedEvent.dancingList[indexPath.row] as? NSDictionary)!["StartDate"] as? String)!)!
+            empEndDate = dateformatter.dateFromString(((selectedEvent.dancingList[indexPath.row] as? NSDictionary)!["EndDate"] as? String)!)!
+            employeeCell.startTimeLabel.text = shortFormatter.stringFromDate(empStartDate)
+            employeeCell.endTimeLabel.text = shortFormatter.stringFromDate(empEndDate)
         }
         
         
@@ -90,21 +98,16 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
         
         
         
-        if indexPath.section == 0{
-            return conditionCell
-            
-        }else{
-            return employeeCell
-        }
+        
+        return employeeCell
+        
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
-            return 1
-        }else if section == 1{
             return selectedEvent.codingList.count
-        }else if section == 2{
+        }else if section == 1{
             return selectedEvent.cleaningList.count
-        }else if section == 3{
+        }else if section == 2{
             return selectedEvent.dancingList.count
         }else{
             return 0
