@@ -17,14 +17,13 @@ class Settings: UITableViewController {
     var currentUID = String()
     
     override func viewDidLoad() {
-        self.title = "設定"
-        
         let tabBarVC = self.tabBarController as! TabBarViewController
         currentUID = tabBarVC.currentUID
     }
     
     override func viewWillAppear(animated: Bool) {
         self.title = "設定"
+        self.navigationController?.title = ""
     }
 
     

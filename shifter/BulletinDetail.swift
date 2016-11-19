@@ -10,7 +10,7 @@ import UIKit
 
 
 class BulletinDetail: UITableViewController {
-    let subjectArray = ["標題：","時間：","內容"]
+    let subjectArray = ["標題：","時間：","作者：","內容："]
     var selectedSection = Int()
     var selectedRow = Int()
     var section0Posts = [post]()
@@ -24,9 +24,11 @@ class BulletinDetail: UITableViewController {
     override func viewDidLoad() {
         self.tabBarController?.tabBar.hidden = true
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(BulletinDetail.editPressed))
+        editButton.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = editButton
         
-        let backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Done, target: self, action: #selector(BulletinDetail.backToBulletin))
+        let backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Done, target: self, action: #selector(BulletinDetail.backPressed))
+        backButton.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backButton
         
         
@@ -64,8 +66,8 @@ class BulletinDetail: UITableViewController {
         
     }
     
-    func backToBulletin(){
-        self.tabBarController?.selectedIndex = 1
+    func backPressed(){
+        tabBarController?.selectedIndex = 1 //let path trough notification ends at bulletin
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
@@ -87,15 +89,15 @@ class BulletinDetail: UITableViewController {
     
     //set tableView
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("bulletinDetailCell")! as UITableViewCell
-        let subjectLabel = UILabel(frame: CGRectMake(20,10,51,21))
         
         //set subject and content labels
+        let subjectLabel = UILabel(frame: CGRectMake(20,10,51,21))
         cell.addSubview(subjectLabel)
         subjectLabel.text = subjectArray[indexPath.row]
         let valueLabel = UILabel(frame: CGRectMake(60,10,400,21))
@@ -113,6 +115,12 @@ class BulletinDetail: UITableViewController {
                 valueLabel.text = section0Posts[selectedRow].time
             }else{
                 valueLabel.text = section1Posts[selectedRow].time
+            }
+        }else if indexPath.row == 2{
+            if selectedSection == 0{
+                valueLabel.text = section0Posts[selectedRow].employee
+            }else{
+                valueLabel.text = section1Posts[selectedRow].employee
             }
         }else{
             if selectedSection == 0{

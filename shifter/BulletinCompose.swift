@@ -34,7 +34,12 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
         super.viewDidLoad()
         self.title = "新增公告"
         let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: #selector(BulletinCompose.donePressed))
+        doneButton.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = doneButton
+        
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: #selector(BulletinCompose.cancelPressed))
+        cancelButton.tintColor = UIColor.whiteColor()
+        navigationItem.leftBarButtonItem = cancelButton
         firstLoad = true
         self.tabBarController?.tabBar.hidden = true
         
@@ -327,6 +332,10 @@ class BulletinCompose: UIViewController, UITableViewDelegate, UITableViewDataSou
         //go back to bulletin without losing tab bar and navigation controller
         self.navigationController?.popToRootViewControllerAnimated(true)
         
+    }
+    
+    func cancelPressed(){
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func deletePressed(){

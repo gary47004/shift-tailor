@@ -12,39 +12,34 @@ import FirebaseDatabase
 
 class TransferableViewController: UITableViewController {
     var storeArray = [String]()
-    var distantArray = [AnyObject]()
+    var distanceArray = [String]()
+    var transferableArray = [Bool]()
+    var currentSID = String()
     
     override func viewDidLoad() {
         self.title = "調撥門市"
                 
         let tabBarVC = self.tabBarController as! TabBarViewController
-        let currentSID = tabBarVC.currentSID
+        currentSID = tabBarVC.currentSID
         
         let databaseRef = FIRDatabase.database().reference()
         
         databaseRef.child("store/\(currentSID)/transferable").observeEventType(.ChildAdded, withBlock: { snapshot in
             let store = snapshot.key
+            let transferable = snapshot.value as! Bool
             
-            self.storeArray.insert(store, atIndex: 0)
+            self.storeArray.append(store)
+            self.transferableArray.append(transferable)
             self.tableView.reloadData()
+            
         })
 
-//        databaseRef.child("store/\(currentSID)/transferable").observeEventType(.ChildAdded, withBlock: { snapshot in
-//            let store = snapshot.key
-//
-//            self.storeArray.insert(store, atIndex: 0)
-//            self.tableView.reloadData()
-//        })
         
-        databaseRef.child("store/\(currentSID)/distant").observeEventType(.ChildAdded, withBlock: { snapshot in
+        databaseRef.child("store/\(currentSID)/distance").observeEventType(.ChildAdded, withBlock: { snapshot in
+            let distance = snapshot.value as! String
             
-            print(snapshot)
-//            let store = snapshot.key
-//            print(store)
-            let distant = snapshot.value!["020"] as? String
-//
-            print(distant)
-            
+            self.distanceArray.append(distance)
+            self.tableView.reloadData()
         })
     }
     
@@ -55,15 +50,38 @@ class TransferableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = storeArray[indexPath.row]
+        let distanceLabel = UILabel(frame: CGRectMake(284,11,60,21))
+        if distanceArray != []{
+            distanceLabel.text = distanceArray[indexPath.row] + " km"
+            cell.addSubview(distanceLabel)
+        }
+        
+        if transferableArray[indexPath.row] == true{
+            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+        }else{
+            cell.accessoryType = UITableViewCellAccessoryType.None
+        }
+        
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         return cell
     }
     
+    //make transferable
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.Checkmark
+        transferableArray[indexPath.row] = true
+        let databaseRef  = FIRDatabase.database().reference()
+        let store = storeArray[indexPath.row]
+        databaseRef.child("store/\(currentSID)/transferable/").updateChildValues([ store : true ])
     }
+    
+    //make untransferable
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.None
+        transferableArray[indexPath.row] = false
+        let databaseRef  = FIRDatabase.database().reference()
+        let store = storeArray[indexPath.row]
+        databaseRef.child("store/\(currentSID)/transferable/").updateChildValues([ store : false ])
     }
     
 }
