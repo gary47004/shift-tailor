@@ -31,6 +31,10 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {                                                               
         super.viewDidLoad()
         
+        //UI
+        tabBar.barTintColor = UIColor(red: 12/255, green: 12/255, blue: 12/255, alpha: 100/255)
+        tabBar.tintColor = UIColor.whiteColor()
+        
         let defaults = NSUserDefaults.standardUserDefaults()
         currentUID = defaults.objectForKey("currentUID") as! String
         currentSID = defaults.objectForKey("currentSID") as! String
@@ -234,6 +238,7 @@ class TabBarViewController: UITabBarController {
                 }
             }
         })
+        
     }
 
     override func didReceiveMemoryWarning() {

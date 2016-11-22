@@ -58,11 +58,11 @@
 		432687341D83DD2A003BD479 /* TextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432687331D83DD2A003BD479 /* TextInputTableViewCell.swift */; };
 		435A374C1DBF261400BA6974 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435A374A1DBF261400BA6974 /* NotificationTableViewCell.swift */; };
 		435A374D1DBF261400BA6974 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 435A374B1DBF261400BA6974 /* NotificationTableViewCell.xib */; };
-		435A374F1DBF2E3F00BA6974 /* BulletinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435A374E1DBF2E3F00BA6974 /* BulletinDetail.swift */; };
-		43778AD71D6ECDDB00D74478 /* BulletinCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43778AD61D6ECDDB00D74478 /* BulletinCompose.swift */; };
 		43D2EDBC1DAF95AB00E5133E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D2EDBB1DAF95AB00E5133E /* TabBarViewController.swift */; };
 		43DBC69C1DD4A90200B8A426 /* TransferableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DBC69B1DD4A90200B8A426 /* TransferableViewController.swift */; };
 		43F708261DBDE90A006432EB /* Bulletin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F708251DBDE90A006432EB /* Bulletin.swift */; };
+		43F96E8A1DE172FF00B7D460 /* BulletinCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F96E891DE172FF00B7D460 /* BulletinCompose.swift */; };
+		43F96E8C1DE19A4900B7D460 /* BulletinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F96E8B1DE19A4900B7D460 /* BulletinDetail.swift */; };
 		CDCF55F9FA1EE4396F39383B /* Pods_shifter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735680C7B9CA8A9AB24F547B /* Pods_shifter.framework */; };
 /* End PBXBuildFile section */
 
@@ -140,11 +140,11 @@
 		432687331D83DD2A003BD479 /* TextInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputTableViewCell.swift; sourceTree = "<group>"; };
 		435A374A1DBF261400BA6974 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		435A374B1DBF261400BA6974 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
-		435A374E1DBF2E3F00BA6974 /* BulletinDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinDetail.swift; sourceTree = "<group>"; };
-		43778AD61D6ECDDB00D74478 /* BulletinCompose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinCompose.swift; sourceTree = "<group>"; };
 		43D2EDBB1DAF95AB00E5133E /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		43DBC69B1DD4A90200B8A426 /* TransferableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferableViewController.swift; sourceTree = "<group>"; };
 		43F708251DBDE90A006432EB /* Bulletin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bulletin.swift; sourceTree = "<group>"; };
+		43F96E891DE172FF00B7D460 /* BulletinCompose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinCompose.swift; sourceTree = "<group>"; };
+		43F96E8B1DE19A4900B7D460 /* BulletinDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinDetail.swift; sourceTree = "<group>"; };
 		735680C7B9CA8A9AB24F547B /* Pods_shifter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_shifter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74F47A4D01FED2182C3E71B5 /* Pods-shifter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shifter.release.xcconfig"; path = "Pods/Target Support Files/Pods-shifter/Pods-shifter.release.xcconfig"; sourceTree = "<group>"; };
 		DF887F1EFBBF18CB0BFB310D /* Pods-shifter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shifter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shifter/Pods-shifter.debug.xcconfig"; sourceTree = "<group>"; };
@@ -355,9 +355,9 @@
 			children = (
 				4326143D1DACCD4D0080AD10 /* DateTableViewCell.swift */,
 				432687331D83DD2A003BD479 /* TextInputTableViewCell.swift */,
-				435A374E1DBF2E3F00BA6974 /* BulletinDetail.swift */,
 				43F708251DBDE90A006432EB /* Bulletin.swift */,
-				43778AD61D6ECDDB00D74478 /* BulletinCompose.swift */,
+				43F96E891DE172FF00B7D460 /* BulletinCompose.swift */,
+				43F96E8B1DE19A4900B7D460 /* BulletinDetail.swift */,
 			);
 			name = Bulletin;
 			sourceTree = "<group>";
@@ -564,7 +564,6 @@
 				04852D291DB37F9700229CAE /* MSDayColumnHeaderBackground.m in Sources */,
 				04852D281DB37F9700229CAE /* MSDayColumnHeader.m in Sources */,
 				04852D331DB37F9700229CAE /* MSWeekViewDecoratorInfinite.m in Sources */,
-				435A374F1DBF2E3F00BA6974 /* BulletinDetail.swift in Sources */,
 				04BCE1201DB46AB4004A8162 /* EmployeeEventWeekViewController.swift in Sources */,
 				432687341D83DD2A003BD479 /* TextInputTableViewCell.swift in Sources */,
 				04BCE12F1DB490A1004A8162 /* ConditionTableViewCell.swift in Sources */,
@@ -581,7 +580,6 @@
 				04852D321DB37F9700229CAE /* MSWeekViewDecoratorFactory.m in Sources */,
 				04BCE1361DB496D1004A8162 /* addEventTableViewController.swift in Sources */,
 				04852D301DB37F9700229CAE /* MSWeekViewDecorator.m in Sources */,
-				43778AD71D6ECDDB00D74478 /* BulletinCompose.swift in Sources */,
 				04852D2B1DB37F9700229CAE /* MSEvent.m in Sources */,
 				4310221E1D60D6EB00C47D22 /* Notification.swift in Sources */,
 				043BA15A1DC89A2800262430 /* SliderCell.swift in Sources */,
@@ -590,6 +588,7 @@
 				04852D271DB37F9700229CAE /* MSCurrentTimeIndicator.m in Sources */,
 				431554F01DD06123008434BB /* Helpers.swift in Sources */,
 				04BCE1221DB46D65004A8162 /* EmployeeAddEventViewController.swift in Sources */,
+				43F96E8C1DE19A4900B7D460 /* BulletinDetail.swift in Sources */,
 				430738C71D59E108006F749A /* LoginViewContoller.swift in Sources */,
 				0463E87D1DC442C500D93E93 /* PopoverMenuViewController.swift in Sources */,
 				04BCE1291DB480FE004A8162 /* ShiftViewController.swift in Sources */,
@@ -597,6 +596,7 @@
 				4326143F1DACCD4D0080AD10 /* DateTableViewCell.swift in Sources */,
 				04852D311DB37F9700229CAE /* MSWeekViewDecoratorDragable.m in Sources */,
 				04852D2E1DB37F9700229CAE /* MSTimeRowHeader.m in Sources */,
+				43F96E8A1DE172FF00B7D460 /* BulletinCompose.swift in Sources */,
 				04852D2F1DB37F9700229CAE /* MSTimeRowHeaderBackground.m in Sources */,
 				435A374C1DBF261400BA6974 /* NotificationTableViewCell.swift in Sources */,
 				431022201D60E07800C47D22 /* ClockIn.swift in Sources */,

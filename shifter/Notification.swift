@@ -22,7 +22,9 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
     var currentDID = String()
     
     @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
+        tableView.rowHeight = 48
         tableView.registerNib(UINib(nibName: "NotificationTableViewCell", bundle: nil), forCellReuseIdentifier: "notificationCell")
         
         let tabBarVC = self.tabBarController as! TabBarViewController
@@ -74,6 +76,9 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     override func viewWillAppear(animated: Bool) {
         self.title = "通知"
+        self.navigationController?.title = ""
+        
+        //checked notification: hide tab bar item badge, mark new notifcaitons
         tabBarController?.tabBar.items?[2].badgeValue = nil
         let tabBarVC = self.tabBarController as! TabBarViewController
         tabBarVC.oldNotifications += tabBarVC.newNotifications
