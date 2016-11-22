@@ -12,15 +12,7 @@ struct accounts {
     let rank : String!
 }
 
-//extension UIColor {
-//    convenience init(red: Int, green: Int, blue: Int) {
-//        let newRed = CGFloat(red)/255
-//        let newGreen = CGFloat(green)/255
-//        let newBlue = CGFloat(blue)/255
-//        
-//        self.init(red: newRed, green: newGreen, blue: newBlue, alpha: 1.0)
-//    }
-//}
+
 
 class LoginViewContoller: UIViewController, UITextFieldDelegate {
     var inputID = String()
@@ -28,9 +20,7 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
     var accountArray = [accounts]()
     var IDArray = [String]()
     var passwordArray = [String]()
-//    var currentSID = String()
-//    var currentDID = String()
-//    var currentRank = String()
+
     
     @IBOutlet weak var idTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!

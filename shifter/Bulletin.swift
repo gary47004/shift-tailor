@@ -125,7 +125,7 @@ class Bulletin: UIViewController, UITableViewDataSource, UITableViewDelegate {
             tabBarVC.selectedSection = 1
             tabBarVC.selectedRow = indexPath.row
         }
-        performSegueWithIdentifier("bulletinDetail", sender: self)
+        performSegueWithIdentifier("showDetail", sender: self)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
     

@@ -43,23 +43,41 @@ class TransferableViewController: UITableViewController {
         })
     }
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 60
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return storeArray.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = storeArray[indexPath.row]
-        let distanceLabel = UILabel(frame: CGRectMake(284,11,60,21))
+        cell.textLabel?.text = "    store " + storeArray[indexPath.row]
+        cell.textLabel?.font = UIFont.boldSystemFontOfSize(18)
+        cell.textLabel?.textColor = UIColor(red: 74, green: 74, blue: 74)
+        cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+        
+        
+        let distanceLabel = UILabel(frame: CGRectMake(273,20,60,21))
+        distanceLabel.textColor = UIColor(red: 74, green: 74, blue: 74)
+        
         if distanceArray != []{
-            distanceLabel.text = distanceArray[indexPath.row] + " km"
+            distanceLabel.text = "  " + distanceArray[indexPath.row] + " km"
+            distanceLabel.layer.borderColor = UIColor(red: 74, green: 74, blue: 74).CGColor
+            distanceLabel.layer.borderWidth = 1
+            distanceLabel.layer.cornerRadius = 5
+            
             cell.addSubview(distanceLabel)
         }
         
+        //checkmark
         if transferableArray[indexPath.row] == true{
-            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            cell.tintColor = UIColor(red: 74, green: 74, blue: 74)
+
         }else{
-            cell.accessoryType = UITableViewCellAccessoryType.None
+            cell.tintColor = UIColor(red: 216, green: 216, blue: 216)
+
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -69,6 +87,7 @@ class TransferableViewController: UITableViewController {
     //make transferable
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.Checkmark
+        tableView.cellForRowAtIndexPath(indexPath)?.tintColor = UIColor(red: 74, green: 74, blue: 74)
         transferableArray[indexPath.row] = true
         let databaseRef  = FIRDatabase.database().reference()
         let store = storeArray[indexPath.row]
@@ -77,7 +96,8 @@ class TransferableViewController: UITableViewController {
     
     //make untransferable
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.None
+        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.Checkmark
+        tableView.cellForRowAtIndexPath(indexPath)?.tintColor = UIColor(red: 216, green: 216, blue: 216)
         transferableArray[indexPath.row] = false
         let databaseRef  = FIRDatabase.database().reference()
         let store = storeArray[indexPath.row]
