@@ -73,9 +73,11 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
 
         
         let shiftDBRef = FIRDatabase.database().reference()
-        shiftDBRef.child("managerShift").child("010").observeEventType(.Value, withBlock: {snapshot in
+        shiftDBRef.child("managerShift").child("010").child("currentShift").observeEventType(.Value, withBlock: {snapshot in
             
-            self.currentWeekStartDate = snapshot.childSnapshotForPath("currentShift").value as! String
+            self.currentWeekStartDate = snapshot.value as! String
+            
+            print("current", self.currentWeekStartDate)
             
             self.shiftDate = shiftDateFormatter.dateFromString(self.currentWeekStartDate)
             shiftStartDateString = weekDateFormatter.stringFromDate(self.shiftDate)
@@ -84,18 +86,24 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             self.setupWeekData()
             
+            print("Value Load Data")
+            
             self.loadData()
             
-            shiftDBRef.child("ManagerShift").child("010").child(self.currentWeekStartDate).observeEventType(.ChildRemoved, withBlock: {
+            shiftDBRef.child("managerShift").child("010").child(self.currentWeekStartDate).observeEventType(.ChildRemoved, withBlock: {
                 
                 snapshot in
+                
+                print("Child Removed")
                 
                 self.loadData()
             
             })
-            shiftDBRef.child("ManagerShift").child("010").child(self.currentWeekStartDate).observeEventType(.ChildChanged, withBlock: {
+            shiftDBRef.child("managerShift").child("010").child(self.currentWeekStartDate).observeEventType(.ChildChanged, withBlock: {
                 
                 snapshot in
+                
+                print("Child Changed")
                 
                 self.loadData()
                 
@@ -339,6 +347,8 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     
     
     func loadData(){
+        print("ininin")
+        
         
         var newEventArray = [MSEvent]()
         
@@ -346,9 +356,13 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
 
         let eventDBRef = FIRDatabase.database().reference()
         
+        print("Current Week",self.currentWeekStartDate)
+        
         eventDBRef.child("managerShift").child("010").child(self.currentWeekStartDate).observeEventType(.ChildAdded, withBlock: {
             
             snapshot in
+            
+            print("inside")
             
             let post = snapshot.value as! [String :AnyObject ]
             
@@ -360,7 +374,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             let eventType = post["Type"] as! String
             
-            print(snapshot.childSnapshotForPath("Cleaning").value)
+            print(snapshot.value)
             
             let codingList = snapshot.childSnapshotForPath("Coding").value
             let cleaningList = snapshot.childSnapshotForPath("Cleaning").value
@@ -403,6 +417,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             newEventArray.append(newEvent)
             
+            print(newEventArray)
                         
             self.weeklyView.events = newEventArray
             
@@ -426,6 +441,8 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
                 }
                 
             }
+            
+            
 
             
             

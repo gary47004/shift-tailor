@@ -16,6 +16,10 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
     
     var selectedEvent = MSEvent()
     
+    var selectedIndexPath : NSIndexPath!
+    
+    
+    
     var sectionTitleArray = [String]()
     
     let jobArray = ["Coding","Cleaning","Dancing"]
@@ -23,6 +27,7 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
     var currentWeekStartDate: String!
     
     
+    @IBOutlet weak var transferButton: UIBarButtonItem!
     
     
     @IBOutlet weak var managerShiftDetailTableView: UITableView!
@@ -48,6 +53,8 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
+    }
+    @IBAction func transferEmployee(sender: UIBarButtonItem) {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -101,6 +108,18 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
         
         return employeeCell
         
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        transferButton.enabled = true
+        if indexPath.section == 0{
+            print((selectedEvent.codingList[indexPath.row] as? NSDictionary)!["Name"] as? String)
+            selectedEvent.codingList[indexPath.row] = ["Name":"LLL"]
+            
+            let eventDBRef = FIRDatabase.database().reference()
+            
+            eventDBRef.child("managerShift").child("010").child(self.currentWeekStartDate).child(selectedEvent.key).child("Coding").child("0").updateChildValues(["Name":"Changed"])
+        }
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{

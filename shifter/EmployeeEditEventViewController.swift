@@ -149,7 +149,7 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
         let eventDBRef = FIRDatabase.database().reference()
         
         
-        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").child(selectedEvent.key).updateChildValues(["Start Date":startDate, "End Date": endDate,"Preference": preference])
+        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").child(selectedEvent.key).updateChildValues(["StartDate":startDate, "EndDate": endDate,"Preference": preference])
         
     }
     

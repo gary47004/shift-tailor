@@ -240,11 +240,11 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
             snapshot in
             
             
-            let startDateString = snapshot.value!["Start Date"] as! String
+            let startDateString = snapshot.value!["StartDate"] as! String
             
             let eventID = snapshot.key
             
-            let endDateString = snapshot.value!["End Date"] as! String
+            let endDateString = snapshot.value!["EndDate"] as! String
             
             let coding = snapshot.value!["Preference"] as! Int
             
