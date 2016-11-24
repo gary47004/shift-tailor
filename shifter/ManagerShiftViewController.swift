@@ -347,7 +347,6 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     
     
     func loadData(){
-        print("ininin")
         
         
         var newEventArray = [MSEvent]()
@@ -356,13 +355,13 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
 
         let eventDBRef = FIRDatabase.database().reference()
         
-        print("Current Week",self.currentWeekStartDate)
+        //print("Current Week",self.currentWeekStartDate)
         
         eventDBRef.child("managerShift").child("010").child(self.currentWeekStartDate).observeEventType(.ChildAdded, withBlock: {
             
             snapshot in
             
-            print("inside")
+            //print("inside")
             
             let post = snapshot.value as! [String :AnyObject ]
             
@@ -374,7 +373,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             let eventType = post["Type"] as! String
             
-            print(snapshot.value)
+            //print(snapshot.value)
             
             let codingList = snapshot.childSnapshotForPath("Coding").value
             let cleaningList = snapshot.childSnapshotForPath("Cleaning").value

@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDelegate,UIPickerViewDataSource {
     
     @IBOutlet weak var titleItem: UINavigationItem!
     
@@ -18,8 +18,10 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
     
     var selectedIndexPath : NSIndexPath!
     
+    var changeEmployeeList = Array<String>()
     
-    
+    var changeEmp : String!
+
     var sectionTitleArray = [String]()
     
     let jobArray = ["Coding","Cleaning","Dancing"]
@@ -36,7 +38,61 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
        
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(currentWeekStartDate)
+        
+        let eventDBRef = FIRDatabase.database().reference()
+        
+        eventDBRef.child("managerShift").child("010").child(self.currentWeekStartDate).observeEventType(.ChildChanged, withBlock: {
+            
+            snapshot in
+            
+            //print("inside")
+            
+            let post = snapshot.value as! [String :AnyObject ]
+            
+            let startDateString = post["Start Date"] as! String
+            
+            let eventID = snapshot.key
+            
+            let endDateString = post["End Date"] as! String
+            
+            let eventType = post["Type"] as! String
+            
+            //print(snapshot.value)
+            
+            let codingList = snapshot.childSnapshotForPath("Coding").value
+            let cleaningList = snapshot.childSnapshotForPath("Cleaning").value
+            let dancingList = snapshot.childSnapshotForPath("Dancing").value
+            
+            
+            let dateformatter = NSDateFormatter()
+            
+            dateformatter.dateFormat = "yyyy-M-dd-HH:mm"
+            
+            
+            let startDate = dateformatter.dateFromString(startDateString)!
+            
+            let endDate = dateformatter.dateFromString(endDateString)!
+            
+            let shortFormatter = NSDateFormatter()
+            
+            shortFormatter.dateFormat = "H:mm"
+            
+            let shortStartDateString = shortFormatter.stringFromDate(startDate)
+            
+            let shortEndDateString = shortFormatter.stringFromDate(endDate)
+            
+            //self.eventList.append(eventStruct(startDate: startDate,endDate: endDate, coding: coding, dancing: dancing, cleaning: cleaning, key: eventID))
+            
+            let newEvent = MSEvent.make(startDate, end: endDate, title: "\(eventType)\n\(shortStartDateString)", location: "\(shortEndDateString)", key: eventID, codingList: codingList as! [[String:String]], cleaningList: cleaningList as! [[String:String]], dancingList:dancingList as![[String:String]] ,shiftType: eventType)
+            
+            self.selectedEvent = newEvent
+            
+            print("SNNNN",snapshot)
+            
+            self.managerShiftDetailTableView.reloadData()
+            
+            })
+        
         self.sectionTitleArray = ["Coding: \(selectedEvent.codingList.count) 位", "Cleaning: \(selectedEvent.cleaningList.count) 位", "Dancing: \(selectedEvent.dancingList.count) 位"]
         
         let titleFormatter = NSDateFormatter()
@@ -111,15 +167,97 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        transferButton.enabled = true
-        if indexPath.section == 0{
-            print((selectedEvent.codingList[indexPath.row] as? NSDictionary)!["Name"] as? String)
-            selectedEvent.codingList[indexPath.row] = ["Name":"LLL"]
+        //transferButton.enabled = true
+        
+        print((selectedEvent.codingList[indexPath.row] as? NSDictionary)!["Name"] as? String)
+        
+        let eventDBRef = FIRDatabase.database().reference()
+        
+        changeEmployeeList = []
+        
+        
+        eventDBRef.child("employee").observeEventType(.ChildAdded, withBlock: {snapshot in
+        
+            if snapshot.childSnapshotForPath("profession").value as! String == self.jobArray[indexPath.section]{
+                
+                let employeeSnapshot = snapshot.value as! [String:AnyObject]
+                
+                self.changeEmployeeList.append(employeeSnapshot["name"] as! String)
+                
+                print("CEL",self.changeEmployeeList)
+                
+                let empVC = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: "", preferredStyle: .ActionSheet)
+                
+                let pickerView = UIPickerView.init(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
+                
+                pickerView.delegate = self
+                pickerView.dataSource = self
+                
+                pickerView.showsSelectionIndicator = true
+                
+                
+                
+                
+                                
+                let okAction = UIAlertAction(title: "確認", style: .Default, handler : {(alert : UIAlertAction!) in
+                    
+                    
+                    
+                    if self.changeEmp == nil{
+                        
+                        self.changeEmp = self.changeEmployeeList[0]
+                    }
+                    
+                    print("ChangeEmp",self.changeEmp)
+                    
+                    
+                eventDBRef.child("managerShift").child("010").child(self.currentWeekStartDate).child(self.selectedEvent.key).child(self.jobArray[indexPath.section]).child("\(indexPath.row)").updateChildValues(["Name":self.changeEmp])
+        
+                    
+                    self.changeEmp = nil
+                    
+                    
+                    
+
+
+                })
+                
+                empVC.view.addSubview(pickerView)
+                empVC.addAction(okAction)
+                
+                self.presentViewController(empVC, animated: true, completion:nil)
+                
+                
+
+                
+                
+            }
             
-            let eventDBRef = FIRDatabase.database().reference()
             
-            eventDBRef.child("managerShift").child("010").child(self.currentWeekStartDate).child(selectedEvent.key).child("Coding").child("0").updateChildValues(["Name":"Changed"])
-        }
+            
+        
+        })
+        
+        
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return changeEmployeeList.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return changeEmployeeList[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        
+            changeEmp = changeEmployeeList[row]
+        
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
