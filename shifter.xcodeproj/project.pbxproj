@@ -45,7 +45,6 @@
 		04EAAE821DBB49FD00AB7853 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04EAAE811DBB49FD00AB7853 /* GoogleService-Info.plist */; };
 		430738C71D59E108006F749A /* LoginViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430738C61D59E108006F749A /* LoginViewContoller.swift */; };
 		4310221E1D60D6EB00C47D22 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4310221D1D60D6EB00C47D22 /* Notification.swift */; };
-		431022201D60E07800C47D22 /* ClockIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4310221F1D60E07800C47D22 /* ClockIn.swift */; };
 		431022221D60E8F400C47D22 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431022211D60E8F400C47D22 /* Settings.swift */; };
 		431554F01DD06123008434BB /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431554EF1DD06123008434BB /* Helpers.swift */; };
 		43173E081D5328620043399F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43173E071D5328620043399F /* AppDelegate.swift */; };
@@ -63,6 +62,8 @@
 		43F708261DBDE90A006432EB /* Bulletin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F708251DBDE90A006432EB /* Bulletin.swift */; };
 		43F96E8A1DE172FF00B7D460 /* BulletinCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F96E891DE172FF00B7D460 /* BulletinCompose.swift */; };
 		43F96E8C1DE19A4900B7D460 /* BulletinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F96E8B1DE19A4900B7D460 /* BulletinDetail.swift */; };
+		4E9E99121DE6D64500B681A0 /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9E99101DE6D64500B681A0 /* DetailTableViewController.swift */; };
+		4E9E99131DE6D64500B681A0 /* InformationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9E99111DE6D64500B681A0 /* InformationTableViewController.swift */; };
 		CDCF55F9FA1EE4396F39383B /* Pods_shifter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735680C7B9CA8A9AB24F547B /* Pods_shifter.framework */; };
 /* End PBXBuildFile section */
 
@@ -125,7 +126,6 @@
 		04EAAE811DBB49FD00AB7853 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		430738C61D59E108006F749A /* LoginViewContoller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewContoller.swift; sourceTree = "<group>"; };
 		4310221D1D60D6EB00C47D22 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
-		4310221F1D60E07800C47D22 /* ClockIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockIn.swift; sourceTree = "<group>"; };
 		431022211D60E8F400C47D22 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		431554EF1DD06123008434BB /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		43173E041D5328620043399F /* shifter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shifter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +145,8 @@
 		43F708251DBDE90A006432EB /* Bulletin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bulletin.swift; sourceTree = "<group>"; };
 		43F96E891DE172FF00B7D460 /* BulletinCompose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinCompose.swift; sourceTree = "<group>"; };
 		43F96E8B1DE19A4900B7D460 /* BulletinDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinDetail.swift; sourceTree = "<group>"; };
+		4E9E99101DE6D64500B681A0 /* DetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
+		4E9E99111DE6D64500B681A0 /* InformationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationTableViewController.swift; sourceTree = "<group>"; };
 		735680C7B9CA8A9AB24F547B /* Pods_shifter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_shifter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74F47A4D01FED2182C3E71B5 /* Pods-shifter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shifter.release.xcconfig"; path = "Pods/Target Support Files/Pods-shifter/Pods-shifter.release.xcconfig"; sourceTree = "<group>"; };
 		DF887F1EFBBF18CB0BFB310D /* Pods-shifter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shifter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shifter/Pods-shifter.debug.xcconfig"; sourceTree = "<group>"; };
@@ -382,12 +384,13 @@
 			name = Notification;
 			sourceTree = "<group>";
 		};
-		4378DA921DBCB0F700DCAE85 /* Clock In */ = {
+		4378DA921DBCB0F700DCAE85 /* Information */ = {
 			isa = PBXGroup;
 			children = (
-				4310221F1D60E07800C47D22 /* ClockIn.swift */,
+				4E9E99101DE6D64500B681A0 /* DetailTableViewController.swift */,
+				4E9E99111DE6D64500B681A0 /* InformationTableViewController.swift */,
 			);
-			name = "Clock In";
+			name = Information;
 			sourceTree = "<group>";
 		};
 		4378DA931DBCB10000DCAE85 /* Settings */ = {
@@ -410,7 +413,7 @@
 				4378DA8F1DBCB0B900DCAE85 /* Bulletin */,
 				4378DA901DBCB0D200DCAE85 /* 分類一下 */,
 				4378DA911DBCB0EC00DCAE85 /* Notification */,
-				4378DA921DBCB0F700DCAE85 /* Clock In */,
+				4378DA921DBCB0F700DCAE85 /* Information */,
 				4378DA931DBCB10000DCAE85 /* Settings */,
 			);
 			name = "View Controllers";
@@ -596,12 +599,13 @@
 				4326143F1DACCD4D0080AD10 /* DateTableViewCell.swift in Sources */,
 				04852D311DB37F9700229CAE /* MSWeekViewDecoratorDragable.m in Sources */,
 				04852D2E1DB37F9700229CAE /* MSTimeRowHeader.m in Sources */,
+				4E9E99121DE6D64500B681A0 /* DetailTableViewController.swift in Sources */,
 				43F96E8A1DE172FF00B7D460 /* BulletinCompose.swift in Sources */,
 				04852D2F1DB37F9700229CAE /* MSTimeRowHeaderBackground.m in Sources */,
 				435A374C1DBF261400BA6974 /* NotificationTableViewCell.swift in Sources */,
-				431022201D60E07800C47D22 /* ClockIn.swift in Sources */,
 				43173E081D5328620043399F /* AppDelegate.swift in Sources */,
 				04BCE13A1DB49934004A8162 /* employeeCell.swift in Sources */,
+				4E9E99131DE6D64500B681A0 /* InformationTableViewController.swift in Sources */,
 				04BCE1381DB496DA004A8162 /* editEventTableViewController.swift in Sources */,
 				04BCE12B1DB4836A004A8162 /* ManagerShiftViewController.swift in Sources */,
 				04852D2D1DB37F9700229CAE /* MSGridline.m in Sources */,
