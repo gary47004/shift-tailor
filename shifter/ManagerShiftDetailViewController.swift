@@ -24,6 +24,7 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
 
     var sectionTitleArray = [String]()
     
+    @IBOutlet weak var changeEmpButton: UIBarButtonItem!
     let jobArray = ["Coding","Cleaning","Dancing"]
     
     var currentWeekStartDate: String!
@@ -165,20 +166,15 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
         return employeeCell
         
     }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //transferButton.enabled = true
-        
-        print((selectedEvent.codingList[indexPath.row] as? NSDictionary)!["Name"] as? String)
-        
+    @IBAction func changeEmp(sender: AnyObject) {
         let eventDBRef = FIRDatabase.database().reference()
         
         changeEmployeeList = []
         
         
         eventDBRef.child("employee").observeEventType(.ChildAdded, withBlock: {snapshot in
-        
-            if snapshot.childSnapshotForPath("profession").value as! String == self.jobArray[indexPath.section]{
+            
+            if snapshot.childSnapshotForPath("profession").value as! String == self.jobArray[self.selectedIndexPath.section]{
                 
                 let employeeSnapshot = snapshot.value as! [String:AnyObject]
                 
@@ -186,7 +182,7 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
                 
                 print("CEL",self.changeEmployeeList)
                 
-                let empVC = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: "", preferredStyle: .ActionSheet)
+                let empVC = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: "請選取欲更換員工", preferredStyle: .ActionSheet)
                 
                 let pickerView = UIPickerView.init(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
                 
@@ -198,7 +194,7 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
                 
                 
                 
-                                
+                
                 let okAction = UIAlertAction(title: "確認", style: .Default, handler : {(alert : UIAlertAction!) in
                     
                     
@@ -211,33 +207,44 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
                     print("ChangeEmp",self.changeEmp)
                     
                     
-                eventDBRef.child("managerShift").child("010").child(self.currentWeekStartDate).child(self.selectedEvent.key).child(self.jobArray[indexPath.section]).child("\(indexPath.row)").updateChildValues(["Name":self.changeEmp])
-        
+                    eventDBRef.child("managerShift").child("010").child(self.currentWeekStartDate).child(self.selectedEvent.key).child(self.jobArray[self.selectedIndexPath.section]).child("\(self.selectedIndexPath.row)").updateChildValues(["Name":self.changeEmp])
+                    
                     
                     self.changeEmp = nil
                     
-                    
-                    
-
-
                 })
                 
+                let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+                
                 empVC.view.addSubview(pickerView)
+                
                 empVC.addAction(okAction)
+                
+                empVC.addAction(cancelAction)
                 
                 self.presentViewController(empVC, animated: true, completion:nil)
                 
                 
-
+                
                 
                 
             }
             
             
             
-        
+            
         })
         
+        
+
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        changeEmpButton.enabled = true
+        
+        print((selectedEvent.codingList[indexPath.row] as? NSDictionary)!["Name"] as? String)
+        
+        selectedIndexPath = indexPath
         
     }
     

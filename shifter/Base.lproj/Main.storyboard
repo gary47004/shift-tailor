@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <development version="7000" identifier="xcode"/>
@@ -693,7 +693,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XEy-Gm-2ro">
-                                <rect key="frame" x="0.0" y="65" width="375" height="56.5"/>
+                                <rect key="frame" x="0.0" y="65" width="375" height="57"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="店公告Label" translatesAutoresizingMaskIntoConstraints="NO" id="Wkq-Va-C3d">
                                         <rect key="frame" x="13" y="14" width="63" height="29"/>
@@ -1176,45 +1176,8 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConditionCell" id="05k-vo-BwF" customClass="ConditionTableViewCell" customModule="shifter" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="05k-vo-BwF" id="pHN-C8-Exj">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6M-dW-Kze">
-                                                    <rect key="frame" x="20" y="11" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UxZ-C3-P0X">
-                                                    <rect key="frame" x="167" y="11" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4g-u4-V7o">
-                                                    <rect key="frame" x="299" y="7" width="46" height="30"/>
-                                                    <state key="normal" title="Button"/>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="c4g-u4-V7o" firstAttribute="centerY" secondItem="pHN-C8-Exj" secondAttribute="centerY" id="213-gs-3tT"/>
-                                                <constraint firstAttribute="trailing" secondItem="c4g-u4-V7o" secondAttribute="trailing" constant="30" id="AGb-hj-4VP"/>
-                                                <constraint firstItem="m6M-dW-Kze" firstAttribute="centerY" secondItem="pHN-C8-Exj" secondAttribute="centerY" id="a5W-Xw-zIM"/>
-                                                <constraint firstItem="UxZ-C3-P0X" firstAttribute="centerY" secondItem="pHN-C8-Exj" secondAttribute="centerY" id="km8-4C-JTV"/>
-                                                <constraint firstItem="m6M-dW-Kze" firstAttribute="leading" secondItem="pHN-C8-Exj" secondAttribute="leading" constant="20" id="lXD-z0-kIL"/>
-                                                <constraint firstItem="UxZ-C3-P0X" firstAttribute="centerX" secondItem="pHN-C8-Exj" secondAttribute="centerX" id="yZv-kf-knu"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="deploymentButton" destination="c4g-u4-V7o" id="v4W-Ot-exo"/>
-                                            <outlet property="lackingEmployeeLabel" destination="UxZ-C3-P0X" id="PGT-sM-ZUI"/>
-                                            <outlet property="totalEmployeeLabel" destination="m6M-dW-Kze" id="CPn-hk-50m"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EmployeeCell" id="C7l-pO-dil" customClass="ShiftEmployeeTableViewCell" customModule="shifter" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="116" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C7l-pO-dil" id="Tc1-dE-YCk">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
@@ -1266,8 +1229,15 @@
                             <constraint firstItem="D2P-8E-rUu" firstAttribute="leading" secondItem="vxp-SE-E4J" secondAttribute="leading" id="uTI-k8-Ype"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="77P-xF-Exo"/>
+                    <navigationItem key="navigationItem" title="Title" id="77P-xF-Exo">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="調動" id="V0M-DH-1h5">
+                            <connections>
+                                <action selector="changeEmp:" destination="02p-nQ-d2Y" id="Xrv-4l-jaQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="changeEmpButton" destination="V0M-DH-1h5" id="Cpd-EH-0iX"/>
                         <outlet property="managerShiftDetailTableView" destination="D2P-8E-rUu" id="ARt-EJ-vG3"/>
                         <outlet property="titleItem" destination="77P-xF-Exo" id="33z-aM-NfG"/>
                     </connections>
