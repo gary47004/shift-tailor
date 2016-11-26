@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <development version="7000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Bulletin Compose-->
@@ -1141,15 +1142,29 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="hR9-3Z-V4v">
-                        <barButtonItem key="rightBarButtonItem" title="排班" id="cB7-bU-Xdo">
+                        <barButtonItem key="leftBarButtonItem" enabled="NO" title="上週" id="3dM-Ka-zYU">
                             <connections>
-                                <action selector="setEvent:" destination="tLJ-am-17s" id="XTs-eW-yfn"/>
+                                <action selector="showPreviousWeek:" destination="tLJ-am-17s" id="1eu-ar-bv0"/>
                             </connections>
                         </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="排班" id="cB7-bU-Xdo">
+                                <connections>
+                                    <action selector="setEvent:" destination="tLJ-am-17s" id="XTs-eW-yfn"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="下週" id="lul-fn-G85">
+                                <connections>
+                                    <action selector="showNextWeek:" destination="tLJ-am-17s" id="WbI-ti-pfD"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="nextWeekButton" destination="lul-fn-G85" id="m6Q-2Y-OP5"/>
+                        <outlet property="previousWeekButton" destination="3dM-Ka-zYU" id="9xj-Zb-QVp"/>
                         <outlet property="titleItem" destination="hR9-3Z-V4v" id="rzv-Qf-1r7"/>
                         <outlet property="weeklyView" destination="fb9-GT-pDR" id="INa-08-14d"/>
                         <segue destination="02p-nQ-d2Y" kind="show" identifier="showDetailSegue" id="fPU-2C-Qz1"/>
