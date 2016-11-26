@@ -55,7 +55,12 @@ class Settings: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if indexPath.row == 2{
+        //GY
+        if indexPath.row == 1{
+            performSegueWithIdentifier("showAlarmClock", sender: nil)
+        //GY
+        
+        }else if indexPath.row == 2{
             performSegueWithIdentifier("showTransferable", sender: nil)
             self.title = "Back"
     

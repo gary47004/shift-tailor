@@ -9,9 +9,27 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import CoreLocation
 
-class EmployeeWeekViewController: UIViewController,MSWeekViewDelegate {
+class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocationManagerDelegate {
+    
+    //GY
+    @IBOutlet weak var rangingOutlet: UIBarButtonItem!
+    let locationManager = CLLocationManager()
+    let region = CLBeaconRegion(proximityUUID: NSUUID(UUIDString:"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0")!, identifier: "THLight")
+    let testBeacon = [CLBeacon]()
+    var formatter = NSDateFormatter()
+    var myCalendar = NSCalendar.currentCalendar()
+    var weekDay = ""
+    var firstDay = ""
+    var storagePlace = ""
+    var arrival : String?
+    var departure : String?
+    var intervalA:Int?
+    var intervalB:Int?
+    //GY
 
+    
     var  selectedEvent = MSEvent()
     
     //var eventList = [eventStruct]()
@@ -45,6 +63,9 @@ class EmployeeWeekViewController: UIViewController,MSWeekViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //GY
+        rangingOutlet.enabled = false
+        //GY
         
         self.employeeSetEventButton.title = ""
         
@@ -150,12 +171,166 @@ class EmployeeWeekViewController: UIViewController,MSWeekViewDelegate {
     // week View Delegate
     
     
-    
-    func weekView(sender: AnyObject!, eventSelected event: MSEvent!) {
-        print(event.StartDate, event.EndDate)
+    //GY
+    @IBAction func rangingButton(sender: UIBarButtonItem) {
         
+        locationManager.delegate = self;
+        
+        if(CLLocationManager.authorizationStatus() != CLAuthorizationStatus.AuthorizedWhenInUse){
+            locationManager.requestWhenInUseAuthorization()
+        }
+        //允許app使用位置
+        locationManager.startRangingBeaconsInRegion(region)
+        //開始搜尋
+        locationManager(locationManager, didRangeBeacons:testBeacon, inRegion: region)
         
     }
+    
+    
+    func weekView(sender: AnyObject!, eventSelected event: MSEvent!) {
+        
+        let compareResultA = event.StartDate.compare(currentDate)
+        let compareResultB = event.EndDate.compare(currentDate)
+        intervalA = Int(event.StartDate.timeIntervalSinceDate(currentDate))
+        intervalB = Int(event.EndDate.timeIntervalSinceDate(currentDate))
+        if(intervalA <= 10800 && intervalB >= -10800){
+            rangingOutlet.enabled = true
+        }else{
+            rangingOutlet.enabled = false
+        }
+        //差距三小時＝10800秒
+        
+        weekDay = event.key
+        //weekDay = "00"+"\(myCalendar.component(.Weekday, fromDate: currentDate))"
+        
+        let addingNumber = 1-Int(myCalendar.component(.Weekday, fromDate: currentDate))
+        
+        let firstDayOfWeek = myCalendar.dateByAddingUnit(.Day, value: addingNumber, toDate: currentDate, options: [])
+        //現在日期加上addingNumber的日期
+        formatter.dateFormat = "yyyy-M-dd"
+        firstDay = formatter.stringFromDate(firstDayOfWeek!)
+        
+        let tabBarVC = self.tabBarController as? TabBarViewController
+        let id = tabBarVC?.currentUID
+        let storeId = tabBarVC?.currentSID
+        
+        storagePlace = "employeeShift/"+"\(storeId)"+"/"+"\(firstDay)"+"/"+"\(id)"+"/"+"\(weekDay)"
+        
+        
+        let databaseRef = FIRDatabase.database().reference()
+        databaseRef.child(storagePlace).observeEventType(.Value, withBlock: {
+            snapshot in
+            
+            self.arrival = snapshot.value!["arrivalTime"] as? String
+            self.departure = snapshot.value!["departureTime"] as? String
+            
+            print(self.arrival)
+            print(self.departure)
+            //最後才跑＊重要＊
+            //有可能還是沒資料（還沒跑完），再設定按鈕enabled時間在跑完arrival,departure後
+        })
+        
+    }
+    
+    
+    
+    func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
+        
+        let nearBeacons = beacons.filter{ $0.proximity != CLProximity.Unknown}
+        //只要有測到，就放進nearBeacons
+        if (nearBeacons.count > 0){
+            
+            locationManager.stopRangingBeaconsInRegion(region)
+            //停止搜尋
+            let date = NSDate()
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-M-dd-H:mm"
+            let time = dateFormatter.stringFromDate(date)
+            
+            
+            let clockIn = UIAlertController(title: "是否打卡？", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+            //actionsheet無法
+            let goToWork = UIAlertAction(title: "上班打卡", style: UIAlertActionStyle.Default, handler:{
+                (action:UIAlertAction) -> () in
+                self.postArrival(time)
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            let getOff = UIAlertAction(title: "下班打卡", style: UIAlertActionStyle.Default, handler: {
+                (action:UIAlertAction) -> () in
+                self.postDeparture(time)
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler:{
+                (action:UIAlertAction) -> () in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            let close = UIAlertAction(title: "關閉", style: UIAlertActionStyle.Default, handler:{
+                (action:UIAlertAction) -> () in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            if(arrival == nil && departure == nil){
+                clockIn.addAction(goToWork)
+                clockIn.addAction(cancel)
+                self.presentViewController(clockIn, animated: true, completion: nil)
+                
+            }else if(arrival != nil && departure == nil){
+                clockIn.addAction(getOff)
+                clockIn.addAction(cancel)
+                self.presentViewController(clockIn, animated: true, completion: nil)
+                
+            }else if(arrival != nil && departure != nil){
+                clockIn.title = "您已經在這個時段打卡完成"
+                clockIn.message = "同一時段無法打兩次卡"
+                clockIn.addAction(close)
+                self.presentViewController(clockIn, animated: true, completion: nil)
+            }
+        }
+        
+        print("BEACONS: " + "\(beacons)")
+        print("NEAR BEACONS: " + "\(nearBeacons)")
+        
+    }
+    
+    
+    func postArrival(arrival : String){
+        
+        let post : [String : AnyObject] = ["arrivalTime" : arrival]
+        
+        let databaseRef = FIRDatabase.database().reference()
+        databaseRef.child(storagePlace).updateChildValues(post)
+        
+        if(intervalA<0){
+            let number = String(0-intervalA!)
+            let late : [String : String] = ["late" : number]
+            databaseRef.child(storagePlace).updateChildValues(late)
+        }else{
+            let number = "0"
+            let late : [String : String] = ["late" : number]
+            databaseRef.child(storagePlace).updateChildValues(late)
+        }
+        
+    }
+    
+    func postDeparture(departure : String){
+        
+        let post : [String : AnyObject] = ["departureTime" : departure]
+        
+        let databaseRef = FIRDatabase.database().reference()
+        databaseRef.child(storagePlace).updateChildValues(post)
+        
+        if(intervalB>0){
+            let number = String(intervalB!-0)
+            let leaveEarly : [String : String] = ["leaveEarly" : number]
+            databaseRef.child(storagePlace).updateChildValues(leaveEarly)
+        }else{
+            let number = "0"
+            let leaveEarly : [String : String] = ["leaveEarly" : number]
+            databaseRef.child(storagePlace).updateChildValues(leaveEarly)
+        }
+        
+    }
+    //GY
+    
     
     override func viewWillAppear(animated: Bool) {
         

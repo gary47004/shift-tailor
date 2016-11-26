@@ -19,6 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FIRApp.configure()
         
+        
+        //GY
+        let types:UIUserNotificationType = [UIUserNotificationType.Alert , UIUserNotificationType.Badge , UIUserNotificationType.Sound]
+        let mySettings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes:  types, categories: nil)
+        //UIApplication.sharedApplication().registerUserNotificationSettings(mySettings)
+        application.registerUserNotificationSettings(mySettings)
+        //GY
+
+        
         //set initial view controller
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

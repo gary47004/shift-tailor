@@ -27,8 +27,56 @@ class TabBarViewController: UITabBarController {
     
     var selectedSection = Int()
     var selectedRow = Int()
-
-    override func viewDidLoad() {                                                               
+    
+    
+    //GY
+    let now = NSDate()
+    var formatter = NSDateFormatter()
+    let myCalendar = NSCalendar.currentCalendar()
+    var firstDay = ""
+    var interval:String?
+    let notification:UILocalNotification = UILocalNotification()
+    
+    
+    func alarmClock() {
+        let addingNumber = 1-Int(myCalendar.component(.Weekday, fromDate: now))
+        let firstDayOfWeek = myCalendar.dateByAddingUnit(.Day, value: addingNumber, toDate: now, options: [])
+        //現在日期加上addingNumber的日期
+        formatter.dateFormat = "yyyy-M-dd"
+        firstDay = formatter.stringFromDate(firstDayOfWeek!)
+        let storagePlace = "employeeShift/"+"\(currentSID)"+"/"+"\(firstDay)"+"/"+"\(currentUID)"
+        
+        formatter.dateFormat = "yyyy-M-dd-H:mm"
+        let counterInterval = 0-Int(interval!)!
+        var alarmTime = [NSDate]()
+        
+        let databaseRef = FIRDatabase.database().reference()
+        databaseRef.child(storagePlace).observeEventType(.ChildAdded, withBlock: {
+            snapshot in
+            
+            let start = snapshot.value!["Start Date"] as? String
+            if(start != nil){
+                
+                let date = self.formatter.dateFromString(start!)
+                let time = self.myCalendar.dateByAddingUnit(.Minute, value: counterInterval, toDate: date!, options: [])
+                
+                alarmTime.insert(time!, atIndex: 0)
+                print(alarmTime)
+                
+                
+                self.notification.alertBody = "該上班囉"
+                self.notification.alertAction = "該準備去上班囉"
+                self.notification.fireDate = alarmTime[0]
+                self.notification.soundName = UILocalNotificationDefaultSoundName
+                UIApplication.sharedApplication().scheduleLocalNotification(self.notification)
+                
+            }
+        })
+    }
+    //GY
+    
+    
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         //UI
@@ -44,6 +92,25 @@ class TabBarViewController: UITabBarController {
         
         //set Firebase listener
         let databaseRef = FIRDatabase.database().reference()
+        
+        
+        //GY
+        let alarmStoragePlace = "employee/"+"\(currentUID)"+"/alarmClock"
+        databaseRef.child(alarmStoragePlace).observeEventType(.Value, withBlock: {
+            snapshot in
+            
+            let alarmState = snapshot.value!["switch"] as? String
+            self.interval = snapshot.value!["interval"] as? String
+            
+            UIApplication.sharedApplication().cancelLocalNotification(self.notification)
+            
+            if( alarmState == "on" ){
+                self.alarmClock()
+            }
+        })
+        
+        //GY
+
         
         //child added
         databaseRef.child("bulletin").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: { snapshot in 
