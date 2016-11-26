@@ -387,8 +387,8 @@
 		4378DA921DBCB0F700DCAE85 /* Information */ = {
 			isa = PBXGroup;
 			children = (
-				4E9E99101DE6D64500B681A0 /* DetailTableViewController.swift */,
 				4E9E99111DE6D64500B681A0 /* InformationTableViewController.swift */,
+				4E9E99101DE6D64500B681A0 /* DetailTableViewController.swift */,
 			);
 			name = Information;
 			sourceTree = "<group>";

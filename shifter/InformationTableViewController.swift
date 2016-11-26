@@ -52,6 +52,7 @@ class InformationTableViewController: UITableViewController {
             rank = tabBarVC.currentRank
             store = tabBarVC.currentSID
             super.viewDidLoad()
+            //要在viewdidload裡執行
             
             // Do any additional setup after loading the view, typically from a nib.
             
@@ -78,6 +79,7 @@ class InformationTableViewController: UITableViewController {
                     self.id = members[i]
                     self.managerDownload(i)
                     print("a")
+                    print (members)
                     self.tableView.reloadData()
                     
                 })
