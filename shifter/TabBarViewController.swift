@@ -15,6 +15,7 @@ class TabBarViewController: UITabBarController {
     var currentSID = String()
     var currentDID = String()
     var currentRank = String()
+    var currentPro = String()
     
     var newNotifications = Int()
     var oldNotifications = Int()
@@ -88,6 +89,7 @@ class TabBarViewController: UITabBarController {
         currentSID = defaults.objectForKey("currentSID") as! String
         currentDID = defaults.objectForKey("currentDID") as! String
         currentRank = defaults.objectForKey("currentRank") as! String
+        currentPro = defaults.objectForKey("currentProfession") as! String
         
         
         //set Firebase listener

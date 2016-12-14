@@ -15,28 +15,12 @@ import DateTools
 struct eventStruct{
     let startDate: NSDate!
     let endDate: NSDate!
-    let coding: Int
-    let dancing: Int
+    let beverage: Int
+    let cashier: Int
     let cleaning: Int
     let key: String!
     
 }
-
-//extension NSNull {
-//    func length() -> Int { return 0 }
-//    
-//    func integerValue() -> Int { return 0 }
-//    
-//    func floatValue() -> Float { return 0 };
-//    
-//    //func description() -> String { return "0(NSNull)" }
-//    
-//    func componentsSeparatedByString(separator: String) -> [AnyObject] { return [AnyObject]() }
-//    
-//    func objectForKey(key: AnyObject) -> AnyObject? { return nil }
-//    
-//    func boolValue() -> Bool { return false }
-//}
 
 
 class ManagerSetEventViewController: UIViewController,UIPopoverPresentationControllerDelegate,MenuButtonDelegate,MSWeekViewDelegate,MSWeekViewDragableDelegate,MSWeekViewNewEventDelegate, MSWeekViewInfiniteDelegate{
@@ -69,11 +53,21 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
     
     let weekDateFormatter = NSDateFormatter()
     
+    var currentUID = String()
+    var currentSID = String()
+    var currentRank = String()
+    
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tabBarVC = self.tabBarController as! TabBarViewController
+        
+        currentUID = tabBarVC.currentUID
+        currentSID = tabBarVC.currentSID
+        currentRank = tabBarVC.currentRank
         
         
     
@@ -208,7 +202,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         let editDBRef = FIRDatabase.database().reference()
         
         
-        editDBRef.child("managerEvent").child("010").child(shiftStartDate).observeEventType(.ChildRemoved, withBlock: {
+        editDBRef.child("managerEvent").child(self.currentSID).child(shiftStartDate).observeEventType(.ChildRemoved, withBlock: {
             
             snapshot in
             
@@ -216,9 +210,9 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
             let eventID = snapshot.key
 //            let startDateString = snapshot.value!["Start Date"] as! String
 //            let endDateString = snapshot.value!["End Date"] as! String
-//            let coding = snapshot.value!["Coding"] as! Int
-//            let dancing = snapshot.value!["Dancing"] as! Int
-//            let cleaning = snapshot.value!["Cleaning"] as! Int
+//            let beverage = snapshot.value!["beverage"] as! Int
+//            let cashier = snapshot.value!["cashier"] as! Int
+//            let cleaning = snapshot.value!["cleaning"] as! Int
             
             
             if eventID != "" {
@@ -268,9 +262,9 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         let setDeadlineAction = UIAlertAction(title: "Send", style: .Default, handler:{(alert:UIAlertAction) in
             
             let eventDBRef = FIRDatabase.database().reference()
-            eventDBRef.child("managerEvent").child("010").child("currentEventDeadline").setValue(self.deadlineDate)
-            eventDBRef.child("managerEvent").child("010").child("setEventSwitch").setValue(false)
-            eventDBRef.child("managerEvent").child("010").child("isSchedulingSwitch").setValue(true)
+            eventDBRef.child("managerEvent").child(self.currentSID).child("currentEventDeadline").setValue(self.deadlineDate)
+            eventDBRef.child("managerEvent").child(self.currentSID).child("setEventSwitch").setValue(false)
+            eventDBRef.child("managerEvent").child(self.currentSID).child("isSchedulingSwitch").setValue(true)
             let completeVC = UIAlertController(title: "已完成排班", message: "將於 \(self.deadlineDate) 收到班表",preferredStyle: .Alert)
             let confirmAction = UIAlertAction(title: "OK", style: .Default, handler: {(alert:UIAlertAction) in
             
@@ -317,8 +311,8 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         let confirmAction = UIAlertAction(title: "Confirm", style: .Default, handler: {(alert:UIAlertAction) in
         
             let eventDBRef = FIRDatabase.database().reference()
-            eventDBRef.child("managerEvent").child("010").child(self.shiftStartDate).removeValue()
-            eventDBRef.child("managerEvent").child("010").child("setEventSwitch").setValue(false)
+            eventDBRef.child("managerEvent").child(self.currentSID).child(self.shiftStartDate).removeValue()
+            eventDBRef.child("managerEvent").child(self.currentSID).child("setEventSwitch").setValue(false)
             
             self.navigationController?.popToRootViewControllerAnimated(true)
         
@@ -350,9 +344,9 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         
         
         
-        //eventDBRef.child("managerEvent").child("010").child(shiftStartDate).child("00001").removeValue()
+        //eventDBRef.child("managerEvent").child(self.currentSID).child(shiftStartDate).child("00001").removeValue()
         
-        eventDBRef.child("managerEvent").child("010").child(shiftStartDate).queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
+        eventDBRef.child("managerEvent").child(self.currentSID).child(shiftStartDate).queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
             snapshot in
             
             print("Snapshot",snapshot.value)
@@ -365,12 +359,12 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
             
             let endDateString = snapshot.value!["EndDate"] as! String
             
-            let coding = snapshot.value!["Coding"] as! Int
+            let beverage = snapshot.value!["beverage"] as! Int
             
             
-            let dancing = snapshot.value!["Dancing"] as! Int
+            let cashier = snapshot.value!["cashier"] as! Int
             
-            let cleaning = snapshot.value!["Cleaning"] as! Int
+            let cleaning = snapshot.value!["cleaning"] as! Int
             
             let dateformatter = NSDateFormatter()
             
@@ -387,9 +381,11 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
             
             let shortEndDateString = shortFormatter.stringFromDate(endDate)
             
-            self.eventList.append(eventStruct(startDate: startDate,endDate: endDate, coding: coding, dancing: dancing, cleaning: cleaning, key: eventID))
+            self.eventList.append(eventStruct(startDate: startDate,endDate: endDate, beverage: beverage, cashier: cashier, cleaning: cleaning, key: eventID))
             
-            let newEvent = MSEvent.make(startDate, end: endDate, title: "\(shortStartDateString) \(coding)", location: "\(shortEndDateString)", key: eventID, coding: coding, dancing: dancing, cleaning: cleaning)
+            
+            
+            let newEvent = MSEvent.makeManagerEventEvent(startDate, end: endDate, title: "\(shortStartDateString)", location: "\(shortEndDateString)", key: eventID, beverage: beverage, cashier: cashier, cleaning: cleaning)
             
             
             

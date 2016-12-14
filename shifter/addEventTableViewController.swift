@@ -23,15 +23,27 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
    
     let sectionArray = ["Select Date", "Select Employee"]
     
-    let itemArray = [["Start Date", "End Date"],["Coding","Cleaning","Dancing"]]
+    let itemArray = [["Start Date", "End Date"],["beverage","cleaning","cashier"]]
     
     var selectedIndexPath: NSIndexPath? = nil
     
     var shiftStartDate: String!
+    
+    var currentUID = String()
+    var currentSID = String()
+    var currentRank = String()
+    
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tabBarVC = self.tabBarController as! TabBarViewController
+        
+        currentUID = tabBarVC.currentUID
+        currentSID = tabBarVC.currentSID
+        currentRank = tabBarVC.currentRank
+
         
         addEventTableView.registerNib(UINib(nibName: "DatePickerCell", bundle: nil), forCellReuseIdentifier: "DatePickerCell")
         print("LongPressDate: ",longPressDate)
@@ -113,7 +125,7 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("managerEvent").child("010").child(shiftStartDate).childByAutoId().setValue(event)
+        eventDBRef.child("managerEvent").child(self.currentSID).child(shiftStartDate).childByAutoId().setValue(event)
         
         
         

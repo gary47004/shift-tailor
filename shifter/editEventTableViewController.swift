@@ -41,16 +41,23 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
     
     let sectionArray = ["Select Date", "Select Employee"]
     
-    let itemArray = [["Start Date", "End Date"],["Coding","Cleaning","Dancing"]]
+    let itemArray = [["Start Date", "End Date"],["beverage","cleaning","cashier"]]
     
     var selectedIndexPath: NSIndexPath? = nil
     
     var shiftStartDate: String!
+    
+    var currentUID = String()
+    var currentSID = String()
+    var currentRank = String()
+
+    
+    
 
     
     @IBAction func deleteEvent(sender: UIButton) {
         let eventDBRef = FIRDatabase.database().reference()
-        eventDBRef.child("managerEvent").child("010").child(shiftStartDate).child(event.key).removeValue()
+        eventDBRef.child("managerEvent").child(self.currentSID).child(shiftStartDate).child(event.key).removeValue()
         //print(editEventButton.title)
         
         for (var i = 0; i < self.navigationController?.viewControllers.count; i = i + 1) {
@@ -112,6 +119,14 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tabBarVC = self.tabBarController as! TabBarViewController
+        
+        currentUID = tabBarVC.currentUID
+        currentSID = tabBarVC.currentSID
+        currentRank = tabBarVC.currentRank
+
+        
         editEventTableView.registerNib(UINib(nibName: "DatePickerCell", bundle: nil), forCellReuseIdentifier: "DatePickerCell")
         
                 
@@ -171,9 +186,9 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
         
         event.StartDate = dateArray[0]
         event.EndDate = dateArray[1]
-        event.coding = jobArray[0]
+        event.beverage = jobArray[0]
         event.cleaning = jobArray[1]
-        event.dancing = jobArray[2]
+        event.cashier = jobArray[2]
         
         
         dateArray = []
@@ -185,7 +200,7 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
         let eventDBRef = FIRDatabase.database().reference()
         
         
-        eventDBRef.child("managerEvent").child("010").child(shiftStartDate).child(event.key).updateChildValues(["StartDate":startDate, "EndDate": endDate, "Coding":event.coding, "Dancing":event.dancing, "Cleaning": event.cleaning])
+        eventDBRef.child("managerEvent").child(self.currentSID).child(shiftStartDate).child(event.key).updateChildValues(["StartDate":startDate, "EndDate": endDate, "beverage":event.beverage, "cashier":event.cashier, "cleaning": event.cleaning])
         
         
     
@@ -270,11 +285,11 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
         }else{
             
             for _ in 0...itemArray[1].count-1 {
-                if empCell.empTitleLabel.text == "Coding"{
-                    empCell.txtNumber.text = String(event.coding)
-                }else if empCell.empTitleLabel.text == "Dancing"{
-                    empCell.txtNumber.text = String(event.dancing)
-                }else if empCell.empTitleLabel.text == "Cleaning"{
+                if empCell.empTitleLabel.text == "beverage"{
+                    empCell.txtNumber.text = String(event.beverage)
+                }else if empCell.empTitleLabel.text == "cashier"{
+                    empCell.txtNumber.text = String(event.cashier)
+                }else if empCell.empTitleLabel.text == "cleaning"{
                     empCell.txtNumber.text = String(event.cleaning)
                 }
             }
