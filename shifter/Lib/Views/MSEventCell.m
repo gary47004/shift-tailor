@@ -145,12 +145,12 @@
 
 - (UIColor *)backgroundColorHighlighted:(BOOL)selected
 {
-    return selected ? [UIColor colorWithHexString:@"35b1f1"] : [[UIColor colorWithHexString:@"35b1f1"] colorWithAlphaComponent:0.2];
+    return selected ? [UIColor colorWithHexString:@"44484C"] : [[UIColor colorWithHexString:@"74787B"] colorWithAlphaComponent:0.2];
 }
 
 - (UIColor *)textColorHighlighted:(BOOL)selected
 {
-    return selected ? [UIColor whiteColor] : [UIColor colorWithHexString:@"21729c"];
+    return selected ? [UIColor whiteColor] : [UIColor blackColor];
 }
 
 - (UIColor *)borderColor

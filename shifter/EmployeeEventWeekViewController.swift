@@ -40,11 +40,21 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
     let weekDateFormatter = NSDateFormatter()
     
     
+    var currentUID = String()
+    var currentSID = String()
+    var currentRank = String()
+    var currentPro = String()
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tabBarVC = self.tabBarController as! TabBarViewController
+        currentUID = tabBarVC.currentUID
+        currentSID = tabBarVC.currentSID
+        currentRank = tabBarVC.currentRank
+        currentPro = tabBarVC.currentPro
         
         
         
@@ -159,7 +169,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
         let editDBRef = FIRDatabase.database().reference()
         
         
-        editDBRef.child("employeeEvent").child("010").child(shiftStartDate).observeEventType(.ChildRemoved, withBlock: {
+        editDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).observeEventType(.ChildRemoved, withBlock: {
             
             snapshot in
             
@@ -186,7 +196,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
 //        
 //        let eventDBRef = FIRDatabase.database().reference()
 //        
-//        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").queryOrderedByKey().observeEventType(.ChildChanged, withBlock: {
+//        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentUID).queryOrderedByKey().observeEventType(.ChildChanged, withBlock: {
 //            
 //            snapshot in
 //            
@@ -236,7 +246,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
+        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentPro).child(self.currentUID).queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
             snapshot in
             
             
@@ -246,12 +256,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
             
             let endDateString = snapshot.value!["EndDate"] as! String
             
-            let coding = snapshot.value!["Preference"] as! Int
-            
-            
-            let dancing = 0
-            
-            let cleaning = 0
+            let preference = snapshot.value!["Preference"] as! Int
             
             let dateformatter = NSDateFormatter()
             
@@ -268,7 +273,9 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
             
             let shortEndDateString = shortFormatter.stringFromDate(endDate)
             
-            let newEvent = MSEvent.make(startDate, end: endDate, title: "\(shortStartDateString) \(coding)", location: "\(shortEndDateString)", key: eventID, coding: coding, dancing: dancing, cleaning: cleaning)
+            
+            
+            let newEvent = MSEvent.makeEmployeeEventEvent(startDate, end: endDate, title: "\(shortStartDateString)\(preference)", location: "\(shortEndDateString)", key: eventID, preference: preference)
             
             
             

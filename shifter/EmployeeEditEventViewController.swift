@@ -29,9 +29,20 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
     var dateArray = Array<NSDate>()
     
     var selectedIndexPath: NSIndexPath? = nil
+    
+    var currentUID = String()
+    var currentSID = String()
+    var currentRank = String()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let tabBarVC = self.tabBarController as! TabBarViewController
+        currentUID = tabBarVC.currentUID
+        currentSID = tabBarVC.currentSID
+        currentRank = tabBarVC.currentRank
+
         
         employeeEditEventTableView.registerNib(UINib(nibName: "DatePickerCell", bundle: nil), forCellReuseIdentifier: "DatePickerCell")
         employeeEditEventTableView.registerNib(UINib(nibName: "SliderCell", bundle: nil), forCellReuseIdentifier: "SliderCell")
@@ -90,7 +101,7 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
     }
     @IBAction func deleteEvent(sender: UIButton) {
         let eventDBRef = FIRDatabase.database().reference()
-        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").child(selectedEvent.key).removeValue()
+        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentUID).child(selectedEvent.key).removeValue()
         //print(editEventButton.title)
         
         for (var i = 0; i < self.navigationController?.viewControllers.count; i = i + 1) {
@@ -140,7 +151,7 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
         
         selectedEvent.StartDate = dateArray[0]
         selectedEvent.EndDate = dateArray[1]
-        selectedEvent.coding = preference
+        selectedEvent.preference = preference
         
         dateArray = []
         
@@ -149,7 +160,7 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
         let eventDBRef = FIRDatabase.database().reference()
         
         
-        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").child(selectedEvent.key).updateChildValues(["StartDate":startDate, "EndDate": endDate,"Preference": preference])
+        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentUID).child(selectedEvent.key).updateChildValues(["StartDate":startDate, "EndDate": endDate,"Preference": preference])
         
     }
     
@@ -236,8 +247,8 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
             
             
         }else{
-            sliderCell.preferenceLabel.text = String(selectedEvent.coding)
-            sliderCell.preferenceSlider.value = selectedEvent.coding as Float
+            sliderCell.preferenceLabel.text = String(selectedEvent.preference)
+            sliderCell.preferenceSlider.value = selectedEvent.preference as Float
             
             if isExpandable == true{
                 sliderCell.preferenceSlider.enabled = true

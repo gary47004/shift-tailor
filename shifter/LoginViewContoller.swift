@@ -10,6 +10,7 @@ struct accounts {
     let store: String!
     let district : String!
     let rank : String!
+    let profession : String!
 }
 
 
@@ -45,8 +46,9 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
             let store = snapshot.value!["store"] as? String
             let district = snapshot.value!["district"] as? String
             let rank = snapshot.value!["rank"] as? String
+            let profession = snapshot.value!["profession"] as? String
             
-            self.accountArray.append(accounts(ID: ID, password: password, store: store, district: district, rank: rank))
+            self.accountArray.append(accounts(ID: ID, password: password, store: store, district: district, rank: rank, profession: profession))
             self.IDArray.append(ID!)
             self.passwordArray.append(password!)
         })
@@ -92,6 +94,7 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
                         defaults.setObject(accountArray[index].district, forKey: "currentDID")
                         defaults.setObject(accountArray[index].rank, forKey: "currentRank")
                         defaults.setObject(accountArray[index].password, forKey: "currentPassword")
+                        defaults.setObject(accountArray[index].profession, forKey: "currentProfession")
                         defaults.setBool(true, forKey: "loggedin")
 
                         performSegueWithIdentifier("showHome", sender: self)

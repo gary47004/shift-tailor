@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <development version="7000" identifier="xcode"/>
@@ -531,21 +531,37 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="2vZ-wg-jzc">
-                        <barButtonItem key="leftBarButtonItem" title="打卡" id="6K5-xe-Fn8">
-                            <connections>
-                                <action selector="rangingButton:" destination="JUv-aj-PLw" id="Ozi-VS-WJk"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="填表" id="ANU-ud-Oc3">
-                            <connections>
-                                <action selector="employeeSetEvent:" destination="JUv-aj-PLw" id="ZVw-xN-cIF"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem title="打卡" id="6K5-xe-Fn8">
+                                <connections>
+                                    <action selector="rangingButton:" destination="JUv-aj-PLw" id="Ozi-VS-WJk"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem enabled="NO" title="上週" id="Qsd-px-yGk">
+                                <connections>
+                                    <action selector="showPreviousWeek:" destination="JUv-aj-PLw" id="ofG-Xk-HUb"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
+                            <barButtonItem title="填表" id="ANU-ud-Oc3">
+                                <connections>
+                                    <action selector="employeeSetEvent:" destination="JUv-aj-PLw" id="ZVw-xN-cIF"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="下週" id="CXI-jG-oVT">
+                                <connections>
+                                    <action selector="showNextWeek:" destination="JUv-aj-PLw" id="NYr-u8-SbS"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="employeeSetEventButton" destination="ANU-ud-Oc3" id="hA4-Hy-KJ4"/>
+                        <outlet property="nextWeekButton" destination="CXI-jG-oVT" id="toH-cG-jhm"/>
+                        <outlet property="previousWeekButton" destination="Qsd-px-yGk" id="den-ew-njL"/>
                         <outlet property="rangingOutlet" destination="6K5-xe-Fn8" id="aR3-ca-z35"/>
                         <outlet property="titleItem" destination="2vZ-wg-jzc" id="Bpp-ls-SdH"/>
                         <outlet property="weeklyView" destination="aPM-hJ-K83" id="mA9-f0-Am7"/>
@@ -1214,14 +1230,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fb9-GT-pDR" customClass="MSWeekView">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fb9-GT-pDR" customClass="MSWeekView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDc-6o-T2W">
+                                <rect key="frame" x="0.0" y="44" width="375" height="30"/>
+                                <color key="backgroundColor" red="0.61714141789999999" green="0.94660605259999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="ufF-K6-Bln"/>
+                                </constraints>
+                                <state key="normal" title="發佈"/>
+                                <connections>
+                                    <action selector="announceShift:" destination="tLJ-am-17s" eventType="touchUpInside" id="vNg-d7-vti"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="PtZ-Nv-kdA" firstAttribute="top" secondItem="fb9-GT-pDR" secondAttribute="bottom" id="54I-wr-Iyi"/>
+                            <constraint firstItem="TDc-6o-T2W" firstAttribute="top" secondItem="EsU-N2-26g" secondAttribute="bottom" id="9cr-Nl-Mnf"/>
+                            <constraint firstItem="TDc-6o-T2W" firstAttribute="centerX" secondItem="gJq-ca-uAk" secondAttribute="centerX" id="Bhj-4e-tPL"/>
                             <constraint firstItem="fb9-GT-pDR" firstAttribute="top" secondItem="EsU-N2-26g" secondAttribute="bottom" constant="-44" id="pI8-mi-Wha"/>
                             <constraint firstItem="fb9-GT-pDR" firstAttribute="leading" secondItem="gJq-ca-uAk" secondAttribute="leading" id="peg-uJ-4jL"/>
                             <constraint firstAttribute="trailing" secondItem="fb9-GT-pDR" secondAttribute="trailing" id="rE1-Mi-4tE"/>
@@ -1249,6 +1278,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="announcementButton" destination="TDc-6o-T2W" id="6fF-Bd-7Uk"/>
                         <outlet property="nextWeekButton" destination="lul-fn-G85" id="m6Q-2Y-OP5"/>
                         <outlet property="previousWeekButton" destination="3dM-Ka-zYU" id="9xj-Zb-QVp"/>
                         <outlet property="titleItem" destination="hR9-3Z-V4v" id="rzv-Qf-1r7"/>

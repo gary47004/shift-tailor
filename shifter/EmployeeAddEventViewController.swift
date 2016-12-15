@@ -24,14 +24,24 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
     
     let sectionArray = ["Select Date","喜好度"]
     
-    let itemArray = ["Start Date", "End Date"]
+    let itemArray = ["StartDate", "EndDate"]
     
     var selectedIndexPath: NSIndexPath? = nil
     
     var shiftStartDate: String = ""
     
+    var currentUID = String()
+    var currentSID = String()
+    var currentRank = String()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tabBarVC = self.tabBarController as! TabBarViewController
+        currentUID = tabBarVC.currentUID
+        currentSID = tabBarVC.currentSID
+        currentRank = tabBarVC.currentRank
+        
         
         employeeAddEventTableView.registerNib(UINib(nibName: "DatePickerCell", bundle: nil), forCellReuseIdentifier: "DatePickerCell")
         employeeAddEventTableView.registerNib(UINib(nibName: "SliderCell", bundle: nil), forCellReuseIdentifier: "SliderCell")
@@ -96,7 +106,7 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("employeeEvent").child("010").child(shiftStartDate).child("102306111").childByAutoId().setValue(event)
+        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentUID).childByAutoId().setValue(event)
         
         for (var i = 0; i < self.navigationController?.viewControllers.count; i += 1) {
             if(self.navigationController?.viewControllers[i].isKindOfClass(EmployeeEventWeekViewController) == true) {
