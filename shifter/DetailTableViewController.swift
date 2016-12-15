@@ -58,7 +58,7 @@ class DetailTableViewController: UITableViewController {
             else if(indexPath.row==3){cell.textLabel?.text = "phone:"+"\(infor[rowSelected!].phone)"}
             else if(indexPath.row==4){cell.textLabel?.text = "rank:"+"\(infor[rowSelected!].rank)"}
             else if(indexPath.row==5){cell.textLabel?.text = "store:"+"\(infor[rowSelected!].store)"}
-            else if(indexPath.row==8){cell.textLabel?.text = "profession:"+"\(infor[rowSelected!].profession)"}
+            else if(indexPath.row==6){cell.textLabel?.text = "profession:"+"\(infor[rowSelected!].profession)"}
         
             return cell
         }else if(indexPath.section == 1){

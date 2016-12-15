@@ -62,6 +62,7 @@
 		43F708261DBDE90A006432EB /* Bulletin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F708251DBDE90A006432EB /* Bulletin.swift */; };
 		43F96E8A1DE172FF00B7D460 /* BulletinCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F96E891DE172FF00B7D460 /* BulletinCompose.swift */; };
 		43F96E8C1DE19A4900B7D460 /* BulletinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F96E8B1DE19A4900B7D460 /* BulletinDetail.swift */; };
+		4E6C4C9A1E02B4C000BE1EF3 /* NewInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6C4C991E02B4C000BE1EF3 /* NewInformationViewController.swift */; };
 		4E9E99121DE6D64500B681A0 /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9E99101DE6D64500B681A0 /* DetailTableViewController.swift */; };
 		4E9E99131DE6D64500B681A0 /* InformationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9E99111DE6D64500B681A0 /* InformationTableViewController.swift */; };
 		4EB716DA1DE9CE3400662774 /* AlarmSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB716D91DE9CE3400662774 /* AlarmSwitchTableViewCell.swift */; };
@@ -147,6 +148,7 @@
 		43F708251DBDE90A006432EB /* Bulletin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bulletin.swift; sourceTree = "<group>"; };
 		43F96E891DE172FF00B7D460 /* BulletinCompose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinCompose.swift; sourceTree = "<group>"; };
 		43F96E8B1DE19A4900B7D460 /* BulletinDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinDetail.swift; sourceTree = "<group>"; };
+		4E6C4C991E02B4C000BE1EF3 /* NewInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewInformationViewController.swift; sourceTree = "<group>"; };
 		4E9E99101DE6D64500B681A0 /* DetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
 		4E9E99111DE6D64500B681A0 /* InformationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationTableViewController.swift; sourceTree = "<group>"; };
 		4EB716D91DE9CE3400662774 /* AlarmSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmSwitchTableViewCell.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 			children = (
 				4E9E99111DE6D64500B681A0 /* InformationTableViewController.swift */,
 				4E9E99101DE6D64500B681A0 /* DetailTableViewController.swift */,
+				4E6C4C991E02B4C000BE1EF3 /* NewInformationViewController.swift */,
 			);
 			name = Information;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 				43D2EDBC1DAF95AB00E5133E /* TabBarViewController.swift in Sources */,
 				04852D241DB37F9700229CAE /* MSCollectionViewCalendarLayout.m in Sources */,
 				04BCE11D1DB38C32004A8162 /* EmployeeWeekViewController.swift in Sources */,
+				4E6C4C9A1E02B4C000BE1EF3 /* NewInformationViewController.swift in Sources */,
 				431022221D60E8F400C47D22 /* Settings.swift in Sources */,
 				43DBC69C1DD4A90200B8A426 /* TransferableViewController.swift in Sources */,
 				04BCE1311DB490B9004A8162 /* ShiftEmployeeTableViewCell.swift in Sources */,
