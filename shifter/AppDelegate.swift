@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let defaults = NSUserDefaults.standardUserDefaults()
         
-        print(defaults.boolForKey("loggedin"))
+//        defaults.setBool(false, forKey: "loggedin")
         if defaults.boolForKey("loggedin") != true{
             let loginVC: LoginViewContoller = mainStoryboard.instantiateViewControllerWithIdentifier("loginVC") as! LoginViewContoller
             self.window?.rootViewController = loginVC

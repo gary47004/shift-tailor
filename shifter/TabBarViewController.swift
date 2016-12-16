@@ -29,8 +29,15 @@ class TabBarViewController: UITabBarController {
     var selectedSection = Int()
     var selectedRow = Int()
     
+    var currentWeekStartDateArray = [String]()
+    var currentWeekEndDateArray = [String]()
+    var releaseDate = String()
     
-    //GY
+    var nextWeekStartDateArray = [String]()
+    var nextWeekEndDateArray = [String]()
+    
+    
+    //GGGGGGGGGGGGGGGGGGGGGGGY
     let now = NSDate()
     var formatter = NSDateFormatter()
     let myCalendar = NSCalendar.currentCalendar()
@@ -74,7 +81,7 @@ class TabBarViewController: UITabBarController {
             }
         })
     }
-    //GY
+    //GGGGGGGGGGGGGGGGGGGGGGGGY
     
     
     override func viewDidLoad() {
@@ -96,7 +103,7 @@ class TabBarViewController: UITabBarController {
         let databaseRef = FIRDatabase.database().reference()
         
         
-        //GY
+        //GGGGGGGGGGGGGGGGGGY
         let alarmStoragePlace = "employee/"+"\(currentUID)"+"/alarmClock"
         databaseRef.child(alarmStoragePlace).observeEventType(.Value, withBlock: {
             snapshot in
@@ -111,11 +118,71 @@ class TabBarViewController: UITabBarController {
             }
         })
         
-        //GY
+        //GGGGGGGGGGGGGGGGGGGY
+        
+        
+        
+        //fill-in notifiacation's dates
+        databaseRef.child("managerEvent/\(currentSID)/currentEvent").observeEventType(.Value, withBlock: {snapshot in
+            
+            let dateFormmater = NSDateFormatter()
+            dateFormmater.dateFormat = "yyyy-M-dd"
+            self.nextWeekStartDateArray.append(snapshot.value as! String)
+            let nextWeekDate = dateFormmater.dateFromString(snapshot.value as! String)
+            self.nextWeekEndDateArray.append(dateFormmater.stringFromDate((nextWeekDate?.addDays(6))!))
+        })
+        
+        //fill-in notification
+        databaseRef.child("managerEvent/\(self.currentSID)/isSchedulingSwitch").observeEventType(.Value, withBlock: { snapshot in
+            if snapshot.value as! Int == 1{
+                self.notifications += 1
+                let defaults = NSUserDefaults.standardUserDefaults()
+                if defaults.objectForKey("oldNotifications") != nil{
+                    self.oldNotifications = defaults.objectForKey("oldNotifications") as! Int
+                }
+                self.newNotifications = self.notifications - self.oldNotifications
+                if self.newNotifications > 0{
+                    self.tabBar.items?[2].badgeValue = String(self.newNotifications)
+                }
+            }
+        })
+        
+        //released shift schedule dates(get it from current shift + 7 days)
+        databaseRef.child("managerShift/\(self.currentSID)/currentShift").observeEventType(.Value, withBlock: {snapshot in
+            
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-M-dd"
+            
+            let weekStartDate = dateFormatter.dateFromString(snapshot.value as! String)
+            
+            self.currentWeekStartDateArray.append(dateFormatter.stringFromDate((weekStartDate?.addDays(7))!))
+            self.currentWeekEndDateArray.append(dateFormatter.stringFromDate((weekStartDate?.addDays(13))!))
+            
+            //shift schedule released
+            let announcementDate = dateFormatter.stringFromDate((weekStartDate?.addDays(7))!)
+            self.releaseDate = announcementDate
+            databaseRef.child("managerShift/\(self.currentSID)/\(announcementDate)/announcementSwitch").observeEventType(.Value, withBlock: { snapshot in
+                
+                
+                if snapshot.value as! Int == 1{
+                    self.notifications += 1
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    if defaults.objectForKey("oldNotifications") != nil{
+                        self.oldNotifications = defaults.objectForKey("oldNotifications") as! Int
+                    }
+                    self.newNotifications = self.notifications - self.oldNotifications
+                    if self.newNotifications > 0{
+                        self.tabBar.items?[2].badgeValue = String(self.newNotifications)
+                    }
+                }
+            })
 
+        })
+        
+        
         
         //child added
-        databaseRef.child("bulletin").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: { snapshot in 
+        databaseRef.child("bulletin").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: { snapshot in
             let title = snapshot.value!["title"] as? String
             let time = snapshot.value!["time"] as? String
             let content = snapshot.value!["content"] as? String
