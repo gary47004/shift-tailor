@@ -265,10 +265,34 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
             eventDBRef.child("managerEvent").child(self.currentSID).child("currentEventDeadline").setValue(self.deadlineDate)
             eventDBRef.child("managerEvent").child(self.currentSID).child("setEventSwitch").setValue(false)
             eventDBRef.child("managerEvent").child(self.currentSID).child("isSchedulingSwitch").setValue(true)
+            
+            
+            
+
+            
+            
+            
             let completeVC = UIAlertController(title: "已完成排班", message: "將於 \(self.deadlineDate) 收到班表",preferredStyle: .Alert)
             let confirmAction = UIAlertAction(title: "OK", style: .Default, handler: {(alert:UIAlertAction) in
-            
+                
+                                /*
+                 
+                 
+                 
+                 填表通知
+                 
+                 
+                 對象：該店員工
+                 回傳：填表介面 EmployeeEventWeekViewController
+                 
+                 
+                 
+                 
+                 */
+                
+                
                 self.navigationController?.popToRootViewControllerAnimated(true)
+                
                 
             })
             

@@ -10,16 +10,33 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
+struct notification {
+    let title : String!
+    let type : String!
+    let key : String!
+    let selectedSection : Int!
+    let selectedRow : Int!
+}
+
 class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var titleArray = [String]()
-    var typeArray = [String]()
-    var sectionArray = [Int]()
     var section0Key = [String]()
     var section1Key = [String]()
-    var keyArray = [String]()
     var currentUID = String()
     var currentSID = String()
     var currentDID = String()
+    
+    var notificationArray = [notification]()
+    var selectedRowIn0 = Int()
+    var selectedRowIn1 = Int()
+    
+    var releaseDate = String()
+    var currentWeekStartDateArray = [String]()
+    var currentWeekEndDateArray = [String]()
+    var currentWeekDate = Int()
+    
+    var nextWeekStartDateArray = [String]()
+    var nextWeekEndDateArray = [String]()
+    var nextWeekDate = Int()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -27,14 +44,22 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
         tableView.rowHeight = 48
         tableView.registerNib(UINib(nibName: "NotificationTableViewCell", bundle: nil), forCellReuseIdentifier: "notificationCell")
         
+        
         let tabBarVC = self.tabBarController as! TabBarViewController
         currentUID = tabBarVC.currentUID
         currentSID = tabBarVC.currentSID
         currentDID = tabBarVC.currentDID
+        currentWeekStartDateArray = tabBarVC.currentWeekStartDateArray
+        currentWeekEndDateArray = tabBarVC.currentWeekEndDateArray
+        nextWeekStartDateArray = tabBarVC.nextWeekStartDateArray
+        nextWeekEndDateArray = tabBarVC.nextWeekEndDateArray
+        releaseDate = tabBarVC.releaseDate
+        
         
         //set listener
         let databaseRef = FIRDatabase.database().reference()
         
+        //bulletin new post
         databaseRef.child("bulletin").queryOrderedByKey().observeEventType(.ChildAdded, withBlock: { snapshot in
             let title = snapshot.value!["title"] as? String
             let section = snapshot.value!["section"] as? Int
@@ -45,26 +70,26 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
             
             if store == self.currentSID{
                 if employee != self.currentUID{
-                    self.titleArray.insert(title!, atIndex: 0)
-                    self.typeArray.insert("公告欄", atIndex: 0)
-                    self.sectionArray.insert(section!, atIndex: 0)
-                    self.keyArray.insert(key, atIndex: 0)
-                    
-                    if section == 0{
+
+                    if section == 0 {
+                        //store's post
+                        self.selectedRowIn0 += 1
+                        self.notificationArray.insert(notification(title: title, type: "店公告", key: key, selectedSection: section, selectedRow: self.selectedRowIn0), atIndex: 0)
                         self.section0Key.insert(key, atIndex: 0)
                     }else{
+                        //company's post
+                        self.selectedRowIn1 += 1
+                        self.notificationArray.insert(notification(title: title, type: "公司公告", key: key, selectedSection: section, selectedRow: self.selectedRowIn1), atIndex: 0)
                         self.section1Key.insert(key, atIndex: 0)
+
                     }
                 }
             }else{
                 if district == self.currentDID{
-                    if section == 1{
-                        self.titleArray.insert(title!, atIndex: 0)
-                        self.typeArray.insert("公告欄", atIndex: 0)
-                        self.sectionArray.insert(section!, atIndex: 0)
-                        self.keyArray.insert(key, atIndex: 0)
-                        self.section1Key.insert(key, atIndex: 0)
-                    }
+                    //company's post
+                    self.selectedRowIn1 += 1
+                    print(self.selectedRowIn1)
+                    self.notificationArray.insert(notification(title: title, type: "公司公告", key: key, selectedSection: section, selectedRow: self.selectedRowIn1), atIndex: 0)
                 }
             }
             
@@ -72,13 +97,46 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
             
         })
         
+        //fill-in
+        databaseRef.child("managerEvent/\(self.currentSID)/isSchedulingSwitch").observeEventType(.Value, withBlock: { snapshot in
+            
+            if snapshot.value as! Int == 1{
+                self.nextWeekDate += 1
+                self.fillInNotification()
+                self.tableView.reloadData()
+            }
+            
+        })
+        
+        //shift schedule released
+        databaseRef.child("managerShift/\(self.currentSID)/\(self.releaseDate)/announcementSwitch").observeEventType(.Value, withBlock: { snapshot in
+            if snapshot.value as! Int == 1{
+                self.currentWeekDate += 1
+                print("currentWeekDate",self.currentWeekDate)
+                print("currentWeekStartDate",self.currentWeekStartDateArray)
+                print("currentWeekEndDate",self.currentWeekEndDateArray)
+                self.releasedNotification()
+                self.tableView.reloadData()
+            }
+        })
+    }
+    
+    func fillInNotification(){
+        notificationArray.insert(notification(title: "\(nextWeekStartDateArray[nextWeekDate-1])-\(nextWeekEndDateArray[nextWeekDate-1])已開始填表", type: "開始填表", key: nil, selectedSection: nil, selectedRow: nil), atIndex: 0)
+    }
+    
+    func releasedNotification() {
+        if currentWeekDate > 0{
+            notificationArray.insert(notification(title: "\(currentWeekStartDateArray[currentWeekDate-1])-\(currentWeekEndDateArray[currentWeekDate-1])班表已公布", type: "班表發佈", key: nil, selectedSection: nil, selectedRow: nil), atIndex: 0)
+        }
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         self.title = "通知"
         self.navigationController?.title = ""
         
-        //checked notification: hide tab bar item badge, mark new notifcaitons
+        //checked new notifications: hide tab bar item badge, mark new notifcaitons
         tabBarController?.tabBar.items?[2].badgeValue = nil
         let tabBarVC = self.tabBarController as! TabBarViewController
         tabBarVC.oldNotifications += tabBarVC.newNotifications
@@ -91,34 +149,34 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     //set tableView
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titleArray.count
+        return notificationArray.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("notificationCell") as? NotificationTableViewCell
-//        cell?.setType(typeArray[indexPath.row])
-        cell?.setTitle(titleArray[indexPath.row])
+        cell?.setTitle(notificationArray[indexPath.row].title)
         return cell!
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if typeArray[indexPath.row] == "公告欄"{
+        if notificationArray[indexPath.row].type == "店公告" || notificationArray[indexPath.row].type == "公司公告"{
             let tabBarVC = self.tabBarController as! TabBarViewController
             
             //set selected section and row
-            let selectedSection = sectionArray[indexPath.row]
-            var selectedRow = Int()
-            if selectedSection == 0{
-                selectedRow = section0Key.indexOf(keyArray[indexPath.row])!
+            tabBarVC.selectedSection = notificationArray[indexPath.row].selectedSection
+            if tabBarVC.selectedSection == 0{
+                tabBarVC.selectedRow = section0Key.indexOf(notificationArray[indexPath.row].key)!
             }else{
-                selectedRow = section1Key.indexOf(keyArray[indexPath.row])!
+                tabBarVC.selectedRow = section1Key.indexOf(notificationArray[indexPath.row].key)!
             }
             
-            tabBarVC.selectedSection = selectedSection
-            tabBarVC.selectedRow = selectedRow
             
             //go to bulletinDetail
             performSegueWithIdentifier("showPost", sender: nil)
 
+        }else if notificationArray[indexPath.row].type == "班表發佈"{
+            //到發佈畫面
+        }else if notificationArray[indexPath.row].type == "開始填表"{
+            //到填表畫面
         }
     }
     

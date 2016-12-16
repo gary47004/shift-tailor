@@ -253,8 +253,26 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     @IBAction func announceShift(sender: UIButton) {
         let DBREF = FIRDatabase.database().reference()
         
+        
+        
+        
+        
         DBREF.child("employeeShift").child(self.currentSID).child("2016-11-06").child("announcementSwitch").setValue(true)
         DBREF.child("managerShift").child(self.currentSID).child(self.currentWeekStartDate).child("announcementSwitch").setValue(true)
+        
+    
+   
+        /*
+         
+         發布班表
+         
+         對象：該店員工
+         回傳介面：EmployeeWeekViewController
+         
+         
+         
+         
+         */
     }
     @IBAction func showNextWeek(sender: UIBarButtonItem) {
         
