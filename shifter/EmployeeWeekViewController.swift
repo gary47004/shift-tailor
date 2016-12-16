@@ -27,6 +27,12 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
     var departure : String?
     var intervalA:Int?
     var intervalB:Int?
+    var managerAttendStoragePlace = ""
+    var managerAttendenceStoragePlace = ""
+    struct managerShiftDataStruct{
+        let id : String?
+    }
+    var managerShiftData = [managerShiftDataStruct]()
     //GY
 
     
@@ -67,6 +73,7 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
     var currentUID = String()
     var currentSID = String()
     var currentRank = String()
+    var currentProfession = String()
 
     
     
@@ -80,6 +87,7 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
         currentUID = tabBarVC.currentUID
         currentSID = tabBarVC.currentSID
         currentRank = tabBarVC.currentRank
+        currentProfession = tabBarVC.currentPro
         
         
         
@@ -208,14 +216,23 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
         formatter.dateFormat = "yyyy-M-dd"
         firstDay = formatter.stringFromDate(firstDayOfWeek!)
         
-        let tabBarVC = self.tabBarController as? TabBarViewController
-        let id = tabBarVC?.currentUID
-        let storeId = tabBarVC?.currentSID
         
-        storagePlace = "employeeShift/"+"\(storeId)"+"/"+"\(firstDay)"+"/"+"\(id)"+"/"+"\(weekDay)"
+        storagePlace = "employeeShift/"+currentSID+"/"+firstDay+"/"+currentUID+"/"+weekDay
+        managerAttendStoragePlace = "managerShift/"+currentSID+"/"+firstDay+"/"+weekDay+"/"+currentProfession
         
         
         let databaseRef = FIRDatabase.database().reference()
+        databaseRef.child(managerAttendStoragePlace).observeEventType(.ChildAdded, withBlock: {
+            snapshot in
+            
+            let Id = snapshot.value!["Id"] as? String
+            
+            if(Id == self.currentUID){
+                self.managerShiftData.insert(managerShiftDataStruct(id: Id), atIndex: 0)
+            }
+        })
+        
+        
         databaseRef.child(storagePlace).observeEventType(.Value, withBlock: {
             snapshot in
             
@@ -301,10 +318,12 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
             let number = String(0-intervalA!)
             let late : [String : String] = ["late" : number]
             databaseRef.child(storagePlace).updateChildValues(late)
+            //databaseRef.child(managerAttendenceStoragePlace).updateChildValues(late)
         }else{
             let number = "0"
             let late : [String : String] = ["late" : number]
             databaseRef.child(storagePlace).updateChildValues(late)
+            //databaseRef.child(managerAttendenceStoragePlace).updateChildValues(late)
         }
         
     }
@@ -320,10 +339,12 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
             let number = String(intervalB!-0)
             let leaveEarly : [String : String] = ["leaveEarly" : number]
             databaseRef.child(storagePlace).updateChildValues(leaveEarly)
+            //databaseRef.child(managerAttendenceStoragePlace).updateChildValues(leaveEarly)
         }else{
             let number = "0"
             let leaveEarly : [String : String] = ["leaveEarly" : number]
             databaseRef.child(storagePlace).updateChildValues(leaveEarly)
+            //databaseRef.child(managerAttendenceStoragePlace).updateChildValues(leaveEarly)
         }
         
     }
