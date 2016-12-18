@@ -116,13 +116,16 @@ class Notification: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         //shift schedule released
         databaseRef.child("managerShift/\(self.currentSID)/\(self.releaseDate)/announcementSwitch").observeEventType(.Value, withBlock: { snapshot in
-            if snapshot.value as! Int == 1{
-                self.currentWeekDate += 1
-                print("currentWeekDate",self.currentWeekDate)
-                print("currentWeekStartDate",self.currentWeekStartDateArray)
-                print("currentWeekEndDate",self.currentWeekEndDateArray)
-                self.releasedNotification()
-                self.tableView.reloadData()
+            if String(snapshot.value) != "Optional(<null>)"{
+                if snapshot.value as! Int == 1{
+                    self.currentWeekDate += 1
+                    print("currentWeekDate",self.currentWeekDate)
+                    print("currentWeekStartDate",self.currentWeekStartDateArray)
+                    print("currentWeekEndDate",self.currentWeekEndDateArray)
+                    self.releasedNotification()
+                    self.tableView.reloadData()
+                }
+
             }
         })
     }

@@ -185,18 +185,20 @@ class TabBarViewController: UITabBarController {
             self.releaseDate = announcementDate
             databaseRef.child("managerShift/\(self.currentSID)/\(announcementDate)/announcementSwitch").observeEventType(.Value, withBlock: { snapshot in
                 
-                
-                if snapshot.value as! Int == 1{
-                    self.notifications += 1
-                    let defaults = NSUserDefaults.standardUserDefaults()
-                    if defaults.objectForKey("oldNotifications") != nil{
-                        self.oldNotifications = defaults.objectForKey("oldNotifications") as! Int
-                    }
-                    self.newNotifications = self.notifications - self.oldNotifications
-                    if self.newNotifications > 0{
-                        self.tabBar.items?[2].badgeValue = String(self.newNotifications)
+                if String(snapshot.value) != "Optional(<null>)"{
+                    if snapshot.value as! Int == 1{
+                        self.notifications += 1
+                        let defaults = NSUserDefaults.standardUserDefaults()
+                        if defaults.objectForKey("oldNotifications") != nil{
+                            self.oldNotifications = defaults.objectForKey("oldNotifications") as! Int
+                        }
+                        self.newNotifications = self.notifications - self.oldNotifications
+                        if self.newNotifications > 0{
+                            self.tabBar.items?[2].badgeValue = String(self.newNotifications)
+                        }
                     }
                 }
+                
             })
 
         })

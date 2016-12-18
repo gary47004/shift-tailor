@@ -110,7 +110,7 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
             
             })
         
-        self.sectionTitleArray = ["Beverage: \(selectedEvent.beverageList.count) 位", "Cleaning: \(selectedEvent.cleaningList.count) 位", "Cashier: \(selectedEvent.cashierList.count) 位"]
+        self.sectionTitleArray = ["\(selectedEvent.beverageList.count) 位", "\(selectedEvent.cleaningList.count) 位", "\(selectedEvent.cashierList.count) 位"]
         
         let titleFormatter = NSDateFormatter()
         titleFormatter.dateFormat = "MMM dd eee"
@@ -123,14 +123,25 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
     //UI
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIImageView()
+        let label = UILabel(frame: CGRect(x: 76, y: 19, width: 40, height: 11))
+
         if section == 0{
             view.image = UIImage(named: "beverage header")
+            label.text = sectionTitleArray[0]
         }else if section == 1{
             view.image = UIImage(named: "cashier header")
+            label.text = sectionTitleArray[1]
+
         }else{
             view.image = UIImage(named: "cleaning header")
+            label.text = sectionTitleArray[2]
+
         }
     
+        label.textColor = UIColor.whiteColor()
+        view.addSubview(label)
+        
+        
         return view
     }
     
