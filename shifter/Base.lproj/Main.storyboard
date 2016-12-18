@@ -181,11 +181,59 @@
                         <outlet property="weekLeaveEarlyLabel" destination="hk9-95-pOT" id="Yh2-ca-QC3"/>
                         <outlet property="weekPay" destination="The-f0-vbu" id="GM3-Lq-BX1"/>
                         <segue destination="IGv-KP-wY4" kind="show" identifier="showDetail" id="HLD-EC-MfC"/>
+                        <segue destination="Vn7-aC-nfo" kind="show" identifier="showPersonalDetail" id="Rpc-El-ejt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T3o-el-9mn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-435.5" y="2631.5"/>
+        </scene>
+        <!--Personal Information View Controller-->
+        <scene sceneID="gti-Z6-cv7">
+            <objects>
+                <viewController id="Vn7-aC-nfo" customClass="PersonalInformationViewController" customModule="shifter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pv9-sk-WxD"/>
+                        <viewControllerLayoutGuide type="bottom" id="5cn-dU-8Us"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="n73-o0-b1q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RyC-42-dh0">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="detailCell" id="K4w-c6-OtL">
+                                        <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="K4w-c6-OtL" id="X8t-UH-ebO">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Vn7-aC-nfo" id="KQr-V6-0ng"/>
+                                    <outlet property="delegate" destination="Vn7-aC-nfo" id="wFy-BM-5Uc"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RyC-42-dh0" firstAttribute="leading" secondItem="n73-o0-b1q" secondAttribute="leading" id="1fL-L7-rcb"/>
+                            <constraint firstAttribute="trailing" secondItem="RyC-42-dh0" secondAttribute="trailing" id="6RJ-hV-qDm"/>
+                            <constraint firstItem="5cn-dU-8Us" firstAttribute="top" secondItem="RyC-42-dh0" secondAttribute="bottom" id="OQi-NU-aGC"/>
+                            <constraint firstItem="RyC-42-dh0" firstAttribute="top" secondItem="pv9-sk-WxD" secondAttribute="bottom" id="uPL-qj-q4V"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="dTableView" destination="RyC-42-dh0" id="pl7-9o-OLg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PjP-Q0-yqh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="312.5" y="2021.5"/>
         </scene>
         <!--Detail Table View Controller-->
         <scene sceneID="U9G-Vz-oHD">
@@ -213,7 +261,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3rw-eW-wR7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="176.5" y="2631.5"/>
+            <point key="canvasLocation" x="312.5" y="2735.5"/>
         </scene>
         <!--Notification-->
         <scene sceneID="dgF-7y-DYe">

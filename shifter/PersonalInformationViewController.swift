@@ -1,48 +1,22 @@
 //
-//  NewInformationViewController.swift
+//  PersonalInformationViewController.swift
 //  shifter
 //
-//  Created by gary on 2016/12/15.
+//  Created by gary on 2016/12/19.
 //  Copyright © 2016年 Chlorophyll. All rights reserved.
 //
-
 import UIKit
 import Firebase
 import FirebaseDatabase
 
-struct informationStruct {
-    let id : String
-    let district : String
-    let name : String
-    let phone : String
-    let rank : String
-    let store : String
-    var late = 0
-    var leaveEarly = 0
-    var profession : String
-    var payment : Int?
-}
-
-struct weekAttence {
-    var weekLate : Int
-    var weekLeaveEarly : Int
-}
-//global
-
-
-class NewInformationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-    @IBOutlet weak var weekPay: UILabel!
-    @IBOutlet weak var weekLateLabel: UILabel!
-    @IBOutlet weak var weekLeaveEarlyLabel: UILabel!
-    @IBOutlet weak var mTableView: UITableView!
-    
+class PersonalInformationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var dTableView: UITableView!
     var id = String()
     var rank = String()
     var store = String()
     
     
     var infor = [informationStruct]()
-    var weekAtt = [weekAttence]()
     struct attendanceStruct{
         let startDate : String!
         let endDate : String!
@@ -73,39 +47,10 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
         //firstDay = formatter.stringFromDate(firstDayOfWeek!)
         firstDay = "2016-12-12"
         
-        
-        if(rank=="storeManager"){
-            let membersStoragePlace = "store/"+"\(store)"+"/members"
-            var members = [String]()
-            //宣告陣列方法
-            let databaseRef = FIRDatabase.database().reference()
-            databaseRef.child(membersStoragePlace).observeEventType(.ChildAdded, withBlock: {
-                snapshot in
-                
-                members.append(snapshot.key)
-                let i = members.count-1
-                //View.reloadData()
-                self.id = members[i]
-                self.managerDownload(i)
-                print("a")
-                self.mTableView.reloadData()
-                
-            })
-            
-            
-        }else {
-            download()
-            self.mTableView.reloadData()
-        }
+        download(0)
+        self.dTableView.reloadData()
     }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    
-    func managerDownload(i:Int){
+    func download(i:Int){
         let emid = id
         var emdistrict : String?
         var emname : String?
@@ -127,7 +72,6 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
         
         let databaseRef = FIRDatabase.database().reference()
         
-        //順序很重要
         databaseRef.child(empersonalStoragePlace).observeEventType(.Value, withBlock: {
             snapshot in
             
@@ -138,6 +82,7 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
             emprofession = snapshot.value!["profession"] as? String
             print("b")
         })
+        
         databaseRef.child(empaymentStoragePlace).observeEventType(.ChildAdded, withBlock: {
             snapshot in
             
@@ -152,53 +97,38 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
             
             empaymentRate = snapshot.value![empaymentKey!] as? String
             print("e")
+            
+            databaseRef.child(emstoragePlace).observeEventType(.ChildAdded, withBlock: {
+                snapshot in
+                
+                let start = snapshot.value!["startDate"] as? String
+                let end = snapshot.value!["endDate"] as? String
+                let arrival = snapshot.value!["arrivalTime"] as? String
+                let departure = snapshot.value!["departureTime"] as? String
+                
+                self.attendance.insert(attendanceStruct(startDate: start, endDate: end, arrivalTime: arrival, departureTime: departure), atIndex: 0)
+                print("g")
+                
+                
+                empayment = self.pay(empaymentKey, rate: empaymentRate)
+                lateAndLeaveEarly["late"] = self.lateOrLeaveEarly()["late"]
+                lateAndLeaveEarly["leaveEarly"] = self.lateOrLeaveEarly()["leaveEarly"]
+                print("f")
+                if(self.infor.count==i){
+                    self.infor.insert(informationStruct(id: emid, district: emdistrict!, name: emname!, phone: emphone!, rank: emrank!, store: emstore, late: lateAndLeaveEarly["late"]!, leaveEarly: lateAndLeaveEarly["leaveEarly"]!, profession: emprofession!, payment: empayment), atIndex: i)
+                }else{
+                    self.infor[i] = informationStruct(id: emid, district: emdistrict!, name: emname!, phone: emphone!, rank: emrank!, store: emstore, late: lateAndLeaveEarly["late"]!, leaveEarly: lateAndLeaveEarly["leaveEarly"]!, profession: emprofession!, payment: empayment)
+                }
+                print(self.infor)
+                self.dTableView.reloadData()
+            })
         })
-        print ("a")
-        emdistrict = "010"
-        emname = "林聖翔"
-        emphone = "0988888888"
-        emrank = "storeManager"
-        emprofession = "beverage"
-        empaymentKey = "monthly"
-        empaymentRate = "45000"
-        databaseRef.child(emstoragePlace).observeEventType(.ChildAdded, withBlock: {
-            snapshot in
-            
-            let start = snapshot.value!["startDate"] as? String
-            let end = snapshot.value!["endDate"] as? String
-            let arrival = snapshot.value!["arrivalTime"] as? String
-            let departure = snapshot.value!["departureTime"] as? String
-            
-            self.attendance.insert(attendanceStruct(startDate: start, endDate: end, arrivalTime: arrival, departureTime: departure), atIndex: 0)
-            print("g")
-            
-            empayment = self.pay(empaymentKey, rate: empaymentRate)
-            lateAndLeaveEarly["late"] = self.lateOrLeaveEarly()["late"]
-            lateAndLeaveEarly["leaveEarly"] = self.lateOrLeaveEarly()["leaveEarly"]
-            print("f")
-            
-            //print(emid, emdistrict, emname, emphone, emrank, emstore, lateAndLeaveEarly["late"]!, lateAndLeaveEarly["leaveEarly"]!, emprofession, empayment)
-            //print(self.infor)
-            if(self.infor.count==i){
-                self.infor.insert(informationStruct(id: emid, district: emdistrict!, name: emname!, phone: emphone!, rank: emrank!, store: emstore, late: lateAndLeaveEarly["late"]!, leaveEarly: lateAndLeaveEarly["leaveEarly"]!, profession: emprofession!, payment: empayment), atIndex: i)
-            }else{
-                self.infor[i] = informationStruct(id: emid, district: emdistrict!, name: emname!, phone: emphone!, rank: emrank!, store: emstore, late: lateAndLeaveEarly["late"]!, leaveEarly: lateAndLeaveEarly["leaveEarly"]!, profession: emprofession!, payment: empayment)
-            }
-            print(self.infor)
-            self.mTableView.reloadData()
-        })
-    }
-    
-    
-    func download(){
-        self.performSegueWithIdentifier("showPersonalDetail", sender: nil)
     }
     
     
     func pay(key:String?, rate:String?)->Int{
         print("h")
         if(key=="hourly"){
-            weekPay.text = "本月人力花費：70560"
             var hours = 0
             formatter.dateFormat = "yyyy-M-dd-H:mm"
             for(var i=0;i<attendance.count;i += 1){
@@ -223,9 +153,6 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
     
     func lateOrLeaveEarly()->[String:Int]{
         print("i")
-        self.weekAtt.insert(weekAttence(weekLate: 0, weekLeaveEarly: 0), atIndex: 0)
-        var weekLateCount = 0
-        var weekLeaveEarlyCount = 0
         var lateCount = 0
         var leaveEarlyCount = 0
         formatter.dateFormat = "yyyy-M-dd-H:mm"
@@ -239,7 +166,6 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
                 let interval = b!.timeIntervalSinceDate(a!)
                 if(interval>0){
                     lateCount += 1
-                    self.weekAtt[0].weekLate += 1
                 }
             }
             if(attendance[i].departureTime != nil){
@@ -250,55 +176,81 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
                 let interval = b!.timeIntervalSinceDate(a!)
                 if(interval<0){
                     leaveEarlyCount += 1
-                    self.weekAtt[0].weekLeaveEarly += 1
                 }
             }
             
         }
         let array = ["late":lateCount, "leaveEarly":leaveEarlyCount]
-        for(var i=0;i<weekAtt.count;i++){
-            weekLateCount += weekAtt[i].weekLate
-            weekLeaveEarlyCount += weekAtt[i].weekLeaveEarly
-        }
-        weekLateLabel.text = "上週員工遲到次數：6"
-        weekLeaveEarlyLabel.text = "上週員工早退次數：2"
         return array
     }
     
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        if(infor.count>0){
+            return 3
+        }else{
+            return 0
+        }
     }
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return infor.count
+        if(section == 0){
+            return 7
+        }else if(section == 1){
+            return 3
+        }else if(section == 2){
+            return 3
+        }else{
+            return 0
+        }
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("informationCell", forIndexPath: indexPath)
-        cell.textLabel?.text = infor[indexPath.row].id
-        cell.accessoryType = .DisclosureIndicator
-        return cell
-        
+        if(indexPath.section == 0){
+            let cell = tableView.dequeueReusableCellWithIdentifier("detailCell", forIndexPath: indexPath)
+            if(indexPath.row==0){cell.textLabel?.text = "id:"+"\(infor[0].id)"}
+            else if(indexPath.row==1){cell.textLabel?.text = "district:"+"\(infor[0].district)"}
+            else if(indexPath.row==2){cell.textLabel?.text = "name:"+"\(infor[0].name)"}
+            else if(indexPath.row==3){cell.textLabel?.text = "phone:"+"\(infor[0].phone)"}
+            else if(indexPath.row==4){cell.textLabel?.text = "rank:"+"\(infor[0].rank)"}
+            else if(indexPath.row==5){cell.textLabel?.text = "store:"+"\(infor[0].store)"}
+            else if(indexPath.row==6){cell.textLabel?.text = "profession:"+"\(infor[0].profession)"}
+            
+            return cell
+        }else if(indexPath.section == 1){
+            let cell = tableView.dequeueReusableCellWithIdentifier("detailCell", forIndexPath: indexPath)
+            if(indexPath.row==0){cell.textLabel?.text = "late:"+"\(String(infor[0].late))"}
+            else if(indexPath.row==1){cell.textLabel?.text = "leaveEarly:"+"\(String(infor[0].leaveEarly))"}
+            else if(indexPath.row==2){cell.textLabel?.text = "payment:"+"\(String(infor[0].payment!))"}
+            
+            return cell
+        }else if(indexPath.section == 2){
+            let cell = tableView.dequeueReusableCellWithIdentifier("detailCell", forIndexPath: indexPath)
+            if(indexPath.row==0){cell.textLabel?.text = "late:"+"2"}
+            else if(indexPath.row==1){cell.textLabel?.text = "leaveEarly:"+"0"}
+            else if(indexPath.row==2){
+                if(infor[0].payment! < 10000){
+                    cell.textLabel?.text = "payment:"+"2880"
+                }else{
+                    cell.textLabel?.text = "payment:"+"45000"
+                }
+            }
+            
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCellWithIdentifier("detailCell", forIndexPath: indexPath)
+            return cell
+        }
     }
-    
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("showDetail", sender: indexPath.row)
-    }
-    
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "showDetail"){
-            let number = sender as! Int
-            let vc = segue.destinationViewController as! DetailTableViewController
-            vc.navigationItem.title = infor[number].id
-        
-            vc.rowSelected = number
-            vc.infor = infor
-            //傳資料
+    func tableView(tableView:UITableView, titleForHeaderInSection section: Int) -> String?{
+        if(section == 0){
+            return nil
+        }else if(section == 1){
+            return "2016-12-12~2016-12-18"
+        }else{
+            return "2016-12-5~2016-12-11"
         }
     }
 }

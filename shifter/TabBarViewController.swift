@@ -53,7 +53,7 @@ class TabBarViewController: UITabBarController {
         //現在日期加上addingNumber的日期
         formatter.dateFormat = "yyyy-M-dd"
         //firstDay = formatter.stringFromDate(firstDayOfWeek!)
-        let storagePlace = "employeeShift/"+"\(currentSID)"+"/"+"2016-12-12"+"/"+"\(currentUID)"
+        let storagePlace = "employeeShift/"+"\(currentSID)"+"/"+"2016-12-19"+"/"+"\(currentUID)"
         
         formatter.dateFormat = "yyyy-M-dd-H:mm"
         let counterInterval = 0-Int(interval!)!

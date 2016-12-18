@@ -64,6 +64,7 @@
 		43F96E8A1DE172FF00B7D460 /* BulletinCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F96E891DE172FF00B7D460 /* BulletinCompose.swift */; };
 		43F96E8C1DE19A4900B7D460 /* BulletinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F96E8B1DE19A4900B7D460 /* BulletinDetail.swift */; };
 		4E6C4C9A1E02B4C000BE1EF3 /* NewInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6C4C991E02B4C000BE1EF3 /* NewInformationViewController.swift */; };
+		4EAC9FD51E071A620054392E /* PersonalInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC9FD41E071A620054392E /* PersonalInformationViewController.swift */; };
 		4EB716DA1DE9CE3400662774 /* AlarmSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB716D91DE9CE3400662774 /* AlarmSwitchTableViewCell.swift */; };
 		4EB716DC1DE9CE6400662774 /* AlarmClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB716DB1DE9CE6400662774 /* AlarmClockViewController.swift */; };
 		CDCF55F9FA1EE4396F39383B /* Pods_shifter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735680C7B9CA8A9AB24F547B /* Pods_shifter.framework */; };
@@ -149,6 +150,7 @@
 		43F96E891DE172FF00B7D460 /* BulletinCompose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinCompose.swift; sourceTree = "<group>"; };
 		43F96E8B1DE19A4900B7D460 /* BulletinDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinDetail.swift; sourceTree = "<group>"; };
 		4E6C4C991E02B4C000BE1EF3 /* NewInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewInformationViewController.swift; sourceTree = "<group>"; };
+		4EAC9FD41E071A620054392E /* PersonalInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInformationViewController.swift; sourceTree = "<group>"; };
 		4EB716D91DE9CE3400662774 /* AlarmSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		4EB716DB1DE9CE6400662774 /* AlarmClockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmClockViewController.swift; sourceTree = "<group>"; };
 		735680C7B9CA8A9AB24F547B /* Pods_shifter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_shifter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -393,6 +395,7 @@
 			children = (
 				433897D21E06A966006A14E8 /* DetailTableViewController.swift */,
 				4E6C4C991E02B4C000BE1EF3 /* NewInformationViewController.swift */,
+				4EAC9FD41E071A620054392E /* PersonalInformationViewController.swift */,
 			);
 			name = Information;
 			sourceTree = "<group>";
@@ -574,6 +577,7 @@
 				04852D281DB37F9700229CAE /* MSDayColumnHeader.m in Sources */,
 				04852D331DB37F9700229CAE /* MSWeekViewDecoratorInfinite.m in Sources */,
 				04BCE1201DB46AB4004A8162 /* EmployeeEventWeekViewController.swift in Sources */,
+				4EAC9FD51E071A620054392E /* PersonalInformationViewController.swift in Sources */,
 				432687341D83DD2A003BD479 /* TextInputTableViewCell.swift in Sources */,
 				04BCE12F1DB490A1004A8162 /* ConditionTableViewCell.swift in Sources */,
 				43F708261DBDE90A006432EB /* Bulletin.swift in Sources */,

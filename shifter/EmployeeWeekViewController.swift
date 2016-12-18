@@ -216,11 +216,11 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
         //現在日期加上addingNumber的日期
         formatter.dateFormat = "yyyy-M-dd"
         //firstDay = formatter.stringFromDate(firstDayOfWeek!)
-        firstDay = "2016-12-12"
+        firstDay = "2016-12-19"
         
         
         storagePlace = "employeeShift/"+currentSID+"/"+firstDay+"/"+currentUID+"/"+weekDay
-        managerAttendStoragePlace = "managerShift/"+currentSID+"/"+firstDay+"/"+"Day6"+"/"+currentProfession
+        managerAttendStoragePlace = "managerShift/"+currentSID+"/"+firstDay+"/"+"Day1"+"/"+currentProfession
         
         
         let databaseRef = FIRDatabase.database().reference()
