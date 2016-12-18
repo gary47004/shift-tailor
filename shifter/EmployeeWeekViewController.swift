@@ -229,9 +229,11 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
             
             let Id = snapshot.value!["ID"] as? String
             let Key = snapshot.key
+            print (Key)
             
             if(Id == self.currentUID){
                 self.managerShiftData.insert(managerShiftDataStruct(key: Key), atIndex: 0)
+                self.managerAttendenceStoragePlace = self.managerAttendStoragePlace + "/" + self.managerShiftData[0].key!
             }
         })
         
