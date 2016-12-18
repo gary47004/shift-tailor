@@ -32,7 +32,7 @@ class BulletinCompose: UIViewController, UITextFieldDelegate {
     //UI frame
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentTextField: UITextField!
-    let storeButton = UIButton(frame: CGRect(x: 18, y: 84, width: 161, height: 38))
+    let storeButton = UIButton(frame: CGRect(x: 107, y: 84, width: 161, height: 38))
     let districtButton = UIButton(frame: CGRect(x: 197, y: 84, width: 161, height: 38))
     let deleteButton = UIButton(frame: CGRect(x: 0, y: 618, width: 375, height: 49))
 
@@ -72,7 +72,7 @@ class BulletinCompose: UIViewController, UITextFieldDelegate {
         self.view.addSubview(storeButton)
         
         districtButton.addTarget(self, action: #selector(BulletinCompose.districtButtonPressed), forControlEvents: .TouchUpInside)
-        self.view.addSubview(districtButton)
+//        self.view.addSubview(districtButton)
         
         let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: #selector(BulletinCompose.donePressed))
                 doneButton.tintColor = UIColor.whiteColor()

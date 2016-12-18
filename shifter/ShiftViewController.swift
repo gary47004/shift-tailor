@@ -14,9 +14,25 @@ class ShiftViewController: UIViewController {
     @IBOutlet weak var managerContainerView: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
 
+    var currentRank = String()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tabBarVC = self.tabBarController as! TabBarViewController
+        currentRank = tabBarVC.currentRank
+        
+        if currentRank == "partTime"{
+            segmentedControl.selectedSegmentIndex = 1
+            self.managerContainerView.alpha = 0
+            self.employeeContainerView.alpha = 1
+            let employeeSeg = UIImageView(frame: CGRect(x: 0, y: 20, width: 375, height: 45))
+            employeeSeg.image = UIImage(named: "employeeSegment")
+            self.view.addSubview(employeeSeg)
+            self.reloadInputViews()
+        }
+        
+        
         
         //UI
         view.subviews[0].backgroundColor = UIColor(red: 40, green: 40, blue: 40)
