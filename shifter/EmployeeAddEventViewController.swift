@@ -24,7 +24,9 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
     
     let sectionArray = ["怎麼會","沒變"]
     
-    let itemArray = ["開始時間", "結束時間"]
+    let itemArray = ["StartDate", "EndDate"]
+    
+    let titleArray = ["開始時間", "結束時間"]
     
     var selectedIndexPath: NSIndexPath? = nil
     
@@ -33,6 +35,7 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
     var currentUID = String()
     var currentSID = String()
     var currentRank = String()
+    var currentProfession = String()
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
@@ -45,6 +48,7 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
         currentUID = tabBarVC.currentUID
         currentSID = tabBarVC.currentSID
         currentRank = tabBarVC.currentRank
+        currentProfession = tabBarVC.currentPro
         
         
         employeeAddEventTableView.registerNib(UINib(nibName: "DatePickerCell", bundle: nil), forCellReuseIdentifier: "DatePickerCell")
@@ -114,7 +118,7 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentUID).childByAutoId().setValue(event)
+        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(currentProfession).child(self.currentUID).childByAutoId().setValue(event)
         
         for (var i = 0; i < self.navigationController?.viewControllers.count; i += 1) {
             if(self.navigationController?.viewControllers[i].isKindOfClass(EmployeeEventWeekViewController) == true) {
@@ -194,7 +198,7 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
         //UI
         
         
-        dateCell.titleLabel.text = itemArray[indexPath.row]
+        dateCell.titleLabel.text = titleArray[indexPath.row]
         
         if longPressDate != nil {
             

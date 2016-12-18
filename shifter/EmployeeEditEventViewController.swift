@@ -33,6 +33,7 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
     var currentUID = String()
     var currentSID = String()
     var currentRank = String()
+    var currentPro = String()
 
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
@@ -62,6 +63,7 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
         currentUID = tabBarVC.currentUID
         currentSID = tabBarVC.currentSID
         currentRank = tabBarVC.currentRank
+        currentPro = tabBarVC.currentPro
 
         
         employeeEditEventTableView.registerNib(UINib(nibName: "DatePickerCell", bundle: nil), forCellReuseIdentifier: "DatePickerCell")
@@ -121,7 +123,7 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
     }
     @IBAction func deleteEvent(sender: UIButton) {
         let eventDBRef = FIRDatabase.database().reference()
-        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentUID).child(selectedEvent.key).removeValue()
+        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentUID).child(currentPro).child(selectedEvent.key).removeValue()
         //print(editEventButton.title)
         
         for (var i = 0; i < self.navigationController?.viewControllers.count; i = i + 1) {
@@ -180,7 +182,7 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
         let eventDBRef = FIRDatabase.database().reference()
         
         
-        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentUID).child(selectedEvent.key).updateChildValues(["StartDate":startDate, "EndDate": endDate,"Preference": preference])
+        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentPro).child(self.currentUID).child(selectedEvent.key).updateChildValues(["StartDate":startDate, "EndDate": endDate,"Preference": preference])
         
     }
     

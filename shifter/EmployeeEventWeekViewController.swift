@@ -246,7 +246,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
         
         let eventDBRef = FIRDatabase.database().reference()
         
-        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentPro).child(self.currentUID).queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
+        eventDBRef.child("employeeEvent").child(self.currentSID).child(shiftStartDate).child(self.currentPro).child(self.currentPro).child(self.currentUID).queryOrderedByKey().observeEventType(.ChildAdded, withBlock: {
             snapshot in
             
             
