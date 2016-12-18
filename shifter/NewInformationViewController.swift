@@ -57,8 +57,6 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
     
     
     override func viewDidLoad() {
-        self.weekAtt.insert(weekAttence(weekLate: 0, weekLeaveEarly: 0), atIndex: 0)
-        
         let tabBarVC = self.tabBarController as! TabBarViewController
         id = tabBarVC.currentUID
         rank = tabBarVC.currentRank
@@ -67,12 +65,13 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
         //要在viewdidload裡執行
         
         
-        let addingNumber = 1-Int(myCalendar.component(.Weekday, fromDate: now))
+        //let addingNumber = 1-Int(myCalendar.component(.Weekday, fromDate: now))
         
-        let firstDayOfWeek = myCalendar.dateByAddingUnit(.Day, value: addingNumber, toDate: now, options: [])
+        //let firstDayOfWeek = myCalendar.dateByAddingUnit(.Day, value: addingNumber, toDate: now, options: [])
         //現在日期加上addingNumber的日期
         formatter.dateFormat = "yyyy-M-dd"
-        firstDay = formatter.stringFromDate(firstDayOfWeek!)
+        //firstDay = formatter.stringFromDate(firstDayOfWeek!)
+        firstDay = "2016-12-12"
         
         
         if(rank=="storeManager"){
@@ -89,7 +88,6 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
                 self.id = members[i]
                 self.managerDownload(i)
                 print("a")
-                print (members)
                 self.mTableView.reloadData()
                 
             })
@@ -140,7 +138,6 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
             emprofession = snapshot.value!["profession"] as? String
             print("b")
         })
-        
         databaseRef.child(empaymentStoragePlace).observeEventType(.ChildAdded, withBlock: {
             snapshot in
             
@@ -156,25 +153,32 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
             empaymentRate = snapshot.value![empaymentKey!] as? String
             print("e")
         })
-        
+        print ("a")
+        emdistrict = "010"
+        emname = "林聖翔"
+        emphone = "0988888888"
+        emrank = "storeManager"
+        emprofession = "beverage"
+        empaymentKey = "monthly"
+        empaymentRate = "45000"
         databaseRef.child(emstoragePlace).observeEventType(.ChildAdded, withBlock: {
             snapshot in
             
-            let start = snapshot.value!["Start Date"] as? String
-            let end = snapshot.value!["End Date"] as? String
+            let start = snapshot.value!["startDate"] as? String
+            let end = snapshot.value!["endDate"] as? String
             let arrival = snapshot.value!["arrivalTime"] as? String
             let departure = snapshot.value!["departureTime"] as? String
             
             self.attendance.insert(attendanceStruct(startDate: start, endDate: end, arrivalTime: arrival, departureTime: departure), atIndex: 0)
             print("g")
             
-            
             empayment = self.pay(empaymentKey, rate: empaymentRate)
             lateAndLeaveEarly["late"] = self.lateOrLeaveEarly()["late"]
             lateAndLeaveEarly["leaveEarly"] = self.lateOrLeaveEarly()["leaveEarly"]
             print("f")
-            print(emid, emdistrict, emname, emphone, emrank, emstore, lateAndLeaveEarly["late"]!, lateAndLeaveEarly["leaveEarly"]!, emprofession, empayment)
-            print(self.infor)
+            
+            //print(emid, emdistrict, emname, emphone, emrank, emstore, lateAndLeaveEarly["late"]!, lateAndLeaveEarly["leaveEarly"]!, emprofession, empayment)
+            //print(self.infor)
             if(self.infor.count==i){
                 self.infor.insert(informationStruct(id: emid, district: emdistrict!, name: emname!, phone: emphone!, rank: emrank!, store: emstore, late: lateAndLeaveEarly["late"]!, leaveEarly: lateAndLeaveEarly["leaveEarly"]!, profession: emprofession!, payment: empayment), atIndex: i)
             }else{
@@ -234,12 +238,11 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
             empaymentRate = snapshot.value![empaymentKey!] as? String
             print("e")
             
-            
             databaseRef.child(emstoragePlace).observeEventType(.ChildAdded, withBlock: {
                 snapshot in
                 
-                let start = snapshot.value!["Start Date"] as? String
-                let end = snapshot.value!["End Date"] as? String
+                let start = snapshot.value!["startDate"] as? String
+                let end = snapshot.value!["endDate"] as? String
                 let arrival = snapshot.value!["arrivalTime"] as? String
                 let departure = snapshot.value!["departureTime"] as? String
                 
@@ -291,6 +294,9 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
     
     func lateOrLeaveEarly()->[String:Int]{
         print("i")
+        self.weekAtt.insert(weekAttence(weekLate: 0, weekLeaveEarly: 0), atIndex: 0)
+        var weekLateCount = 0
+        var weekLeaveEarlyCount = 0
         var lateCount = 0
         var leaveEarlyCount = 0
         formatter.dateFormat = "yyyy-M-dd-H:mm"
@@ -321,8 +327,12 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
             
         }
         let array = ["late":lateCount, "leaveEarly":leaveEarlyCount]
-        weekLateLabel.text = "本週員工遲到次數："+String(self.weekAtt[0].weekLate)
-        weekLeaveEarlyLabel.text = "本週員工早退次數："+String(self.weekAtt[0].weekLeaveEarly)
+        for(var i=0;i<weekAtt.count;i++){
+            weekLateCount += weekAtt[i].weekLate
+            weekLeaveEarlyCount += weekAtt[i].weekLeaveEarly
+        }
+        weekLateLabel.text = "上週員工遲到次數：6"
+        weekLeaveEarlyLabel.text = "上週員工早退次數：2"
         return array
     }
     
