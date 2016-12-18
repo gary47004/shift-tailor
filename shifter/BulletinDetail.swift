@@ -19,6 +19,8 @@ class BulletinDetail: UIViewController {
     var editMode = Bool()
     var currentUID = String()
     
+    
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var timeLable: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
@@ -28,8 +30,9 @@ class BulletinDetail: UIViewController {
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(BulletinDetail.editPressed))
         editButton.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = editButton
+        self.navigationItem.rightBarButtonItem?.title = "編輯"
         
-        let backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Done, target: self, action: #selector(BulletinDetail.backPressed))
+        let backButton = UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: #selector(BulletinDetail.backPressed))
         backButton.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backButton
     }
@@ -41,7 +44,7 @@ class BulletinDetail: UIViewController {
     
     func editPressed(){
         performSegueWithIdentifier("editPressed", sender: self)
-        self.title = "Cancel"
+        self.title = "取消"
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

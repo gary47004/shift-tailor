@@ -55,6 +55,7 @@
 		4326143F1DACCD4D0080AD10 /* DateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326143D1DACCD4D0080AD10 /* DateTableViewCell.swift */; };
 		432614401DACCD4D0080AD10 /* DateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4326143E1DACCD4D0080AD10 /* DateTableViewCell.xib */; };
 		432687341D83DD2A003BD479 /* TextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432687331D83DD2A003BD479 /* TextInputTableViewCell.swift */; };
+		433897D31E06A966006A14E8 /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433897D21E06A966006A14E8 /* DetailTableViewController.swift */; };
 		435A374C1DBF261400BA6974 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435A374A1DBF261400BA6974 /* NotificationTableViewCell.swift */; };
 		435A374D1DBF261400BA6974 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 435A374B1DBF261400BA6974 /* NotificationTableViewCell.xib */; };
 		43D2EDBC1DAF95AB00E5133E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D2EDBB1DAF95AB00E5133E /* TabBarViewController.swift */; };
@@ -63,8 +64,6 @@
 		43F96E8A1DE172FF00B7D460 /* BulletinCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F96E891DE172FF00B7D460 /* BulletinCompose.swift */; };
 		43F96E8C1DE19A4900B7D460 /* BulletinDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F96E8B1DE19A4900B7D460 /* BulletinDetail.swift */; };
 		4E6C4C9A1E02B4C000BE1EF3 /* NewInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6C4C991E02B4C000BE1EF3 /* NewInformationViewController.swift */; };
-		4E9E99121DE6D64500B681A0 /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9E99101DE6D64500B681A0 /* DetailTableViewController.swift */; };
-		4E9E99131DE6D64500B681A0 /* InformationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9E99111DE6D64500B681A0 /* InformationTableViewController.swift */; };
 		4EB716DA1DE9CE3400662774 /* AlarmSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB716D91DE9CE3400662774 /* AlarmSwitchTableViewCell.swift */; };
 		4EB716DC1DE9CE6400662774 /* AlarmClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB716DB1DE9CE6400662774 /* AlarmClockViewController.swift */; };
 		CDCF55F9FA1EE4396F39383B /* Pods_shifter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735680C7B9CA8A9AB24F547B /* Pods_shifter.framework */; };
@@ -141,6 +140,7 @@
 		4326143D1DACCD4D0080AD10 /* DateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
 		4326143E1DACCD4D0080AD10 /* DateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateTableViewCell.xib; sourceTree = "<group>"; };
 		432687331D83DD2A003BD479 /* TextInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputTableViewCell.swift; sourceTree = "<group>"; };
+		433897D21E06A966006A14E8 /* DetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
 		435A374A1DBF261400BA6974 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		435A374B1DBF261400BA6974 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		43D2EDBB1DAF95AB00E5133E /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -149,8 +149,6 @@
 		43F96E891DE172FF00B7D460 /* BulletinCompose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinCompose.swift; sourceTree = "<group>"; };
 		43F96E8B1DE19A4900B7D460 /* BulletinDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinDetail.swift; sourceTree = "<group>"; };
 		4E6C4C991E02B4C000BE1EF3 /* NewInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewInformationViewController.swift; sourceTree = "<group>"; };
-		4E9E99101DE6D64500B681A0 /* DetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
-		4E9E99111DE6D64500B681A0 /* InformationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationTableViewController.swift; sourceTree = "<group>"; };
 		4EB716D91DE9CE3400662774 /* AlarmSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		4EB716DB1DE9CE6400662774 /* AlarmClockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmClockViewController.swift; sourceTree = "<group>"; };
 		735680C7B9CA8A9AB24F547B /* Pods_shifter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_shifter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -393,8 +391,7 @@
 		4378DA921DBCB0F700DCAE85 /* Information */ = {
 			isa = PBXGroup;
 			children = (
-				4E9E99111DE6D64500B681A0 /* InformationTableViewController.swift */,
-				4E9E99101DE6D64500B681A0 /* DetailTableViewController.swift */,
+				433897D21E06A966006A14E8 /* DetailTableViewController.swift */,
 				4E6C4C991E02B4C000BE1EF3 /* NewInformationViewController.swift */,
 			);
 			name = Information;
@@ -472,7 +469,7 @@
 				TargetAttributes = {
 					43173E031D5328620043399F = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 8XSPVEYLA9;
+						DevelopmentTeam = 993TN7KGWA;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -584,6 +581,7 @@
 				04852D2A1DB37F9700229CAE /* MSDragableEvent.m in Sources */,
 				043BA15D1DCA148C00262430 /* EmployeeEditEventViewController.swift in Sources */,
 				43D2EDBC1DAF95AB00E5133E /* TabBarViewController.swift in Sources */,
+				433897D31E06A966006A14E8 /* DetailTableViewController.swift in Sources */,
 				04852D241DB37F9700229CAE /* MSCollectionViewCalendarLayout.m in Sources */,
 				04BCE11D1DB38C32004A8162 /* EmployeeWeekViewController.swift in Sources */,
 				4E6C4C9A1E02B4C000BE1EF3 /* NewInformationViewController.swift in Sources */,
@@ -611,13 +609,11 @@
 				4326143F1DACCD4D0080AD10 /* DateTableViewCell.swift in Sources */,
 				04852D311DB37F9700229CAE /* MSWeekViewDecoratorDragable.m in Sources */,
 				04852D2E1DB37F9700229CAE /* MSTimeRowHeader.m in Sources */,
-				4E9E99121DE6D64500B681A0 /* DetailTableViewController.swift in Sources */,
 				43F96E8A1DE172FF00B7D460 /* BulletinCompose.swift in Sources */,
 				04852D2F1DB37F9700229CAE /* MSTimeRowHeaderBackground.m in Sources */,
 				435A374C1DBF261400BA6974 /* NotificationTableViewCell.swift in Sources */,
 				43173E081D5328620043399F /* AppDelegate.swift in Sources */,
 				04BCE13A1DB49934004A8162 /* employeeCell.swift in Sources */,
-				4E9E99131DE6D64500B681A0 /* InformationTableViewController.swift in Sources */,
 				04BCE1381DB496DA004A8162 /* editEventTableViewController.swift in Sources */,
 				04BCE12B1DB4836A004A8162 /* ManagerShiftViewController.swift in Sources */,
 				04852D2D1DB37F9700229CAE /* MSGridline.m in Sources */,
@@ -756,8 +752,9 @@
 					"\"${PODS_ROOT}/Headers/Public/GoogleUtilities\"",
 				);
 				INFOPLIST_FILE = shifter/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chlorophyll.shifter;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chlorophyll.shift-tailor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shifter/shifter-Bridging-Header.h";
@@ -793,8 +790,9 @@
 					"\"${PODS_ROOT}/Headers/Public/GoogleUtilities\"",
 				);
 				INFOPLIST_FILE = shifter/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chlorophyll.shifter;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chlorophyll.shift-tailor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shifter/shifter-Bridging-Header.h";

@@ -22,6 +22,7 @@ struct informationStruct {
     var profession : String
     var payment : Int?
 }
+
 struct weekAttence {
     var weekLate : Int
     var weekLeaveEarly : Int

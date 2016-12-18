@@ -11,60 +11,85 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class Settings: UITableViewController {
+class Settings: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var currentName = String()
     var currentUID = String()
+    var currentSID = String()
+    
     var settingsArray = [String]()
     
+    @IBOutlet weak var IDLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var storeLabel: UILabel!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    
     override func viewDidLoad() {
+        //UI
+        self.tableView.backgroundColor = UIColor(red: 43, green: 43, blue: 50)
+        
         let tabBarVC = self.tabBarController as! TabBarViewController
         currentUID = tabBarVC.currentUID
-        settingsArray = ["ID: \(currentUID)","    提醒設定","    調撥門市","    更改密碼","    登出"]
+        currentSID = tabBarVC.currentSID
+        currentName = tabBarVC.currentName
+        
+        settingsArray = ["    提醒設定","    調撥門市","    更改密碼","    登出"]
+        
+        IDLabel.text = "ID：" + currentUID
+        nameLabel.text = "姓名：" + currentName
+        storeLabel.text = "門市：" + currentSID
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         self.title = "設定"
         self.navigationController?.title = ""
+        self.tabBarController?.tabBar.hidden = false
     }
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == 0{
-            return 100
-        }else{
-            return 60
-        }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 59
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settingsArray.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = settingsArray[indexPath.row]
-        cell.textLabel?.textColor = UIColor(red: 74,green: 74,blue: 74)
+        
+        //UI
+        cell.textLabel?.textColor = UIColor.whiteColor()
         cell.textLabel?.font = UIFont(name: ".PingFan TC", size: 18)
         cell.textLabel?.font = UIFont.boldSystemFontOfSize(18)
-        
+        cell.backgroundColor = UIColor.clearColor()
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor(red: 14, green: 14, blue: 14).CGColor
         if indexPath.row == 0{
-
-            cell.imageView?.image = UIImage(named: "ID icon")
+            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        }else if indexPath.row == 1{
+            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         }
+        
+        
     
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         //GY
-        if indexPath.row == 1{
+        if indexPath.row == 0{
             performSegueWithIdentifier("showAlarmClock", sender: nil)
         //GY
         
-        }else if indexPath.row == 2{
+        }else if indexPath.row == 1{
             performSegueWithIdentifier("showTransferable", sender: nil)
             self.title = "Back"
     
-        }else if indexPath.row == 3{
+        }else if indexPath.row == 2{
             
             let alertController = UIAlertController(title: "Change Password", message: "please enter new password", preferredStyle: UIAlertControllerStyle.Alert)
                 alertController.addTextFieldWithConfigurationHandler({ (textField: UITextField) in
@@ -84,7 +109,7 @@ class Settings: UITableViewController {
             alertController.addAction(enterAction)
             self.presentViewController(alertController, animated: true, completion: nil)
             
-        }else if indexPath.row == 4{
+        }else if indexPath.row == 3{
             //logout alert
             let alertController = UIAlertController(title: "Logout", message: "logout from account \(currentUID)", preferredStyle: UIAlertControllerStyle.Alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) in

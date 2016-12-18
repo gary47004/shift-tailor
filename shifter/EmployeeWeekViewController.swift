@@ -30,7 +30,7 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
     var managerAttendStoragePlace = ""
     var managerAttendenceStoragePlace = ""
     struct managerShiftDataStruct{
-        let id : String?
+        let key : String?
     }
     var managerShiftData = [managerShiftDataStruct]()
     //GY
@@ -111,6 +111,7 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
             
             snapshot in
             
+            print(snapshot)
             self.currentWeekStartDate = snapshot.value as! String
             
             let shiftDateFormatter = NSDateFormatter()
@@ -164,7 +165,7 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
         
         weeklyView.daysToShow = 0
         
-        weeklyView.weekFlowLayout.hourHeight = 50
+        weeklyView.weekFlowLayout.hourHeight = 18
         
         weeklyView.events = [event1,event2,event3,event4,event5,event6,event7]
       
@@ -209,26 +210,28 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
         weekDay = event.key
         //weekDay = "00"+"\(myCalendar.component(.Weekday, fromDate: currentDate))"
         
-        let addingNumber = 1-Int(myCalendar.component(.Weekday, fromDate: currentDate))
+        //let addingNumber = 1-Int(myCalendar.component(.Weekday, fromDate: currentDate))
         
-        let firstDayOfWeek = myCalendar.dateByAddingUnit(.Day, value: addingNumber, toDate: currentDate, options: [])
+        //let firstDayOfWeek = myCalendar.dateByAddingUnit(.Day, value: addingNumber, toDate: currentDate, options: [])
         //現在日期加上addingNumber的日期
         formatter.dateFormat = "yyyy-M-dd"
-        firstDay = formatter.stringFromDate(firstDayOfWeek!)
+        //firstDay = formatter.stringFromDate(firstDayOfWeek!)
+        firstDay = "2016-12-12"
         
         
         storagePlace = "employeeShift/"+currentSID+"/"+firstDay+"/"+currentUID+"/"+weekDay
-        managerAttendStoragePlace = "managerShift/"+currentSID+"/"+firstDay+"/"+weekDay+"/"+currentProfession
+        managerAttendStoragePlace = "managerShift/"+currentSID+"/"+firstDay+"/"+"Day6"+"/"+currentProfession
         
         
         let databaseRef = FIRDatabase.database().reference()
         databaseRef.child(managerAttendStoragePlace).observeEventType(.ChildAdded, withBlock: {
             snapshot in
             
-            let Id = snapshot.value!["Id"] as? String
+            let Id = snapshot.value!["ID"] as? String
+            let Key = snapshot.key
             
             if(Id == self.currentUID){
-                self.managerShiftData.insert(managerShiftDataStruct(id: Id), atIndex: 0)
+                self.managerShiftData.insert(managerShiftDataStruct(key: Key), atIndex: 0)
             }
         })
         
@@ -318,12 +321,12 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
             let number = String(0-intervalA!)
             let late : [String : String] = ["late" : number]
             databaseRef.child(storagePlace).updateChildValues(late)
-            //databaseRef.child(managerAttendenceStoragePlace).updateChildValues(late)
+            databaseRef.child(managerAttendenceStoragePlace).updateChildValues(late)
         }else{
             let number = "0"
             let late : [String : String] = ["late" : number]
             databaseRef.child(storagePlace).updateChildValues(late)
-            //databaseRef.child(managerAttendenceStoragePlace).updateChildValues(late)
+            databaseRef.child(managerAttendenceStoragePlace).updateChildValues(late)
         }
         
     }
@@ -339,12 +342,12 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
             let number = String(intervalB!-0)
             let leaveEarly : [String : String] = ["leaveEarly" : number]
             databaseRef.child(storagePlace).updateChildValues(leaveEarly)
-            //databaseRef.child(managerAttendenceStoragePlace).updateChildValues(leaveEarly)
+            databaseRef.child(managerAttendenceStoragePlace).updateChildValues(leaveEarly)
         }else{
             let number = "0"
             let leaveEarly : [String : String] = ["leaveEarly" : number]
             databaseRef.child(storagePlace).updateChildValues(leaveEarly)
-            //databaseRef.child(managerAttendenceStoragePlace).updateChildValues(leaveEarly)
+            databaseRef.child(managerAttendenceStoragePlace).updateChildValues(leaveEarly)
         }
         
     }
@@ -510,9 +513,9 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
             
             
             
-            let startDateString = snapshot.value!["Start Date"] as! String
+            let startDateString = snapshot.value!["startDate"] as! String
             
-            let endDateString = snapshot.value!["End Date"] as! String
+            let endDateString = snapshot.value!["endDate"] as! String
             
             let late = snapshot.value!["late"] as? String
             
@@ -536,7 +539,7 @@ class EmployeeWeekViewController: UIViewController, MSWeekViewDelegate, CLLocati
             
             
             
-            let newEvent = MSEvent.makeEmployeeShiftEvent(startDate, end: endDate, title: "\(shortStartDateString)\(late)", location: "\(shortEndDateString)", key: eventKey, late: late)
+            let newEvent = MSEvent.makeEmployeeShiftEvent(startDate, end: endDate, title: "\(shortStartDateString)", location: "\(shortEndDateString)", key: eventKey, late: late)
             let event1: MSEvent = MSEvent.make(self.shiftDate, duration: 0, title: "", location: "")
             let event2: MSEvent = MSEvent.make(self.shiftDate.addDays(1), duration: 0, title: "", location: "")
             let event3: MSEvent = MSEvent.make(self.shiftDate.addDays(2), duration: 0, title: "", location: "")

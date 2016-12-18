@@ -16,6 +16,11 @@ class TransferableViewController: UITableViewController {
     var transferableArray = [Bool]()
     var currentSID = String()
     
+    
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = true
+    }
+    
     override func viewDidLoad() {
         self.title = "調撥門市"
                 

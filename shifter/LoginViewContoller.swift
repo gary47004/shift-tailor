@@ -6,6 +6,7 @@ import FirebaseDatabase
 
 struct accounts {
     let ID: String!
+    let name: String!
     var password: String!
     let store: String!
     let district : String!
@@ -42,13 +43,15 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
         let databaseRef = FIRDatabase.database().reference()
         databaseRef.child("employee").observeEventType(.ChildAdded, withBlock: { snapshot in
             let ID = snapshot.value!["ID"] as? String
+            let name = snapshot.value!["name"] as? String
             let password = snapshot.value!["password"] as? String
             let store = snapshot.value!["store"] as? String
             let district = snapshot.value!["district"] as? String
             let rank = snapshot.value!["rank"] as? String
             let profession = snapshot.value!["profession"] as? String
             
-            self.accountArray.append(accounts(ID: ID, password: password, store: store, district: district, rank: rank, profession: profession))
+            print(snapshot)
+            self.accountArray.append(accounts(ID: ID, name: name, password: password, store: store, district: district, rank: rank, profession: profession))
             self.IDArray.append(ID!)
             self.passwordArray.append(password!)
         })
@@ -89,6 +92,7 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
                         errorStatusLabel.hidden = true
                         
                         let defaults = NSUserDefaults.standardUserDefaults()
+                        defaults.setObject(accountArray[index].name, forKey: "currentName")
                         defaults.setObject(inputID, forKey: "currentUID")
                         defaults.setObject(accountArray[index].store, forKey: "currentSID")
                         defaults.setObject(accountArray[index].district, forKey: "currentDID")
@@ -155,6 +159,10 @@ class LoginViewContoller: UIViewController, UITextFieldDelegate {
 
 class ForgotPasswordViewController: UIViewController{
     let loginVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("loginVC")
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
     
     @IBAction func backButton(sender: UIBarButtonItem) {
         self.presentViewController(loginVC, animated: true, completion: nil)

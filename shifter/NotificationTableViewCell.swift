@@ -12,6 +12,8 @@ class NotificationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var notificationIcon: UIImageView!
+    @IBOutlet weak var ImageIcon: UIImageView!
     
 //    func setType(type: String){
 //        typeLabel.text = "[\(type)]"
@@ -19,6 +21,10 @@ class NotificationTableViewCell: UITableViewCell {
     
     func setTitle(title: String){
         titleLabel.text = title
+    }
+    
+    func setNotificationImage(image: String){
+        ImageIcon.image = UIImage(named: image)
     }
     
     

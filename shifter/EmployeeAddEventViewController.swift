@@ -22,9 +22,9 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
     
     var jobArray = Array<Int>()
     
-    let sectionArray = ["Select Date","喜好度"]
+    let sectionArray = ["怎麼會","沒變"]
     
-    let itemArray = ["StartDate", "EndDate"]
+    let itemArray = ["開始時間", "結束時間"]
     
     var selectedIndexPath: NSIndexPath? = nil
     
@@ -33,6 +33,10 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
     var currentUID = String()
     var currentSID = String()
     var currentRank = String()
+    
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +50,10 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
         employeeAddEventTableView.registerNib(UINib(nibName: "DatePickerCell", bundle: nil), forCellReuseIdentifier: "DatePickerCell")
         employeeAddEventTableView.registerNib(UINib(nibName: "SliderCell", bundle: nil), forCellReuseIdentifier: "SliderCell")
         print("LongPressDate: ",longPressDate)
+        
+        
+        //UI
+        self.title = ""
         
         /*
          let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
@@ -119,6 +127,22 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
         
     }
     
+    //UI
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIImageView()
+        if section == 0{
+            view.image = UIImage(named: "選擇時間")
+        }else{
+            view.image = UIImage(named: "時間偏好程度")
+        }
+        return view
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.sectionArray[section]
     }
@@ -163,8 +187,12 @@ class EmployeeAddEventViewController: UIViewController,UITableViewDataSource, UI
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        
         let sliderCell = employeeAddEventTableView.dequeueReusableCellWithIdentifier("SliderCell") as! SliderCell
         let dateCell = employeeAddEventTableView.dequeueReusableCellWithIdentifier("DatePickerCell") as! DatePickerCell
+        
+        //UI
+        
         
         dateCell.titleLabel.text = itemArray[indexPath.row]
         

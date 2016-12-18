@@ -88,9 +88,9 @@ class DetailTableViewController: UITableViewController {
         if(section == 0){
             return nil
         }else if(section == 1){
-            return "2016-12-19~2016-12-25"
-        }else{
             return "2016-12-12~2016-12-18"
+        }else{
+            return "2016-12-5~2016-12-11"
         }
     }    
 }

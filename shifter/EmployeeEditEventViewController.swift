@@ -24,7 +24,7 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
     
     let sectionArray = ["Select Date","喜好度"]
     
-    let itemArray = ["Start Date", "End Date"]
+    let itemArray = ["開始時間", "結束時間"]
     
     var dateArray = Array<NSDate>()
     
@@ -34,6 +34,26 @@ class EmployeeEditEventViewController: UIViewController,UITableViewDelegate,UITa
     var currentSID = String()
     var currentRank = String()
 
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = true
+    }
+    
+    //UI
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIImageView()
+        if section == 0{
+            view.image = UIImage(named: "選擇時間")
+        }else{
+            view.image = UIImage(named: "時間偏好程度")
+        }
+        return view
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

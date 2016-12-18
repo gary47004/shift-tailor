@@ -34,6 +34,11 @@ class Bulletin: UIViewController, UITableViewDataSource, UITableViewDelegate {
    
     
     override func viewDidLoad() {
+        //UI
+        self.tableView0.backgroundColor = UIColor(red: 43, green: 43, blue: 50)
+        self.tableView1.backgroundColor = UIColor(red: 43, green: 43, blue: 50)
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 22, green: 22, blue: 24)
+        
         //get values when loaded first time
         let tabBarVC = self.tabBarController as! TabBarViewController
         currentUID = tabBarVC.currentUID
@@ -105,6 +110,12 @@ class Bulletin: UIViewController, UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
 
+        //UI
+        cell.backgroundColor = UIColor.clearColor()
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor(red: 22, green: 22, blue: 24).CGColor
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        
         if tableView == self.tableView0{
             cell.textLabel?.text = self.section0Posts[indexPath.row].title
         }else{

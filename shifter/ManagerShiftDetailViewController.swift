@@ -35,14 +35,18 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
     
     
     @IBOutlet weak var transferButton: UIBarButtonItem!
-    
-    
+
     @IBOutlet weak var managerShiftDetailTableView: UITableView!
     
+    override func viewWillAppear(animated: Bool) {
+        tabBarController?.tabBar.hidden = true
+    }
     
-       
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //UI
+        managerShiftDetailTableView.backgroundColor = UIColor(red: 43, green: 43, blue: 50)
         
         let tabBarVC = self.tabBarController as! TabBarViewController
         
@@ -66,7 +70,7 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
             
             let endDateString = post["EndDate"] as! String
             
-            let eventType = post["Type"] as! String
+            let eventType = ""
             
             //print(snapshot.value)
             
@@ -116,6 +120,24 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
         // Do any additional setup after loading the view.
     }
     
+    //UI
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIImageView()
+        if section == 0{
+            view.image = UIImage(named: "beverage header")
+        }else if section == 1{
+            view.image = UIImage(named: "cashier header")
+        }else{
+            view.image = UIImage(named: "cleaning header")
+        }
+    
+        return view
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.sectionTitleArray[section]
     }
@@ -130,6 +152,14 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
         
         let employeeCell = self.managerShiftDetailTableView.dequeueReusableCellWithIdentifier("EmployeeCell") as! ShiftEmployeeTableViewCell
         
+        //UI
+        employeeCell.backgroundColor = UIColor.clearColor()
+        employeeCell.layer.borderWidth = 1
+        employeeCell.layer.borderColor = UIColor(red: 95, green: 95, blue: 95).CGColor
+        let redStatus = UIImage(named: "red status")
+        let normalStatus = UIImage(named: "normal status")
+
+        
         let empStartDate: NSDate
         let empEndDate: NSDate
         
@@ -143,26 +173,32 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
         
         dateformatter.dateFormat = "yyyy-M-dd-HH:mm"
         if indexPath.section == 0{
-            employeeCell.employeeNameLabel.text = (selectedEvent.beverageList[indexPath.row] as? NSDictionary)!["Name"] as? String
+            employeeCell.employeeNameLabel.text = (selectedEvent.beverageList[indexPath.row] as? NSDictionary)!["name"] as? String
             
             
-
-            empStartDate = dateformatter.dateFromString(((selectedEvent.beverageList[indexPath.row] as? NSDictionary)!["StartDate"] as? String)!)!
-            empEndDate = dateformatter.dateFromString(((selectedEvent.beverageList[indexPath.row] as? NSDictionary)!["EndDate"] as? String)!)!
+            
+            empStartDate = dateformatter.dateFromString(((selectedEvent.beverageList[indexPath.row] as? NSDictionary)!["startDate"] as? String)!)!
+            empEndDate = dateformatter.dateFromString(((selectedEvent.beverageList[indexPath.row] as? NSDictionary)!["endDate"] as? String)!)!
             
             late = (selectedEvent.beverageList[indexPath.row] as? NSDictionary)!["late"] as? String
             leaveEarly = (selectedEvent.beverageList[indexPath.row] as? NSDictionary)!["leaveEarly"] as? String
             
             if late != "0" && late != nil {
-                employeeCell.startTimeLabel.textColor = UIColor.redColor()
+                employeeCell.startTimeLabel.textColor = UIColor.whiteColor()
+                employeeCell.startTimeLabel.backgroundColor = UIColor(patternImage: redStatus!)
             }else {
-                employeeCell.startTimeLabel.textColor = UIColor.blackColor()
+                employeeCell.startTimeLabel.textColor = UIColor.whiteColor()
+                 employeeCell.startTimeLabel.backgroundColor = UIColor(patternImage: normalStatus!)
             }
             
             if leaveEarly != "0" && leaveEarly != nil {
-                employeeCell.endTimeLabel.textColor = UIColor.redColor()
+                employeeCell.endTimeLabel.textColor = UIColor.whiteColor()
+                employeeCell.endTimeLabel.backgroundColor = UIColor(patternImage: redStatus!)
+
             }else {
-                employeeCell.endTimeLabel.textColor = UIColor.blackColor()
+                employeeCell.endTimeLabel.textColor = UIColor.whiteColor()
+                employeeCell.endTimeLabel.backgroundColor = UIColor(patternImage: normalStatus!)
+
             }
             
             
@@ -173,51 +209,61 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
             
             
         }else if indexPath.section == 1 {
-            employeeCell.employeeNameLabel.text = (selectedEvent.cleaningList[indexPath.row] as? NSDictionary)!["Name"] as? String
+            employeeCell.employeeNameLabel.text = (selectedEvent.cleaningList[indexPath.row] as? NSDictionary)!["name"] as? String
             
             late = (selectedEvent.cleaningList[indexPath.row] as? NSDictionary)!["late"] as? String
             leaveEarly = (selectedEvent.cleaningList[indexPath.row] as? NSDictionary)!["leaveEarly"] as? String
             
             if late != "0" && late != nil {
-                employeeCell.startTimeLabel.textColor = UIColor.redColor()
+                employeeCell.startTimeLabel.textColor = UIColor.whiteColor()
+                employeeCell.startTimeLabel.backgroundColor = UIColor(patternImage: redStatus!)
             }else {
-                employeeCell.startTimeLabel.textColor = UIColor.blackColor()
+                employeeCell.startTimeLabel.textColor = UIColor.whiteColor()
+                employeeCell.startTimeLabel.backgroundColor = UIColor(patternImage: normalStatus!)
             }
             
             if leaveEarly != "0" && leaveEarly != nil {
-                employeeCell.endTimeLabel.textColor = UIColor.redColor()
+                employeeCell.endTimeLabel.textColor = UIColor.whiteColor()
+                employeeCell.endTimeLabel.backgroundColor = UIColor(patternImage: redStatus!)
+                
             }else {
-                employeeCell.endTimeLabel.textColor = UIColor.blackColor()
+                employeeCell.endTimeLabel.textColor = UIColor.whiteColor()
+                employeeCell.endTimeLabel.backgroundColor = UIColor(patternImage: normalStatus!)
+                
             }
-
             
             
-            empStartDate = dateformatter.dateFromString(((selectedEvent.cleaningList[indexPath.row] as? NSDictionary)!["StartDate"] as? String)!)!
-            empEndDate = dateformatter.dateFromString(((selectedEvent.cleaningList[indexPath.row] as? NSDictionary)!["EndDate"] as? String)!)!
+            empStartDate = dateformatter.dateFromString(((selectedEvent.cleaningList[indexPath.row] as? NSDictionary)!["startDate"] as? String)!)!
+            empEndDate = dateformatter.dateFromString(((selectedEvent.cleaningList[indexPath.row] as? NSDictionary)!["endDate"] as? String)!)!
             employeeCell.startTimeLabel.text = shortFormatter.stringFromDate(empStartDate)
             employeeCell.endTimeLabel.text = shortFormatter.stringFromDate(empEndDate)
             
         }else if indexPath.section == 2 {
-            employeeCell.employeeNameLabel.text = (selectedEvent.cashierList[indexPath.row] as? NSDictionary)!["Name"] as? String
+            employeeCell.employeeNameLabel.text = (selectedEvent.cashierList[indexPath.row] as? NSDictionary)!["name"] as? String
             
             late = (selectedEvent.cashierList[indexPath.row] as? NSDictionary)!["late"] as? String
             leaveEarly = (selectedEvent.cashierList[indexPath.row] as? NSDictionary)!["leaveEarly"] as? String
             
             if late != "0" && late != nil {
-                employeeCell.startTimeLabel.textColor = UIColor.redColor()
+                employeeCell.startTimeLabel.textColor = UIColor.whiteColor()
+                employeeCell.startTimeLabel.backgroundColor = UIColor(patternImage: redStatus!)
             }else {
-                employeeCell.startTimeLabel.textColor = UIColor.blackColor()
+                employeeCell.startTimeLabel.textColor = UIColor.whiteColor()
+                employeeCell.startTimeLabel.backgroundColor = UIColor(patternImage: normalStatus!)
             }
             
             if leaveEarly != "0" && leaveEarly != nil {
-                employeeCell.endTimeLabel.textColor = UIColor.redColor()
+                employeeCell.endTimeLabel.textColor = UIColor.whiteColor()
+                employeeCell.endTimeLabel.backgroundColor = UIColor(patternImage: redStatus!)
+                
             }else {
-                employeeCell.endTimeLabel.textColor = UIColor.blackColor()
+                employeeCell.endTimeLabel.textColor = UIColor.whiteColor()
+                employeeCell.endTimeLabel.backgroundColor = UIColor(patternImage: normalStatus!)
+                
             }
-
             
-            empStartDate = dateformatter.dateFromString(((selectedEvent.cashierList[indexPath.row] as? NSDictionary)!["StartDate"] as? String)!)!
-            empEndDate = dateformatter.dateFromString(((selectedEvent.cashierList[indexPath.row] as? NSDictionary)!["EndDate"] as? String)!)!
+            empStartDate = dateformatter.dateFromString(((selectedEvent.cashierList[indexPath.row] as? NSDictionary)!["startDate"] as? String)!)!
+            empEndDate = dateformatter.dateFromString(((selectedEvent.cashierList[indexPath.row] as? NSDictionary)!["endDate"] as? String)!)!
             employeeCell.startTimeLabel.text = shortFormatter.stringFromDate(empStartDate)
             employeeCell.endTimeLabel.text = shortFormatter.stringFromDate(empEndDate)
         }
@@ -238,7 +284,7 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
         
         let empVC = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: "請選取欲更換員工", preferredStyle: .ActionSheet)
         
-        let pickerView = UIPickerView.init(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
+        let pickerView = UIPickerView.init(frame: CGRect(x: -20, y: 0, width: 400, height: 200))
         
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -255,7 +301,7 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
             print("ChangeEmp",self.changeEmp)
             
             
-            eventDBRef.child("managerShift").child(self.currentSID).child(self.currentWeekStartDate).child(self.selectedEvent.key).child(self.jobArray[self.selectedIndexPath.section]).child("\(self.selectedIndexPath.row)").updateChildValues(["Name":self.changeEmp])
+            eventDBRef.child("managerShift").child(self.currentSID).child(self.currentWeekStartDate).child(self.selectedEvent.key).child(self.jobArray[self.selectedIndexPath.section]).child("\(self.selectedIndexPath.row)").updateChildValues(["name":self.changeEmp])
             
             
             self.changeEmp = nil
@@ -282,10 +328,12 @@ class ManagerShiftDetailViewController: UIViewController, UITableViewDataSource,
         
         changeEmployeeList = []
         
+        let employeeCell = tableView.cellForRowAtIndexPath(indexPath) as! ShiftEmployeeTableViewCell
+        
         let eventDBRef = FIRDatabase.database().reference()
         eventDBRef.child("employee").observeEventType(.ChildAdded, withBlock: {snapshot in
             
-            if snapshot.childSnapshotForPath("profession").value as! String == self.jobArray[self.selectedIndexPath.section] && snapshot.childSnapshotForPath("store").value as! String == self.currentSID{
+            if snapshot.childSnapshotForPath("profession").value as! String == self.jobArray[self.selectedIndexPath.section] && snapshot.childSnapshotForPath("store").value as! String == self.currentSID && snapshot.childSnapshotForPath("name").value as! String != employeeCell.employeeNameLabel.text{
                 
                 let employeeSnapshot = snapshot.value as! [String:AnyObject]
                 

@@ -42,6 +42,8 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
     let sectionArray = ["Select Date", "Select Employee"]
     
     let itemArray = [["Start Date", "End Date"],["beverage","cleaning","cashier"]]
+    let titleArray = [["開始時間", "結束時間"],["吧台手","清潔工","收銀員"]]
+
     
     var selectedIndexPath: NSIndexPath? = nil
     
@@ -75,11 +77,12 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
             //listTableView.editing = false;
             self.setEditing(false, animated: false)
             self.editEventButton.style = UIBarButtonItemStyle.Plain
-            self.editEventButton.title = "Edit"
+            self.editEventButton.title = "編輯"
             
             self.deleteEventButton.accessibilityElementsHidden = false
             
             editEventTableViewHeight.constant = 0
+            
             deleteView.hidden = true
             
             
@@ -93,9 +96,10 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
             //listTableView.editing = true;
             
             self.setEditing(true, animated: false)
-            self.editEventButton.title = "Done"
+            self.editEventButton.title = "完成"
             self.editEventButton.style =  UIBarButtonItemStyle.Done
             editEventTableViewHeight.constant = -40
+            
             deleteView.hidden = false
             
             
@@ -115,10 +119,31 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
 
     }
    
+    //UI
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIImageView()
+        if section == 0{
+            view.image = UIImage(named: "time header")
+        }else{
+            view.image = UIImage(named: "demand header")
+        }
+        return view
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
  
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = true
+        self.title = ""
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        deleteView.hidden = true
+        
         
         let tabBarVC = self.tabBarController as! TabBarViewController
         
@@ -255,14 +280,16 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
         
         let dateCell = editEventTableView.dequeueReusableCellWithIdentifier("DatePickerCell") as! DatePickerCell
         
-        dateCell.titleLabel.text = itemArray[indexPath.section][indexPath.row]
+        dateCell.titleLabel.text = titleArray[indexPath.section][indexPath.row]
         
 
-        
+        //UI
+        let textField = empCell.subviews[0].subviews[0] as! UITextField
+        textField.underlined()
         
         dateCell.clipsToBounds = true
         
-        empCell.empTitleLabel.text = itemArray[indexPath.section][indexPath.row]
+        empCell.empTitleLabel.text = titleArray[indexPath.section][indexPath.row]
         
         if indexPath.section == 0 {
             
@@ -285,11 +312,11 @@ class editEventTableViewController: UIViewController, UITableViewDelegate, UITab
         }else{
             
             for _ in 0...itemArray[1].count-1 {
-                if empCell.empTitleLabel.text == "beverage"{
+                if empCell.empTitleLabel.text == "吧台手"{
                     empCell.txtNumber.text = String(event.beverage)
-                }else if empCell.empTitleLabel.text == "cashier"{
+                }else if empCell.empTitleLabel.text == "收銀員"{
                     empCell.txtNumber.text = String(event.cashier)
-                }else if empCell.empTitleLabel.text == "cleaning"{
+                }else if empCell.empTitleLabel.text == "清潔工"{
                     empCell.txtNumber.text = String(event.cleaning)
                 }
             }

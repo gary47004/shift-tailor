@@ -1,92 +1,89 @@
-//
-//  AlarmClockViewController.swift
-//  shifter
-//
-//  Created by gary on 2016/11/26.
-//  Copyright © 2016年 Chlorophyll. All rights reserved.
-//
+
 
 import UIKit
 import Firebase
 import FirebaseDatabase
 
 
-class AlarmClockViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var id = ""
-    var alarmStoragePlace = ""
-    var minutes:Int = 0
-    let defaults = NSUserDefaults.standardUserDefaults()
+class AlarmClockViewController: UIViewController{
+    var currentUID = String()
+    var alarmStoragePlace = String()
+    var post = [String : String]()
+    var hour = String()
+    
+    
+    
     //宣告手機應用程式儲存空間
+    let defaults = NSUserDefaults.standardUserDefaults()
     
-    
-    @IBAction func alarmSwitch(alarmOutlet: UISwitch) {
-        let databaseRef = FIRDatabase.database().reference()
-        
-        if(alarmOutlet.on==true){
-            let post : [String : String] = ["switch" : "on"]
-            databaseRef.child(alarmStoragePlace).updateChildValues(post)
-            defaults.setBool(true, forKey: "switchState")
-        }else{
-            let post : [String : String] = ["switch" : "off"]
-            databaseRef.child(alarmStoragePlace).updateChildValues(post)
-            defaults.setBool(false, forKey: "switchState")
-        }
-        
-    }
+    @IBOutlet weak var minuteLabel: UILabel!
+    @IBOutlet weak var hourLabel: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
-    @IBAction func pickerChange(sender: UIDatePicker) {
-        minutes = Int((datePicker.countDownDuration)/60)
-        self.timeLabel.text = "在上班前"+"\(String(minutes))"+"分鐘提醒我"
-        
-        let databaseRef = FIRDatabase.database().reference()
-        let post : [String : String] = ["interval" : String(minutes)]
-        databaseRef.child(alarmStoragePlace).updateChildValues(post)
-    }
-    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var alarmOutlet: UISwitch!
     
+    
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = true
+        
+//        //set default time
+//        let timeLabel:String = "\(hourLabel)" +":" + "\(minuteLabel)"
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateFormat = "hh:mm"
+//        let time = dateFormatter.dateFromString(timeLabel)
+//        print("ttttttt", timeLabel)
+//        print(time)
+//        datePicker.date = time!
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "提醒設定"
         let tabBarVC = self.tabBarController as? TabBarViewController
-        id = tabBarVC!.currentUID
-        alarmStoragePlace = "employee/"+"\(id)"+"/alarmClock"
+        currentUID = tabBarVC!.currentUID
+        alarmStoragePlace = "employee/"+"\(currentUID)"+"/alarmClock"
+        
+        //UI
+        datePicker.setValue(UIColor.whiteColor(), forKeyPath: "textColor")
+        datePicker.datePickerMode = .CountDownTimer
         
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1
-    }
-    
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("alarmSwitchCell") as! AlarmSwitchTableViewCell
-        //as! alarmClockSwitchCell（class）
-        cell.textLabel?.text = "上班提醒"
+        self.navigationItem.backBarButtonItem?.tintColor = UIColor.whiteColor()
         if defaults.boolForKey("switchState") == true {
-            cell.alarmOutlet.on = true
+            alarmOutlet.on = true
         }else if defaults.boolForKey("switchState") == false {
-            cell.alarmOutlet.on = false
+            alarmOutlet.on = false
         }
-        return cell
+
+        
     }
+    
+    @IBAction func alarmSwitch(alarmOutlet: UISwitch) {
+        let databaseRef = FIRDatabase.database().reference()
+        
+        if(alarmOutlet.on==true){
+            post = ["switch" : "on"]
+            databaseRef.child(alarmStoragePlace).updateChildValues(post)
+            defaults.setBool(true, forKey: "switchState")
+        }else{
+            post = ["switch" : "off"]
+            databaseRef.child(alarmStoragePlace).updateChildValues(post)
+            defaults.setBool(false, forKey: "switchState")
+        }
+    }
+    
+    @IBAction func pickerChange(sender: UIDatePicker) {
+        var dateFormatter1 = NSDateFormatter()
+        var dateFormatter2 = NSDateFormatter()
+        dateFormatter1.dateFormat = "hh"
+        dateFormatter2.dateFormat = "mm"
+        
+        self.hourLabel.text = dateFormatter1.stringFromDate(sender.date)
+        self.minuteLabel.text = dateFormatter2.stringFromDate(sender.date)
+        
+//        let databaseRef = FIRDatabase.database().reference()
+//        let post = ["interval" : String(minutes)]
+//        databaseRef.child(alarmStoragePlace).updateChildValues(post)
+    }
+    
 }

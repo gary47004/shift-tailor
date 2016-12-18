@@ -144,7 +144,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
         
         weeklyView.daysToShow = 0
         
-        weeklyView.weekFlowLayout.hourHeight = 50
+        weeklyView.weekFlowLayout.hourHeight = 18
         
         weeklyView.events = [event1,event2,event3,event4,event5,event6,event7]
 
@@ -177,7 +177,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
             let eventID = snapshot.key
             
             if eventID != "" {
-                
+                3
                 self.weeklyView.removeEvent(self.selectedEvent)
                 
             }
@@ -191,7 +191,7 @@ class EmployeeEventWeekViewController: UIViewController,MSWeekViewDelegate,MSWee
     }
     
     override func viewWillAppear(animated: Bool) {
-        
+        self.tabBarController?.tabBar.hidden = false
 //        var newEventArray = [MSEvent]()
 //        
 //        let eventDBRef = FIRDatabase.database().reference()

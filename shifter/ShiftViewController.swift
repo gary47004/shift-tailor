@@ -12,12 +12,24 @@ class ShiftViewController: UIViewController {
 
     @IBOutlet weak var employeeContainerView: UIView!
     @IBOutlet weak var managerContainerView: UIView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        //UI
+        view.subviews[0].backgroundColor = UIColor(red: 40, green: 40, blue: 40)
+        segmentedControl.tintColor = UIColor.whiteColor()
+        segmentedControl.setWidth(189, forSegmentAtIndex: 0)
+        segmentedControl.setWidth(189, forSegmentAtIndex: 1)
+        segmentedControl.setBackgroundImage(UIImage(named: "selected segment"), forState: .Selected, barMetrics: .Default)
+        segmentedControl.setBackgroundImage(UIImage(named: "deselected segment"), forState: .Normal, barMetrics: .Default)
+        segmentedControl.setDividerImage(UIImage(named: "divider segment image - left"), forLeftSegmentState: .Selected, rightSegmentState: .Normal, barMetrics: .Default)
+        segmentedControl.setDividerImage(UIImage(named: "divider segment image - right"), forLeftSegmentState: .Normal, rightSegmentState: .Selected, barMetrics: .Default)
+        
     }
-
+    
     @IBAction func showShiftView(sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             UIView.animateWithDuration(0.5, animations: {

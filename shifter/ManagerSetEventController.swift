@@ -177,7 +177,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         
         weeklyView.daysToShow = 0
         
-        weeklyView.weekFlowLayout.hourHeight = 50
+        weeklyView.weekFlowLayout.hourHeight = 30
         
         weeklyView.events = [event1,event2,event3,event4,event5,event6,event7]
         
@@ -243,7 +243,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
     
     
     func setDeadlineDate() {
-        let setDeadlineDateVC = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: "", preferredStyle: .ActionSheet)
+        let setDeadlineDateVC = UIAlertController(title: "\n\n\n\n\n\n\n\n", message: "請選取填表期限", preferredStyle: .ActionSheet)
         
         let datePickerView = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
         
@@ -253,13 +253,13 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
         
         
         
-        let cancelAction = UIAlertAction(title: "Cancel",style: .Cancel, handler: {(alert:UIAlertAction) in
+        let cancelAction = UIAlertAction(title: "取消",style: .Cancel, handler: {(alert:UIAlertAction) in
             
             self.deadlineDate = ""
             
         })
         
-        let setDeadlineAction = UIAlertAction(title: "Send", style: .Default, handler:{(alert:UIAlertAction) in
+        let setDeadlineAction = UIAlertAction(title: "發送填表通知", style: .Default, handler:{(alert:UIAlertAction) in
             
             let eventDBRef = FIRDatabase.database().reference()
             eventDBRef.child("managerEvent").child(self.currentSID).child("currentEventDeadline").setValue(self.deadlineDate)
@@ -357,6 +357,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = true
         
         var newEventArray = [MSEvent]()
         

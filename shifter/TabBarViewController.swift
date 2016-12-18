@@ -11,6 +11,7 @@ import Firebase
 import FirebaseDatabase
 
 class TabBarViewController: UITabBarController {
+    var currentName = String()
     var currentUID = String()
     var currentSID = String()
     var currentDID = String()
@@ -47,12 +48,12 @@ class TabBarViewController: UITabBarController {
     
     
     func alarmClock() {
-        let addingNumber = 1-Int(myCalendar.component(.Weekday, fromDate: now))
-        let firstDayOfWeek = myCalendar.dateByAddingUnit(.Day, value: addingNumber, toDate: now, options: [])
+        //let addingNumber = 1-Int(myCalendar.component(.Weekday, fromDate: now))
+        //let firstDayOfWeek = myCalendar.dateByAddingUnit(.Day, value: addingNumber, toDate: now, options: [])
         //現在日期加上addingNumber的日期
         formatter.dateFormat = "yyyy-M-dd"
-        firstDay = formatter.stringFromDate(firstDayOfWeek!)
-        let storagePlace = "employeeShift/"+"\(currentSID)"+"/"+"\(firstDay)"+"/"+"\(currentUID)"
+        //firstDay = formatter.stringFromDate(firstDayOfWeek!)
+        let storagePlace = "employeeShift/"+"\(currentSID)"+"/"+"2016-12-12"+"/"+"\(currentUID)"
         
         formatter.dateFormat = "yyyy-M-dd-H:mm"
         let counterInterval = 0-Int(interval!)!
@@ -62,7 +63,7 @@ class TabBarViewController: UITabBarController {
         databaseRef.child(storagePlace).observeEventType(.ChildAdded, withBlock: {
             snapshot in
             
-            let start = snapshot.value!["Start Date"] as? String
+            let start = snapshot.value!["startDate"] as? String
             if(start != nil){
                 
                 let date = self.formatter.dateFromString(start!)
@@ -87,11 +88,15 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         //UI
         tabBar.barTintColor = UIColor(red: 12/255, green: 12/255, blue: 12/255, alpha: 100/255)
         tabBar.tintColor = UIColor.whiteColor()
         
         let defaults = NSUserDefaults.standardUserDefaults()
+        currentName = defaults.objectForKey("currentName") as! String
+        
         currentUID = defaults.objectForKey("currentUID") as! String
         currentSID = defaults.objectForKey("currentSID") as! String
         currentDID = defaults.objectForKey("currentDID") as! String
@@ -120,6 +125,23 @@ class TabBarViewController: UITabBarController {
         
         //GGGGGGGGGGGGGGGGGGGY
         
+        
+        //manual switch
+        databaseRef.child("notification").observeEventType(.Value, withBlock: {snapshot in
+            print(snapshot.value)
+            let manualSwitch = snapshot.value!["manualSwitch"] as! Int
+            if manualSwitch == 1{
+                self.notifications += 1
+                let defaults = NSUserDefaults.standardUserDefaults()
+                if defaults.objectForKey("oldNotifications") != nil{
+                    self.oldNotifications = defaults.objectForKey("oldNotifications") as! Int
+                }
+                self.newNotifications = self.notifications - self.oldNotifications
+                if self.newNotifications > 0{
+                    self.tabBar.items?[2].badgeValue = String(self.newNotifications)
+                }
+            }
+        })
         
         
         //fill-in notifiacation's dates

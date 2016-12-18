@@ -24,6 +24,7 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
     let sectionArray = ["Select Date", "Select Employee"]
     
     let itemArray = [["Start Date", "End Date"],["beverage","cleaning","cashier"]]
+    let titleArray = [["開始時間", "結束時間"],["吧台手","清潔工","收銀員"]]
     
     var selectedIndexPath: NSIndexPath? = nil
     
@@ -33,10 +34,14 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
     var currentSID = String()
     var currentRank = String()
     
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = true
+    }
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         let tabBarVC = self.tabBarController as! TabBarViewController
         
@@ -63,6 +68,21 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
         */
     
    
+    //UI
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIImageView()
+        if section == 0{
+            view.image = UIImage(named: "time header")
+        }else{
+            view.image = UIImage(named: "demand header")
+        }
+        return view
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+            return 50
+    }
+    
     
     @IBAction func addEvent(sender: UIBarButtonItem) {
         getData()
@@ -184,7 +204,8 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         let dateCell = addEventTableView.dequeueReusableCellWithIdentifier("DatePickerCell") as! DatePickerCell
         
-        dateCell.titleLabel.text = itemArray[indexPath.section][indexPath.row]
+        dateCell.titleLabel.text = titleArray[indexPath.section][indexPath.row]
+//        dateCell.titleLabel.backgroundColor = UIColor(patternImage: UIImage(named: "label background L")!)
         
         if longPressDate != nil {
             
@@ -200,7 +221,9 @@ class addEventTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         dateCell.clipsToBounds = true
         
-        empCell.empTitleLabel.text = itemArray[indexPath.section][indexPath.row]
+        empCell.empTitleLabel.text = titleArray[indexPath.section][indexPath.row]
+        let textField = empCell.subviews[0].subviews[0] as! UITextField
+        textField.underlined()
         
         if indexPath.section == 0{
 

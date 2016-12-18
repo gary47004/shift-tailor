@@ -55,7 +55,11 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     
     let currentDate = NSDate()
     
+    
     override func viewDidLoad() {
+        
+        //UI
+
         
         super.viewDidLoad()
         
@@ -67,7 +71,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         
         let shiftDBRef = FIRDatabase.database().reference()
         shiftDBRef.child("managerShift").child(self.currentSID).child("currentShift").observeEventType(.Value, withBlock: {snapshot in
-            
+            print(snapshot)
             self.currentWeekStartDate = snapshot.value as! String
             
             let shiftDateFormatter = NSDateFormatter()
@@ -119,7 +123,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         print("剩餘時間：",dateComponentsFormatter.stringFromTimeInterval(interval)!)
         
         
-        let startDateAlertVC = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: "", preferredStyle: .ActionSheet)
+        let startDateAlertVC = UIAlertController(title: "\n\n\n\n\n\n\n\n", message: "請選取排班日期", preferredStyle: .ActionSheet)
         let isSchedulingVC = UIAlertController(title: "正在排班中", message: "剩餘時間：\n\(dateComponentsFormatter.stringFromTimeInterval(interval)!)", preferredStyle: .Alert)
 
         let datePickerView = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
@@ -128,7 +132,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         datePickerView.addTarget(self, action: #selector(ManagerShiftViewController.datePickerValueChanged(_:)), forControlEvents: .ValueChanged)
         
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler:
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler:
             {(alert: UIAlertAction!)in
                 
                 self.shiftStartDate = ""
@@ -138,13 +142,13 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         
         let okAction = UIAlertAction(title: "確認", style: .Default, handler:nil)
     
-        let setShiftAction = UIAlertAction(title: "Confirm", style: .Default, handler:
+        let setShiftAction = UIAlertAction(title: "確認", style: .Default, handler:
             {(alert: UIAlertAction!) in
                  self.performSegueWithIdentifier("setEvent", sender: nil)
         })
         
         
-        let presentSummaryViewAction = UIAlertAction(title: "Set", style: .Default, handler: {(alert: UIAlertAction!) in
+        let presentSummaryViewAction = UIAlertAction(title: "開始排班", style: .Default, handler: {(alert: UIAlertAction!) in
             
             
             self.shiftStartDate = self.selectedDate
@@ -226,7 +230,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         
         weeklyView.daysToShow = 0
         
-        weeklyView.weekFlowLayout.hourHeight = 50
+        weeklyView.weekFlowLayout.hourHeight = 18
         
         weeklyView.events = [event1,event2,event3,event4,event5,event6,event7]
 
@@ -333,7 +337,8 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
     }
     override func viewWillAppear(animated: Bool) {
         
-        
+        tabBarController?.tabBar.hidden = false
+
         let setEventDBREF = FIRDatabase.database().reference()
         
         setEventDBREF.child("managerEvent").child(self.currentSID).observeEventType(.Value, withBlock:{
@@ -509,8 +514,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
         
             let endDateString = snapshot.value!["EndDate"] as! String
             
-            let eventType = snapshot.value!["Type"] as! String
-            
+            let eventType = ""            
             //print(snapshot.value)
             
             let beverageList = snapshot.childSnapshotForPath("beverage").value
@@ -537,7 +541,7 @@ class ManagerShiftViewController: UIViewController,MSWeekViewDelegate {
             
             //self.eventList.append(eventStruct(startDate: startDate,endDate: endDate, beverage: beverage, cashier: cashier, cleaning: cleaning, key: eventID))
             
-            let newEvent = MSEvent.makeManagerShiftEvent(startDate, end: endDate, title: "\(eventType)\n\(shortStartDateString)", location: "\(shortEndDateString)", key: eventID, beverageList: beverageList as! [[String:String]], cleaningList: cleaningList as! [[String:String]], cashierList: cashierList as![[String:String]], shiftType: eventType)
+            let newEvent = MSEvent.makeManagerShiftEvent(startDate, end: endDate, title: "\(shortStartDateString)", location: "\(shortEndDateString)", key: eventID, beverageList: beverageList as! [[String:String]], cleaningList: cleaningList as! [[String:String]], cashierList: cashierList as![[String:String]], shiftType: eventType)
             
             
             

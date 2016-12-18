@@ -38,6 +38,26 @@ class BulletinCompose: UIViewController, UITextFieldDelegate {
 
 
 
+    override func viewDidLoad() {
+        setButtons()
+        setInitValue()
+        setTextField()
+        
+        firstLoad = true
+        self.tabBarController?.tabBar.hidden = true
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "新增公告")!)
+        self.title = "新增公告"
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if editMode == false{
+            sectionPressed = 0
+        }else{
+            sectionPressed = selectedSection
+        }
+    }
+    
+    
     func setButtons(){
         if sectionPressed == 0{
             storeButton.setImage(UIImage(named: "store button - selected"), forState: .Normal)
@@ -56,15 +76,17 @@ class BulletinCompose: UIViewController, UITextFieldDelegate {
         
         let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: #selector(BulletinCompose.donePressed))
                 doneButton.tintColor = UIColor.whiteColor()
+        doneButton.title = "完成"
         navigationItem.rightBarButtonItem = doneButton
         
         let cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: #selector(BulletinCompose.cancelPressed))
         cancelButton.tintColor = UIColor.whiteColor()
+        cancelButton.title = "取消"
         navigationItem.leftBarButtonItem = cancelButton
         
-        deleteButton.setTitle("Delete", forState: .Normal)
+        deleteButton.setTitle("刪除", forState: .Normal)
         deleteButton.setTitleColor(.whiteColor(), forState: .Normal)
-        deleteButton.backgroundColor = .grayColor()
+        deleteButton.backgroundColor = UIColor(red: 94, green: 19, blue: 28)
         deleteButton.addTarget(self, action: #selector(BulletinCompose.deletePressed), forControlEvents: .TouchUpInside)
         self.view.addSubview(deleteButton)
         
@@ -183,26 +205,7 @@ class BulletinCompose: UIViewController, UITextFieldDelegate {
         }
     }
     
-    override func viewDidLoad() {
-        setButtons()
-        setInitValue()
-        setTextField()
-        
-        firstLoad = true
-        self.tabBarController?.tabBar.hidden = true
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "新增公告")!)
-        self.title = "新增公告"
-
-        
-    }
     
-    override func viewWillAppear(animated: Bool) {
-        if editMode == false{
-            sectionPressed = 0
-        }else{
-            sectionPressed = selectedSection
-        }
-    }
     
     func storeButtonPressed(){
         sectionPressed = 0
