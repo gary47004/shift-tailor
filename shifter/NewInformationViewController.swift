@@ -31,15 +31,16 @@ struct weekAttence {
 
 
 class NewInformationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-    @IBOutlet weak var weekPay: UILabel!
-    @IBOutlet weak var weekLateLabel: UILabel!
-    @IBOutlet weak var weekLeaveEarlyLabel: UILabel!
+    
     @IBOutlet weak var mTableView: UITableView!
+    @IBOutlet weak var topView: UIView!
     
     var id = String()
     var rank = String()
     var store = String()
-    
+    let weekPayLabel = UILabel(frame: CGRect(x: 45, y: 141, width: 200, height: 17))
+    let weekLateLabel = UILabel(frame: CGRect(x: 45, y: 178, width: 200, height: 17))
+    let weekLeaveEarlyLabel = UILabel(frame: CGRect(x: 45, y: 215, width: 200, height: 17))
     
     var infor = [informationStruct]()
     var weekAtt = [weekAttence]()
@@ -55,8 +56,31 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
     let myCalendar = NSCalendar.currentCalendar()
     var firstDay = ""
     
+    override func viewWillAppear(animated: Bool) {
+        self.title = "員工資訊"
+        self.navigationController?.title = ""//to hide the tab bar icon text
+    }
     
     override func viewDidLoad() {
+        //UI
+        view.backgroundColor = UIColor(red: 43, green: 43, blue: 50)
+        
+        
+        let backgroundImageView = UIImageView(frame: CGRect(x: 23, y: 83, width: 326, height: 167))
+        backgroundImageView.image = UIImage(named: "上週概況")
+        view.addSubview(backgroundImageView)
+        
+        weekPayLabel.textColor = UIColor.whiteColor()
+        weekLateLabel.textColor = UIColor.whiteColor()
+        weekLeaveEarlyLabel.textColor = UIColor.whiteColor()
+        
+        view.addSubview(weekPayLabel)
+        view.addSubview(weekLateLabel)
+        view.addSubview(weekLeaveEarlyLabel)
+        
+        mTableView.backgroundColor = UIColor(red: 43, green: 43, blue: 50)
+
+        
         let tabBarVC = self.tabBarController as! TabBarViewController
         id = tabBarVC.currentUID
         rank = tabBarVC.currentRank
@@ -198,7 +222,7 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
     func pay(key:String?, rate:String?)->Int{
         print("h")
         if(key=="hourly"){
-            weekPay.text = "本月人力花費：70560"
+            weekPayLabel.text = "上月人事成本：70560"
             var hours = 0
             formatter.dateFormat = "yyyy-M-dd-H:mm"
             for(var i=0;i<attendance.count;i += 1){
@@ -278,8 +302,13 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("informationCell", forIndexPath: indexPath)
-        cell.textLabel?.text = infor[indexPath.row].id
+        cell.textLabel?.text = infor[indexPath.row].name
         cell.accessoryType = .DisclosureIndicator
+        cell.backgroundColor = UIColor.clearColor()
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.layer.borderColor = UIColor(red: 22, green: 22, blue: 24).CGColor
+        cell.layer.borderWidth = 1
+        cell.imageView?.image = UIImage(named: "呵呵")
         return cell
         
     }
@@ -287,6 +316,7 @@ class NewInformationViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.performSegueWithIdentifier("showDetail", sender: indexPath.row)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     

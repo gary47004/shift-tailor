@@ -88,7 +88,7 @@ class Bulletin: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         self.title = "公告欄"
-        self.navigationController?.title = ""
+        self.navigationController?.title = "" //to prevent the auto made tab bar icon title
         self.tabBarController?.tabBar.hidden = false
         tableView0.reloadData()
         tableView1.reloadData()

@@ -58,7 +58,7 @@ class ManagerSetEventViewController: UIViewController,UIPopoverPresentationContr
     var currentRank = String()
     
     
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -472,7 +472,7 @@
 				TargetAttributes = {
 					43173E031D5328620043399F = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 8XSPVEYLA9;
+						DevelopmentTeam = 993TN7KGWA;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -758,7 +758,7 @@
 				INFOPLIST_FILE = shifter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chlorophyll.shift;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chlorophyll.shift-tailor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shifter/shifter-Bridging-Header.h";
@@ -796,7 +796,7 @@
 				INFOPLIST_FILE = shifter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chlorophyll.shift;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chlorophyll.shift-tailor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shifter/shifter-Bridging-Header.h";
